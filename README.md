@@ -1,6 +1,8 @@
 FALTA TERMINAR O TesteDAO, e FAZER a main
+<br>
 (USAR DE REFERENCIA projetos fullstack do Orrico)
-
+<br>
+<hr>
 
 
 deixei em aberto a questao de algumas variaveis como:
