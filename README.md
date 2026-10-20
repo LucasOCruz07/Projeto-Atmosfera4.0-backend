@@ -1,9 +1,13 @@
+FALTA TERMINAR O TesteDAO, e FAZER a main
+(USAR DE REFERENCIA projetos fullstack do Orrico)
+
+
 
 deixei em aberto a questao de algumas variaveis como:
 "nome_atuador"
 "ultimo_comando"
 
-Pois estao dadas como varChar, datetime
+Pois estao dadas como varChar, datetime, timestamp..
 Fico aberto a opinões de como declarar ela, estou deixando algumas como String,
 deem uma olhada depois e se quiser façam alguma alteração,
 porem deixe resgistrado aqui
