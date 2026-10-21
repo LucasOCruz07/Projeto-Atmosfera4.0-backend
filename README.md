@@ -14,6 +14,21 @@ Fico aberto a opinões de como declarar ela, estou deixando algumas como String,
 deem uma olhada depois e se quiser façam alguma alteração,
 porem deixe resgistrado aqui
 
+<hr>
+bem provavel ter que colocar as FK
+Orrico disse que nao mas o projeto do marcus precisou
+Segue as Orienteções: 
+
+Table: atuadores
+
+
+Table: registro
+gatewai_pai_fk int
+
+
+Table: registro
+id_dispositivos_fk int 
+
 
 <br>
 <hr>

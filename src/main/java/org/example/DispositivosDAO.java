@@ -8,8 +8,8 @@ public class DispositivosDAO {
 
     public Dispositivo salvarDisp(Dispositivo dispositivos) throws SQLException {
         String sql = """
-                INSERT INTO Dispositivos( id_dispositivo, nome_dispositivo, localizacao, tipo_dispositivo )
-                VALUE (?, ?, ?, ?)
+                INSERT INTO Dispositivos( id_dispositivo, nome_dispositivo, localizacao, tipo_dispositivo, gatewai_pai_fk )
+                VALUE (?, ?, ?, ?, ?)
                 """;
         try (Connection conexao = Conexao.connection();
              PreparedStatement comando = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -19,6 +19,7 @@ public class DispositivosDAO {
             comando.setString(2, dispositivos.getNome_dispositivo());
             comando.setString(3, dispositivos.getLocalizacao());
             comando.setString(4, dispositivos.getTipo_dispositivo());
+            comando.setInt(5, dispositivos.getGatewai_pai_fk());
             comando.executeUpdate();
             try (ResultSet chaves = comando.getGeneratedKeys()) {
                 if (chaves.next()) {
@@ -34,7 +35,7 @@ public class DispositivosDAO {
 
     public List<Dispositivo> listarDisp_Disponiveies() throws SQLException {
         String sql = """
-                SELECT  id_dispositivo, nome_dispositivo, localizacao, tipo_dispositivo 
+                SELECT  id_dispositivo, nome_dispositivo, localizacao, tipo_dispositivo, gatewai_pai_fk
                 FROM Dispositivos
                 ORDER BY id_dispositivos
                 """;
@@ -48,7 +49,9 @@ public class DispositivosDAO {
                         resultado.getInt("id_dispositivo"),
                         resultado.getString("nome_dispositivo"),
                         resultado.getString("localizacao"),
-                        resultado.getString("tipo_dispositivo")
+                        resultado.getString("tipo_dispositivo"),
+                        resultado.getInt("gatewai_pai_fk")
+
                 );
                 dispositvos.add(dispositivo);
             }
