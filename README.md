@@ -34,50 +34,37 @@ id_dispositivos_fk int
 <hr>
 TABELA ATUAL DO MySQL:
 
-
-/*
+/*CREATE DATABASE atmosfera;*/
 USE atmosfera;
-SELECT * FROM atuadores;
-SELECT * FROM dispositivos;
-SELECT * FROM registro;
-
+ 
 CREATE TABLE dispositivos(
 id_dispositivos INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 nome_dispositivo VARCHAR(30) NOT NULL,
 localizacao VARCHAR(50),
 tipo_dispositivo VARCHAR(30) NOT NULL,
-gatewai_pai_fk INT
+gatewai_pai_fk INT 
 );
-
-
+ 
 CREATE TABLE registro(
 id_registro BIGINT NOT NULL auto_increment PRIMARY KEY,
-id_dispositivos_fk INT NOT NULL,
-timestamp timestamp NOT NULL,
-data_hora DATETIME default NOW(),
-temperatura FLOAT,
-umidade FLOAT,
-pressao FLOAT,
-altitude FLOAT,
-luminosidade FLOAT,
-velocidade_vento FLOAT,
+id_dispositivos_fk INT NOT NULL, timestamp timestamp NOT NULL,
+data_hora DATETIME default NOW(), temperatura FLOAT, umidade FLOAT,
+pressao FLOAT, altitude FLOAT,
+luminosidade FLOAT, velocidade_vento FLOAT,
 direcao_vento INT,
-intensidade_wifi FLOAT,
-FOREIGN KEY (id_dispositivos_fk) REFERENCES dispositivos(id_dispositivos)
-);
-
-
+intensidade_wifi FLOAT, 
+FOREIGN KEY (id_dispositivos_fk) REFERENCES dispositivos(id_dispositivos) );
+ 
 CREATE TABLE atuadores(
 id_atuadores INT PRIMARY KEY auto_increment NOT NULL,
 id_dispositivo_fk INT NOT NULL,
 nome_atuador VARCHAR(30) NOT NULL,
 status_atual BOOl NOT NULL,
 ultimo_comando DATETIME default NOW(),
-FOREIGN KEY (id_dispositivo_fk) REFERENCES dispositivos(id_dispositivos)
-);
-
+FOREIGN KEY (id_dispositivo_fk) REFERENCES dispositivos(id_dispositivos) );
+ 
 USE atmosfera;
-ALTER TABLE registro
-RENAME COLUMN  timestamp TO time_stamp;
-
-*/
+ALTER TABLE registro RENAME COLUMN timestamp TO time_stamp;
+SELECT * FROM atuadores;
+SELECT * FROM dispositivos;
+SELECT * FROM registro;
