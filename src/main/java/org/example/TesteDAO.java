@@ -14,9 +14,9 @@ public class TesteDAO {
         registrosDAO.salvarRegis(new Registros(01, "São Paulo - Brazil 2026-10-22 10:00:00",5, 40, 60, 50, 45, 40, 10, 34));
 
 
-        atuadoresDAO.listarAtuaDisponiveies();
-        dispositivosDAO.listarDispDisponiveies();
-        registrosDAO.listarRegis_Disponiveies();
+ //   atuadoresDAO.listarAtuaDisponiveies();
+  //  dispositivosDAO.listarDispDisponiveies();
+   //  registrosDAO.listarRegis_Disponiveies();
 
     }
 }

@@ -6,10 +6,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexao {
-    private static final String URL = "jdbc:mysql://localhost:3306/atmosfera_4"
-    + "?useSSL = false "
-            + "&allowPublicKeyRetriveal = true"
-            + "&serverTimezone = America/Sao_Paulo";
+    //Alterar nome do banco se preciso /NOME
+    private static final String URL = "jdbc:mysql://localhost:3306/bancoteste";
+//    + "?useSSL = false "
+//           + "&allowPublicKeyRetriveal = true"
+//     + "&serverTimezone = America/Sao_Paulo";
+
+
 // permite que o  drive JDBC  solicite ao MySQL uma chave publica durante a autenticacao
 
     private static final String USUARIO = "root";
@@ -30,7 +33,6 @@ public class Conexao {
             }
         }
     }
-
 
 }
 

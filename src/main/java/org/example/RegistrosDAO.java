@@ -7,7 +7,7 @@ import java.util.List;
 public class RegistrosDAO {
         public Registros salvarRegis(Registros registros) throws SQLException {
         String sql = """
-                INSERT INTO registro( id_registro, time_stamp, data_hora,temperatura, umidade, pressao, altitude, luminosidade, velocidade_vento, direcao_vento, intensidade_wifi)
+                INSERT INTO registro( id_registro, time_stamp,temperatura, umidade, pressao, altitude, luminosidade, velocidade_vento, direcao_vento, intensidade_wifi)
                 VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """;
         try (Connection conexao = Conexao.connection();
@@ -16,11 +16,12 @@ public class RegistrosDAO {
 
             comando.setLong(1, registros.getId_registro());
             comando.setString(2, registros.getTime_stamp());
-            comando.setFloat(4, registros.getTemperatura());
-            comando.setFloat(5, registros.getUmidade());
-            comando.setFloat(6, registros.getPressao());
-            comando.setFloat(7, registros.getAltitude());
-            comando.setFloat(8, registros.getLuminosidade());
+            comando.setFloat(3, registros.getTemperatura());
+            comando.setFloat(4, registros.getUmidade());
+            comando.setFloat(5, registros.getPressao());
+            comando.setFloat(6, registros.getAltitude());
+            comando.setFloat(7, registros.getLuminosidade());
+            comando.setFloat(8,registros.getVelocidade_vento());
             comando.setInt(9 ,registros.getDirecao_vento());
             comando.setFloat(10, registros.getIntensidade_wifi() );
             comando.executeUpdate();
@@ -38,7 +39,7 @@ public class RegistrosDAO {
 
     public List<Registros> listarRegis_Disponiveies() throws SQLException {
         String sql = """
-                SELECT  id_registro, time_stamp, data_hora,temperatura, umidade, pressao, altitude, luminosidade, velocidade_vento, direcao_vento, intensidade_wifi
+                SELECT  id_registro, time_stamp,temperatura, umidade, pressao, altitude, luminosidade, velocidade_vento, direcao_vento, intensidade_wifi
                 FROM registro
                 ORDER BY id_dispositivos
                 """;
@@ -49,7 +50,7 @@ public class RegistrosDAO {
 
             while (resultado.next()){
                 Registros registro = new Registros(
-                        resultado.getLong("id_dispositivo"),
+                        resultado.getLong("id_registro"),
                         resultado.getString("time_stamp"),
                         resultado.getFloat("temperatura"),
                         resultado.getFloat("umidade"),
