@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegistrosDAO {
-    public Registros salvarRegis(Registros registros) throws SQLException {
+        public Registros salvarRegis(Registros registros) throws SQLException {
         String sql = """
                 INSERT INTO registro( id_registro, time_stamp, data_hora,temperatura, umidade, pressao, altitude, luminosidade, velocidade_vento, direcao_vento, intensidade_wifi)
                 VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -16,7 +16,6 @@ public class RegistrosDAO {
 
             comando.setLong(1, registros.getId_registro());
             comando.setString(2, registros.getTime_stamp());
-            comando.setString(3, registros.getData_hora());
             comando.setFloat(4, registros.getTemperatura());
             comando.setFloat(5, registros.getUmidade());
             comando.setFloat(6, registros.getPressao());
@@ -52,7 +51,6 @@ public class RegistrosDAO {
                 Registros registro = new Registros(
                         resultado.getLong("id_dispositivo"),
                         resultado.getString("time_stamp"),
-                        resultado.getString("data_hora"),
                         resultado.getFloat("temperatura"),
                         resultado.getFloat("umidade"),
                         resultado.getFloat("pressao"),

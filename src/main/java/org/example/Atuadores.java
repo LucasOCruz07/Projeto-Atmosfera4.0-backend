@@ -1,17 +1,20 @@
 package org.example;
 
+
 public class Atuadores {
     private int id_atuador;
     private String nome_atuador; // la no banco esta co mo varchar, deixei como String porem pode ser mudado
-    private  Boolean status_atual;
+    private Boolean status_atual;
+    private String ultimo_comando;// fazer possivel troca, pois no banco o "ultimo_comando" esta como datetime
+    //ultimo_comando (20/10/26 | 10:20)
+    private String resultado_IOT;
 
-    private String ultimo_comando; // fazer possivel troca, pois no banco o "ultimo_comando" esta como datetime
-
-    public Atuadores(int id_atuador, String nome_atuador, Boolean status_atual, String ultimo_comando) {
+    public Atuadores(int id_atuador, String nome_atuador, Boolean status_atual, String ultimo_comando, String resultado_IOT) {
         this.id_atuador = id_atuador;
         this.nome_atuador = nome_atuador;
         this.status_atual = status_atual;
         this.ultimo_comando = ultimo_comando;
+        this.resultado_IOT = resultado_IOT;
     }
 
     public int getId_atuador() {
@@ -45,4 +48,8 @@ public class Atuadores {
     public void setUltimo_comando(String ultimo_comando) {
         this.ultimo_comando = ultimo_comando;
     }
+
+    public void setResultado_IOT(String resultado_IOT) {this.resultado_IOT = resultado_IOT; }
+
+    public String getResultado_IOT() { return resultado_IOT; }
 }

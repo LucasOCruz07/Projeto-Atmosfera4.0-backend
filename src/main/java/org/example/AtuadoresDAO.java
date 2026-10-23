@@ -6,7 +6,7 @@ import java.util.List;
 
 public class AtuadoresDAO {
 
-    public Atuadores salvar(Atuadores atuadores) throws SQLException {
+    public Atuadores salvarAtua(Atuadores atuadores) throws SQLException {
         String sql = """
                 INSERT INTO Atuadores ( id_atuadores, nome_atuador, status_atual, ultimo_comando)
                 VALUE (?, ?, ?, ?)
@@ -19,22 +19,21 @@ public class AtuadoresDAO {
             comando.setString(2, atuadores.getNome_atuador());
             comando.setBoolean(3, atuadores.getStatus_atual());
             comando.setString(4, atuadores.getUltimo_comando());
-            comando.executeUpdate();
+            comando.
+                    executeUpdate();
             try (ResultSet chaves = comando.getGeneratedKeys()) {
                 if (chaves.next()) {
                     atuadores.setId_atuador(chaves.getInt(1));
                 }
 
             }
-
         }
         return atuadores;
     }
 
-
-    public List<Atuadores> listarDisponiveies() throws SQLException {
+    public List<Atuadores> listarAtuaDisponiveies() throws SQLException {
         String sql = """
-                SELECT id_atuador, nome_atuador, status_atual, ultimo_comando
+                SELECT id_atuador, nome_atuador, status_atual, ultimo_registro
                 FROM Atuadores
                 ORDER BY id_atuador
                 """;
@@ -48,7 +47,8 @@ public class AtuadoresDAO {
                         resultado.getInt("id_atuador"),
                         resultado.getString("nome_atuador"),
                         resultado.getBoolean("status_atual"),
-                        resultado.getString("ultimo_comando")
+                        resultado.getString("ultimo_comando"),
+                        resultado.getString("resultado_iot")
                 );
                 atuadores.add(atuador);
             }

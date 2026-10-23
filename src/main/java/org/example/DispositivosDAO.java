@@ -25,15 +25,13 @@ public class DispositivosDAO {
                 if (chaves.next()) {
                     dispositivos.setId_dispositivo(chaves.getInt(1));
                 }
-
             }
-
         }
         return dispositivos;
     }
 
 
-    public List<Dispositivo> listarDisp_Disponiveies() throws SQLException {
+    public List<Dispositivo> listarDispDisponiveies() throws SQLException {
         String sql = """
                 SELECT  id_dispositivo, nome_dispositivo, localizacao, tipo_dispositivo, gatewai_pai_fk
                 FROM Dispositivos

@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexao {
-    private static final String URL = "jdbc://localhost:3306/atmosfera_4.0"
+    private static final String URL = "jdbc:mysql://localhost:3306/atmosfera_4"
     + "?useSSL = false "
             + "&allowPublicKeyRetriveal = true"
             + "&serverTimezone = America/Sao_Paulo";

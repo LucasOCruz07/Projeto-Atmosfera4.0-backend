@@ -4,7 +4,7 @@ public class Registros {
     private long id_registro;
     private String time_stamp; // estou em discussão sobre o tipo de dado "timestamp" do banco de dados
     // por enquatno deixei como String, com o "_" pq o JDBC confunde com o tipo de dado do MySQL
-    private String data_hora ; // por enqto esta como estring tbm porem no Banco seria um timestamp
+
     private float temperatura;
     private float umidade;
     private float pressao;
@@ -14,11 +14,10 @@ public class Registros {
     private int direcao_vento;
     private float intensidade_wifi;
 
-    public Registros(long id_registro, String time_stamp, String data_hora, float temperatura, float umidade, float pressao, float altitude, float luminosidade, float velocidade_vento, int direcao_vento, float intensidade_wifi) {
+    public Registros(long id_registro, String time_stamp, float temperatura, float umidade, float pressao, float altitude, float luminosidade, float velocidade_vento, int direcao_vento, float intensidade_wifi) {
 
         this.id_registro = id_registro;
         this.time_stamp = time_stamp;
-        this.data_hora = data_hora;
         this.temperatura = temperatura;
         this.umidade = umidade;
         this.pressao = pressao;
@@ -46,13 +45,6 @@ public class Registros {
         this.time_stamp = time_stamp;
     }
 
-    public String getData_hora() {
-        return data_hora;
-    }
-
-    public void setData_hora(String data_hora) {
-        this.data_hora = data_hora;
-    }
 
     public float getTemperatura() {
         return temperatura;
