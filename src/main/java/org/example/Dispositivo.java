@@ -15,6 +15,7 @@ public class Dispositivo {
         this.gatewai_pai_fk = gatewai_pai_fk;
     }
 
+
     public int getGatewai_pai_fk() {
         return gatewai_pai_fk;
     }
