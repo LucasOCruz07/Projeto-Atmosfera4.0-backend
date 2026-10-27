@@ -1,11 +1,13 @@
 package org.example;
 
+import java.time.LocalDateTime;
+
 public class Registros {
     private long id_registro;
     private int id_dispositivos_fk;
     private String time_stamp; // estou em discussão sobre o tipo de dado "timestamp" do banco de dados
     // por enquatno deixei como String, com o "_" pq o JDBC confunde com o tipo de dado do MySQL
-
+    private LocalDateTime data_hora;
     private float temperatura;
     private float umidade;
     private float pressao;
@@ -15,15 +17,16 @@ public class Registros {
     private int direcao_vento;
     private float intensidade_wifi;
 
-<<<<<<< HEAD
-    public Registros(long id_registro,int id_dispositivos_fk, String time_stamp, String data_hora, float temperatura, float umidade, float pressao, float altitude, float luminosidade, float velocidade_vento, int direcao_vento, float intensidade_wifi) {
-=======
-    public Registros(long id_registro, String time_stamp, float temperatura, float umidade, float pressao, float altitude, float luminosidade, float velocidade_vento, int direcao_vento, float intensidade_wifi) {
->>>>>>> e346f313be8cc96284c57ffdb47e9e0a8f6b24e5
+
+
+
+    public Registros(long id_registro, int id_dispositivos_fk, String time_stamp, LocalDateTime data_hora, float temperatura, float umidade, float pressao, float altitude, float luminosidade, float velocidade_vento, int direcao_vento, float intensidade_wifi) {
+
 
         this.id_registro = id_registro;
         this.id_dispositivos_fk = id_dispositivos_fk;
         this.time_stamp = time_stamp;
+        this.data_hora = data_hora;
         this.temperatura = temperatura;
         this.umidade = umidade;
         this.pressao = pressao;
@@ -122,5 +125,16 @@ public class Registros {
 
     public void setIntensidade_wifi(float intensidade_wifi) {
         this.intensidade_wifi = intensidade_wifi;
+    }
+    public void setTime_stamp(String time_stamp) {
+        this.time_stamp = time_stamp;
+    }
+
+    public LocalDateTime getData_hora() {
+        return data_hora;
+    }
+
+    public void setData_hora(LocalDateTime data_hora) {
+        this.data_hora = data_hora;
     }
 }

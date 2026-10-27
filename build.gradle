@@ -15,16 +15,16 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:6.0.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-<<<<<<< HEAD
+
     implementation 'com.mysql:mysql-connector-j:8.0.33'//pode ser uma mais recente
-=======
+
 
     implementation 'com.mysql:mysql-connector-j:8.0.33'
 }
 
 application {
     mainClass = 'org.example.TesteDAO'
->>>>>>> e346f313be8cc96284c57ffdb47e9e0a8f6b24e5
+
 }
 
 test {

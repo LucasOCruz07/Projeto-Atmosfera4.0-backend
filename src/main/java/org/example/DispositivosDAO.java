@@ -8,7 +8,7 @@ public class DispositivosDAO {
 
     public Dispositivo salvarDisp(Dispositivo dispositivos) throws SQLException {
         String sql = """
-                INSERT INTO Dispositivos( id_dispositivo, nome_dispositivo, localizacao, tipo_dispositivo, gatewai_pai_fk )
+                INSERT INTO Dispositivos( id_dispositivos, nome_dispositivo, localizacao, tipo_dispositivo, gatewai_pai_fk )
                 VALUE (?, ?, ?, ?, ?)
                 """;
         try (Connection conexao = Conexao.connection();

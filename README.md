@@ -53,7 +53,7 @@ gatewai_pai_fk INT
 CREATE TABLE registro(
 id_registro BIGINT NOT NULL auto_increment PRIMARY KEY,
 id_dispositivos_fk INT NOT NULL,
-timestamp timestamp NOT NULL,
+time_stamp timestamp NOT NULL,
 data_hora DATETIME default NOW(),
 temperatura FLOAT,
 umidade FLOAT,
@@ -77,7 +77,25 @@ FOREIGN KEY (id_dispositivo_fk) REFERENCES dispositivos(id_dispositivos)
 );
 
 USE atmosfera;
-ALTER TABLE registro
-RENAME COLUMN  timestamp TO time_stamp;
 
+-----------------------------------
+INSERT INTO registro (temperatura, umidade, pressao, altitude, luminosidade, velocidade_vento, intensidade_wifi) VALUES
+( 24.5, 65.2, 1013.25, 750.0, 450.0, 12, -65),
+( 28.1, 55.0, 1012.80, 752.3, 890.0, 22, -70),
+( 24.8, 64.9, 1013.10, 750.0, 420.0, 10, -64);
+select*from registro;
+
+select*from Atuadores;
+
+INSERT INTO Atuadores ( nome_atuador) VALUES
+( 'Irrigador Automático Setor A'),
+( 'Exaustor de Ar Traseiro'),
+( 'Válvula de Pressão de Segurança');
+
+INSERT INTO Dispositivos ( nome_dispositivo, localizacao, tipo_dispositivo, gatway_pai_fk) VALUES
+( 'Sensor Estação Norte', 'Estufa 01', 'Estação Meteorológica', 100),
+( 'Sensor Estação Sul', 'Campo Aberto', 'Estação Meteorológica', 100),
+( 'Controlador Central', 'Laboratório', 'Painel de Controle', 101);
+
+select*from   registro;
 */

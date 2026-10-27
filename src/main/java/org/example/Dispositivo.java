@@ -7,7 +7,7 @@ public class Dispositivo {
     private String tipo_dispositivo;
     private int gatewai_pai_fk;
 
-    public Dispositivo(int id_dispositivo, String nome_dispositivo, String localizacao, String tipo_dispositivo, int gatewaiPaiFk) {
+    public Dispositivo(int id_dispositivo, String nome_dispositivo, String localizacao, String tipo_dispositivo, int gatewai_pai_fk) {
         this.id_dispositivo = id_dispositivo;
         this.nome_dispositivo = nome_dispositivo;
         this.localizacao = localizacao;
