@@ -69,11 +69,11 @@ FOREIGN KEY (id_dispositivos_fk) REFERENCES dispositivos(id_dispositivos)
 
 CREATE TABLE atuadores(
 id_atuadores INT PRIMARY KEY auto_increment NOT NULL,
-id_dispositivo_fk INT NOT NULL,
+id_dispositivos_fk INT NOT NULL,
 nome_atuador VARCHAR(30) NOT NULL,
 status_atual BOOl NOT NULL,
 ultimo_comando DATETIME default NOW(),
-FOREIGN KEY (id_dispositivo_fk) REFERENCES dispositivos(id_dispositivos)
+FOREIGN KEY (id_dispositivos_fk) REFERENCES dispositivos(id_dispositivos)
 );
 
 USE atmosfera;
@@ -92,7 +92,7 @@ INSERT INTO Atuadores ( nome_atuador) VALUES
 ( 'Exaustor de Ar Traseiro'),
 ( 'Válvula de Pressão de Segurança');
 
-INSERT INTO Dispositivos ( nome_dispositivo, localizacao, tipo_dispositivo, gatway_pai_fk) VALUES
+INSERT INTO dispositivos ( nome_dispositivo, localizacao, tipo_dispositivo, gatewai_pai_fk) VALUES
 ( 'Sensor Estação Norte', 'Estufa 01', 'Estação Meteorológica', 100),
 ( 'Sensor Estação Sul', 'Campo Aberto', 'Estação Meteorológica', 100),
 ( 'Controlador Central', 'Laboratório', 'Painel de Controle', 101);

@@ -8,14 +8,14 @@ public class DispositivosDAO {
 
     public Dispositivo salvarDisp(Dispositivo dispositivos) throws SQLException {
         String sql = """
-                INSERT INTO Dispositivos( id_dispositivos, nome_dispositivo, localizacao, tipo_dispositivo, gatewai_pai_fk )
+                INSERT INTO dispositivos( id_dispositivos, nome_dispositivo, localizacao, tipo_dispositivo, gatewai_pai_fk )
                 VALUE (?, ?, ?, ?, ?)
                 """;
         try (Connection conexao = Conexao.connection();
              PreparedStatement comando = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             //Statement:  envia os comandos do SQL pronto pro banco
 
-            comando.setInt(1, dispositivos.getId_dispositivo());
+            comando.setInt(1, dispositivos.getId_dispositivos());
             comando.setString(2, dispositivos.getNome_dispositivo());
             comando.setString(3, dispositivos.getLocalizacao());
             comando.setString(4, dispositivos.getTipo_dispositivo());
@@ -23,7 +23,7 @@ public class DispositivosDAO {
             comando.executeUpdate();
             try (ResultSet chaves = comando.getGeneratedKeys()) {
                 if (chaves.next()) {
-                    dispositivos.setId_dispositivo(chaves.getInt(1));
+                    dispositivos.setId_dispositivos(chaves.getInt(1));
                 }
             }
         }
@@ -33,8 +33,7 @@ public class DispositivosDAO {
 
     public List<Dispositivo> listarDispDisponiveies() throws SQLException {
         String sql = """
-                SELECT  id_dispositivo, nome_dispositivo, localizacao, tipo_dispositivo, gatewai_pai_fk
-                FROM Dispositivos
+                SELECT  id_dispositivos, nome_dispositivo, localizacao, tipo_dispositivo, gatewai_pai_fk  FROM dispositivos
                 ORDER BY id_dispositivos
                 """;
         List<Dispositivo> dispositvos = new ArrayList<>();
@@ -44,12 +43,11 @@ public class DispositivosDAO {
 
             while (resultado.next()){
                 Dispositivo dispositivo = new Dispositivo(
-                        resultado.getInt("id_dispositivo"),
+                        resultado.getInt("id_dispositivos"),
                         resultado.getString("nome_dispositivo"),
                         resultado.getString("localizacao"),
                         resultado.getString("tipo_dispositivo"),
                         resultado.getInt("gatewai_pai_fk")
-
                 );
                 dispositvos.add(dispositivo);
             }

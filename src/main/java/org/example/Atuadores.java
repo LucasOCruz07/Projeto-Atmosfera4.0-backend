@@ -1,11 +1,10 @@
 package org.example;
 
 
-import java.sql.Time;
 import java.time.LocalDateTime;
 
 public class Atuadores {
-    private int id_atuador;
+    private int id_atuadores;
     private int id_dispositivos_fk;
     private String nome_atuador; // la no banco esta co mo varchar, deixei como String porem pode ser mudado
     private Boolean status_atual;
@@ -16,9 +15,9 @@ public class Atuadores {
 
 
 
-    public Atuadores(int id_atuador, int id_dispositivos_fk, String nome_atuador, Boolean status_atual, LocalDateTime ultimo_comando){
+    public Atuadores(int id_atuadores, int id_dispositivos_fk, String nome_atuador, Boolean status_atual, LocalDateTime ultimo_comando){
 
-            this.id_atuador = id_atuador;
+            this.id_atuadores = id_atuadores;
             this.id_dispositivos_fk = id_dispositivos_fk;
             this.nome_atuador = nome_atuador;
             this.status_atual = status_atual;
@@ -26,12 +25,12 @@ public class Atuadores {
 
         }
 
-        public int getId_atuador () {
-            return id_atuador;
+        public int getId_atuadores() {
+            return id_atuadores;
         }
 
-        public void setId_atuador ( int id_atuador){
-            this.id_atuador = id_atuador;
+        public void setId_atuadores(int id_atuadores){
+            this.id_atuadores = id_atuadores;
         }
 
         public int getId_dispositivos_fk () {

@@ -1,14 +1,14 @@
 package org.example;
 
 public class Dispositivo {
-    private int id_dispositivo;
+    private int id_dispositivos;
     private String nome_dispositivo;
     private String localizacao;
     private String tipo_dispositivo;
     private int gatewai_pai_fk;
 
-    public Dispositivo(int id_dispositivo, String nome_dispositivo, String localizacao, String tipo_dispositivo, int gatewai_pai_fk) {
-        this.id_dispositivo = id_dispositivo;
+    public Dispositivo(int id_dispositivos, String nome_dispositivo, String localizacao, String tipo_dispositivo, int gatewai_pai_fk) {
+        this.id_dispositivos = id_dispositivos;
         this.nome_dispositivo = nome_dispositivo;
         this.localizacao = localizacao;
         this.tipo_dispositivo = tipo_dispositivo;
@@ -24,12 +24,12 @@ public class Dispositivo {
         this.gatewai_pai_fk = gatewai_pai_fk;
     }
 
-    public int getId_dispositivo() {
-        return id_dispositivo;
+    public int getId_dispositivos() {
+        return id_dispositivos;
     }
 
-    public void setId_dispositivo(int id_dispositivo) {
-        this.id_dispositivo = id_dispositivo;
+    public void setId_dispositivos(int id_dispositivos) {
+        this.id_dispositivos = id_dispositivos;
     }
 
     public String getNome_dispositivo() {

@@ -8,7 +8,7 @@ import java.util.List;
 public class RegistrosDAO {
         public Registros salvarRegis(Registros registros) throws SQLException {
         String sql = """
-                INSERT INTO registro(id_registro, id_dispositivos_fk, time_stamp,temperatura, umidade, pressao, altitude, luminosidade, velocidade_vento, direcao_vento, intensidade_wifi)
+                INSERT INTO registro(id_registro, id_dispositivos_fk, time_stamp, data_hora,temperatura, umidade, pressao, altitude, luminosidade, velocidade_vento, direcao_vento, intensidade_wifi)
                 VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """;
         try (Connection conexao = Conexao.connection();
@@ -45,7 +45,7 @@ public class RegistrosDAO {
         String sql = """
                 SELECT  id_registro, id_dispositivos_fk, time_stamp, data_hora,temperatura, umidade, pressao, altitude, luminosidade, velocidade_vento, direcao_vento, intensidade_wifi
                 FROM registro
-                ORDER BY id_dispositivos
+                ORDER BY id_registro
                 """;
         List<Registros> registros = new ArrayList<>();
         try (Connection conexao = Conexao.connection();
