@@ -1,7 +1,5 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-
-    
     // Elementos dos cards
     const temperaturaCard = document.querySelector(".HT");
     const umidadeCard = document.querySelector(".HU");
@@ -299,3 +297,49 @@ document.addEventListener("DOMContentLoaded", () => {
     // Atualização simulada a cada 5 segundos
     setInterval(simularSensores, 5000);
 });
+
+
+/* ========================================
+   MENU LATERAL - ATMOSFERA 4.0
+======================================== */
+
+const botaoMenu = document.getElementById("botaoMenu");
+const menuLateral = document.getElementById("menuLateral");
+const menuFundo = document.getElementById("menuFundo");
+const fecharMenu = document.getElementById("fecharMenu");
+
+function abrirMenu() {
+    menuLateral.classList.add("aberto");
+    menuFundo.classList.add("aberto");
+
+    botaoMenu.setAttribute("aria-expanded", "true");
+    menuLateral.setAttribute("aria-hidden", "false");
+}
+
+function fecharMenuLateral() {
+    menuLateral.classList.remove("aberto");
+    menuFundo.classList.remove("aberto");
+
+    botaoMenu.setAttribute("aria-expanded", "false");
+    menuLateral.setAttribute("aria-hidden", "true");
+}
+
+// Abrir ao clicar no botão do cabeçalho
+botaoMenu.addEventListener("click", abrirMenu);
+
+// Fechar pelo botão X
+fecharMenu.addEventListener("click", fecharMenuLateral);
+
+// Fechar ao clicar no fundo escurecido
+menuFundo.addEventListener("click", fecharMenuLateral);
+
+// Fechar ao retirar o mouse do menu
+menuLateral.addEventListener("mouseleave", fecharMenuLateral);
+
+// Fechar com a tecla Escape
+document.addEventListener("keydown", function(evento) {
+    if (evento.key === "Escape") {
+        fecharMenuLateral();
+    }
+});
+

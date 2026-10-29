@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -10,12 +11,18 @@
 
 <body>
 
-    <!-- Cabeçalho -->
+    <!-- CABEÇALHO -->
     <header class="topo">
         <div class="inf-esquerda">
-            <div class="logo-topo">
-                <span>◉</span>
-            </div>
+
+            <button class="logo-topo"
+                    id="botaoMenu"
+                    type="button"
+                    aria-label="Abrir menu"
+                    aria-controls="menuLateral"
+                    aria-expanded="false">
+                ☰
+            </button>
 
             <div class="texto-topo">
                 <h1>Supervisão Ambiental</h1>
@@ -25,7 +32,6 @@
 
         <div class="inf-direita">
             <span class="status-dados">DADOS SIMULADOS</span>
-
             <p class="ultima-atualizacao">
                 Atualizado:
                 <strong>15/10, 09:24:39</strong>
@@ -33,7 +39,61 @@
         </div>
     </header>
 
-    <!-- Indicadores gerais -->
+    <!-- MENU LATERAL -->
+    <div class="menu-fundo" id="menuFundo"></div>
+
+    <aside class="menu-lateral"
+           id="menuLateral"
+           aria-label="Menu de navegação"
+           aria-hidden="true">
+
+        <div class="menu-cabecalho">
+
+            <div class="menu-identidade">
+                <span class="menu-logo">◉</span>
+
+                <div>
+                    <h2>Atmosfera 4.0</h2>
+                    <p>Supervisão Ambiental</p>
+                </div>
+            </div>
+
+            <button class="menu-fechar"
+                    id="fecharMenu"
+                    type="button"
+                    aria-label="Fechar menu">
+                &times;
+            </button>
+
+        </div>
+
+        <div class="menu-separador"></div>
+
+        <p class="menu-titulo">NAVEGAÇÃO</p>
+
+        <nav class="menu-links">
+
+            <a href="index.html" class="menu-link ativo">
+                <span class="menu-icone">⌂</span>
+                <span>Painel principal</span>
+            </a>
+
+            <a href="historico.html" class="menu-link">
+                <span class="menu-icone">◷</span>
+                <span>Histórico de dados</span>
+            </a>
+
+           
+        </nav>
+
+        <div class="menu-rodape">
+            <span class="menu-status"></span>
+            Sistema de monitoramento ativo
+        </div>
+
+    </aside>
+
+    <!-- INDICADORES GERAIS -->
     <div class="cards-container">
 
         <div class="card Temp">
@@ -66,11 +126,12 @@
 
     </div>
 
-    <!-- Gráficos ambientais -->
+    <!-- GRÁFICOS AMBIENTAIS -->
     <div class="graficos-container">
 
-        <!-- Temperatura e umidade -->
+        <!-- TEMPERATURA E UMIDADE -->
         <div class="card-Temp">
+
             <div class="Graf_Temp">
 
                 <div class="graf-header">
@@ -107,7 +168,7 @@
             </div>
         </div>
 
-        <!-- Concentração de CO₂ -->
+        <!-- CONCENTRAÇÃO DE CO2 -->
         <div class="card-co2">
 
             <div class="co2-header">
@@ -186,7 +247,7 @@
 
     </div>
 
-    <!-- Planta e informações do dispositivo -->
+    <!-- PLANTA E INFORMAÇÕES DOS DISPOSITIVOS -->
     <div class="retangulos-baixos">
 
         <div class="planta-campus">
@@ -220,59 +281,30 @@
                                 <th>Inte Wifi</th>
                             </tr>
                         </thead>
+
                         <tbody>
                             <tr>
-                                <td>1</td>
-                                <td>22-10-26</td>
-                                <td>25º</td>
-                                <td>68.6</td>
-                                <td>1013.2</td>
-                                <td>850.0º</td>
-                                <td>720.5</td>
-                                <td>12.3</td>
-                                <td>90</td>
-                                <td>-55.0</td>
+                                <td>1</td><td>22-10-26</td><td>25º</td>
+                                <td>68.6</td><td>1013.2</td><td>850.0º</td>
+                                <td>720.5</td><td>12.3</td><td>90</td><td>-55.0</td>
                             </tr>
                             <tr>
-                                <td>2</td>
-                                <td>22-10-26</td>
-                                <td>25º</td>
-                                <td>68.6</td>
-                                <td>1013.2</td>
-                                <td>850.0º</td>
-                                <td>720.5</td>
-                                <td>12.3</td>
-                                <td>90</td>
-                                <td>-55.0</td>
+                                <td>2</td><td>22-10-26</td><td>25º</td>
+                                <td>68.6</td><td>1013.2</td><td>850.0º</td>
+                                <td>720.5</td><td>12.3</td><td>90</td><td>-55.0</td>
                             </tr>
                             <tr>
-                                <td>3</td>
-                                <td>22-10-26</td>
-                                <td>25º</td>
-                                <td>68.6</td>
-                                <td>1013.2</td>
-                                <td>850.0º</td>
-                                <td>720.5</td>
-                                <td>12.3</td>
-                                <td>90</td>
-                                <td>-55.0</td>
+                                <td>3</td><td>22-10-26</td><td>25º</td>
+                                <td>68.6</td><td>1013.2</td><td>850.0º</td>
+                                <td>720.5</td><td>12.3</td><td>90</td><td>-55.0</td>
                             </tr>
-                             <tr>
-                                <td>4</td>
-                                <td>22-10-26</td>
-                                <td>25º</td>
-                                <td>68.6</td>
-                                <td>1013.2</td>
-                                <td>850.0º</td>
-                                <td>720.5</td>
-                                <td>12.3</td>
-                                <td>90</td>
-                                <td>-55.0</td>
+                            <tr>
+                                <td>4</td><td>22-10-26</td><td>25º</td>
+                                <td>68.6</td><td>1013.2</td><td>850.0º</td>
+                                <td>720.5</td><td>12.3</td><td>90</td><td>-55.0</td>
                             </tr>
                         </tbody>
                     </table>
-
-
                 </div>
 
                 <div class="detalhes">
@@ -304,7 +336,7 @@
             </div>
         </div>
 
-        <!-- Controle de atuadores -->
+        <!-- CONTROLE DE ATUADORES -->
         <div class="Controle-Atuadores">
 
             <div class="atuadores-header">
@@ -319,7 +351,6 @@
                         <h3>Climatização <span>HVAC-GIN</span></h3>
                         <p>Ginásio</p>
                     </div>
-
                     <button type="button" class="botao-atuador ligado">
                         <span class="indicador"></span>
                         LIGADO
@@ -331,7 +362,6 @@
                         <h3>Ventilação forçada <span>VNT-A04</span></h3>
                         <p>Bloco A · Sala 4</p>
                     </div>
-
                     <button type="button" class="botao-atuador desligado">
                         <span class="indicador"></span>
                         DESLIGADO
@@ -343,7 +373,6 @@
                         <h3>Iluminação <span>ILU-BIB</span></h3>
                         <p>Biblioteca</p>
                     </div>
-
                     <button type="button" class="botao-atuador ligado">
                         <span class="indicador"></span>
                         LIGADO
@@ -355,7 +384,6 @@
                         <h3>Exaustores <span>EST-REF</span></h3>
                         <p>Refeitório</p>
                     </div>
-
                     <button type="button" class="botao-atuador desligado">
                         <span class="indicador"></span>
                         DESLIGADO
@@ -367,7 +395,6 @@
                         <h3>Extração de ar <span>VNT-REF</span></h3>
                         <p>Refeitório</p>
                     </div>
-
                     <button type="button" class="botao-atuador ligado">
                         <span class="indicador"></span>
                         LIGADO
@@ -385,8 +412,7 @@
 
     </div>
 
-
-    <!-- Rodapé do sistema -->
+    <!-- RODAPÉ DO SISTEMA -->
     <footer class="rodape">
 
         <div class="rodape-principal">
@@ -442,8 +468,8 @@
 
     </footer>
 
+    <!-- JAVASCRIPT -->
     <script src="JS/script.js"></script>
 
 </body>
-
 </html>

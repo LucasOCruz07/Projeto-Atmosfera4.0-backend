@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico | Atmosfera 4.0</title>
+    <link rel="stylesheet" href="CSS/historico.css">
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="barra_superior">
+        <div class="cabecalho_titulo">
+            <button class="botao_voltar" onclick="window.location.href='index.html'">
+                ←
+            </button>
+
+            <div>
+                <h1>Histórico</h1>
+                <p class="subtitulo">
+                    Senai "Anchieta" · Campus principal · Supervisão Ambiental
+                </p>
+            </div>
+        </div>
+
+        <div class="metadados_superiores">
+            <span class="dados_simulados">DADOS SIMULADOS</span>
+            <span>Atualizado: <strong>28/10, 11:10:54</strong></span>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="pagina">
+        <section class="painel">
+
+            <!-- FILTROS -->
+            <div class="filtros">
+                <label class="campo_busca">
+                    <span class="icone_busca">⌕</span>
+                    <input
+                        id="campoBusca"
+                        type="search"
+                        placeholder="Buscar no histórico..."
+                    >
+                </label>
+
+                <label class="campo_filtro">
+                    Período
+                    <select>
+                        <option>22/10/2026 — 28/10/2026</option>
+                        <option>Últimas 24 horas</option>
+                        <option>Últimos 7 dias</option>
+                        <option>Últimos 30 dias</option>
+                    </select>
+                </label>
+
+                <label class="campo_filtro">
+                    Categoria
+                    <select id="filtroCategoria">
+                        <option value="">Todas as categorias</option>
+                        <option>Alerta</option>
+                        <option>Temperatura</option>
+                        <option>Dispositivo</option>
+                        <option>Atuador</option>
+                        <option>CO₂</option>
+                    </select>
+                </label>
+
+                <label class="campo_filtro">
+                    Status
+                    <select id="filtroStatus">
+                        <option value="">Todos os status</option>
+                        <option>Crítico</option>
+                        <option>Aviso</option>
+                        <option>Normal</option>
+                    </select>
+                </label>
+
+                <label class="campo_filtro">
+                    Dispositivo
+                    <select>
+                        <option>Todos os dispositivos</option>
+                        <option>Bloco A - Sala 4</option>
+                        <option>Biblioteca</option>
+                        <option>Ginásio</option>
+                        <option>Refeitório</option>
+                    </select>
+                </label>
+
+                <button class="botao_limpar" id="limparFiltros">
+                    ⚑ LIMPAR FILTROS
+                </button>
+            </div>
+
+            <!-- CARDS DE INDICADORES -->
+            <div class="grade_resumo">
+
+                <button class="cartao_resumo ativo" data-category="">
+                    <span class="icone_resumo ciano">☷</span>
+                    <span class="texto_resumo">
+                        <span>Todos os eventos</span>
+                        <strong>156</strong>
+                    </span>
+                </button>
+
+                <button class="cartao_resumo" data-category="Temperatura">
+                    <span class="icone_resumo laranja">♨</span>
+                    <span class="texto_resumo">
+                        <span>Temperatura / Umidade</span>
+                        <strong>42</strong>
+                    </span>
+                </button>
+
+                <button class="cartao_resumo" data-category="CO₂">
+                    <span class="icone_resumo ciano">☁</span>
+                    <span class="texto_resumo">
+                        <span>CO₂</span>
+                        <strong>28</strong>
+                    </span>
+                </button>
+
+                <button class="cartao_resumo" data-category="Dispositivo">
+                    <span class="icone_resumo azul">▣</span>
+                    <span class="texto_resumo">
+                        <span>Dispositivos</span>
+                        <strong>32</strong>
+                    </span>
+                </button>
+
+                <button class="cartao_resumo" data-category="Atuador">
+                    <span class="icone_resumo roxo">⚙</span>
+                    <span class="texto_resumo">
+                        <span>Atuadores</span>
+                        <strong>38</strong>
+                    </span>
+                </button>
+
+                <button class="cartao_resumo" data-category="Alerta">
+                    <span class="icone_resumo vermelho">⚠</span>
+                    <span class="texto_resumo">
+                        <span>Alertas</span>
+                        <strong>16</strong>
+                    </span>
+                </button>
+
+            </div>
+
+            <!-- TABELA DE HISTÓRICO -->
+            <section class="cartao_historico">
+                <h2>Histórico de eventos</h2>
+
+                <div class="area_tabela">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data / Hora</th>
+                                <th>Categoria</th>
+                                <th>Dispositivo / Local</th>
+                                <th>Descrição do evento</th>
+                                <th>Valor / Detalhes</th>
+                                <th>Status</th>
+                                <th>Usuário / Sistema</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="linhasEventos">
+
+                            <tr data-category="Alerta" data-status="Crítico">
+                                <td>28/10/2026<br>11:08:31</td>
+                                <td>
+                                    <span class="icone_tipo vermelho">⚠</span>
+                                    Alerta
+                                </td>
+                                <td>
+                                    CO2-A02
+                                    <small>Bloco A - Sala 4</small>
+                                </td>
+                                <td>
+                                    CO₂ acima do limite crítico
+                                    <small>Nível crítico ultrapassado: 1400 ppm</small>
+                                </td>
+                                <td>
+                                    <b class="texto_vermelho">1480 ppm</b>
+                                    <small>Limite: 1400 ppm</small>
+                                </td>
+                                <td>
+                                    <span class="status_evento critico">Crítico</span>
+                                </td>
+                                <td>Sistema</td>
+                            </tr>
+
+                            <tr data-category="Temperatura" data-status="Aviso">
+                                <td>28/10/2026<br>11:05:12</td>
+                                <td>
+                                    <span class="icone_tipo laranja">⚠</span>
+                                    Temperatura
+                                </td>
+                                <td>
+                                    Temp/Hum-A04
+                                    <small>Bloco A - Sala 4</small>
+                                </td>
+                                <td>
+                                    Temperatura acima do limite de aviso
+                                    <small>Valor medido acima de 25 °C</small>
+                                </td>
+                                <td>
+                                    <b class="texto_laranja">26.3 °C</b>
+                                    <small>Limite: 25 °C</small>
+                                </td>
+                                <td>
+                                    <span class="status_evento aviso">Aviso</span>
+                                </td>
+                                <td>Sistema</td>
+                            </tr>
+
+                            <tr data-category="Dispositivo" data-status="Normal">
+                                <td>28/10/2026<br>11:02:45</td>
+                                <td>
+                                    <span class="icone_tipo azul">▣</span>
+                                    Dispositivo
+                                </td>
+                                <td>
+                                    ENV-B01
+                                    <small>Biblioteca</small>
+                                </td>
+                                <td>
+                                    Dispositivo voltou online
+                                    <small>Conexão restabelecida com sucesso</small>
+                                </td>
+                                <td>
+                                    Sinal: -62 dBm
+                                    <small>Bateria: 78%</small>
+                                </td>
+                                <td>
+                                    <span class="status_evento normal">Normal</span>
+                                </td>
+                                <td>Sistema</td>
+                            </tr>
+
+                            <tr data-category="Atuador" data-status="Normal">
+                                <td>28/10/2026<br>10:59:31</td>
+                                <td>
+                                    <span class="icone_tipo roxo">⚙</span>
+                                    Atuador
+                                </td>
+                                <td>
+                                    Climatização MAC-GIN
+                                    <small>Ginásio</small>
+                                </td>
+                                <td>
+                                    Climatização ligada automaticamente
+                                    <small>Acionada por temperatura ambiente</small>
+                                </td>
+                                <td>
+                                    Modo: Cool
+                                    <small>Setpoint: 23 °C</small>
+                                </td>
+                                <td>
+                                    <span class="status_evento normal">Normal</span>
+                                </td>
+                                <td>Sistema</td>
+                            </tr>
+
+                            <tr data-category="Temperatura" data-status="Normal">
+                                <td>28/10/2026<br>10:56:18</td>
+                                <td>
+                                    <span class="icone_tipo laranja">⚠</span>
+                                    Temperatura
+                                </td>
+                                <td>
+                                    Temp/Hum-A02
+                                    <small>Bloco A - Sala 4</small>
+                                </td>
+                                <td>
+                                    Temperatura dentro do normal
+                                    <small>Leitura dentro da faixa recomendada</small>
+                                </td>
+                                <td>
+                                    23.7 °C
+                                    <small>Faixa: 20-25 °C</small>
+                                </td>
+                                <td>
+                                    <span class="status_evento normal">Normal</span>
+                                </td>
+                                <td>Sistema</td>
+                            </tr>
+
+                            <tr data-category="CO₂" data-status="Aviso">
+                                <td>28/10/2026<br>10:52:03</td>
+                                <td>
+                                    <span class="icone_tipo ciano">☁</span>
+                                    CO₂
+                                </td>
+                                <td>
+                                    CO2-REF
+                                    <small>Refeitório</small>
+                                </td>
+                                <td>
+                                    CO₂ em nível elevado
+                                    <small>Aproximando do limite crítico</small>
+                                </td>
+                                <td>
+                                    <b class="texto_laranja">1280 ppm</b>
+                                    <small>Limite: 1400 ppm</small>
+                                </td>
+                                <td>
+                                    <span class="status_evento aviso">Aviso</span>
+                                </td>
+                                <td>Sistema</td>
+                            </tr>
+
+                            <tr data-category="Dispositivo" data-status="Aviso">
+                                <td>28/10/2026<br>10:48:55</td>
+                                <td>
+                                    <span class="icone_tipo azul">▣</span>
+                                    Dispositivo
+                                </td>
+                                <td>
+                                    ENV-REF
+                                    <small>Refeitório</small>
+                                </td>
+                                <td>
+                                    Dispositivo entrou em modo offline
+                                    <small>Perda de comunicação detectada</small>
+                                </td>
+                                <td>
+                                    Último sinal:
+                                    <small>10:48:55</small>
+                                </td>
+                                <td>
+                                    <span class="status_evento aviso">Aviso</span>
+                                </td>
+                                <td>Sistema</td>
+                            </tr>
+
+                            <tr data-category="Atuador" data-status="Normal">
+                                <td>28/10/2026<br>10:45:22</td>
+                                <td>
+                                    <span class="icone_tipo roxo">⚙</span>
+                                    Atuador
+                                </td>
+                                <td>
+                                    Iluminação ILU-BIB
+                                    <small>Biblioteca</small>
+                                </td>
+                                <td>
+                                    Iluminação desligada manualmente
+                                    <small>Comando enviado via painel</small>
+                                </td>
+                                <td>
+                                    Grupo: Geral
+                                    <small>Potência: 0%</small>
+                                </td>
+                                <td>
+                                    <span class="status_evento normal">Normal</span>
+                                </td>
+                                <td>Operador</td>
+                            </tr>
+
+                            <tr data-category="Alerta" data-status="Crítico">
+                                <td>28/10/2026<br>10:41:07</td>
+                                <td>
+                                    <span class="icone_tipo vermelho">⚠</span>
+                                    Alerta
+                                </td>
+                                <td>
+                                    CO2-GIN
+                                    <small>Ginásio</small>
+                                </td>
+                                <td>
+                                    CO₂ acima do limite crítico
+                                    <small>Nível crítico ultrapassado: 1400 ppm</small>
+                                </td>
+                                <td>
+                                    <b class="texto_vermelho">1520 ppm</b>
+                                    <small>Limite: 1400 ppm</small>
+                                </td>
+                                <td>
+                                    <span class="status_evento critico">Crítico</span>
+                                </td>
+                                <td>Sistema</td>
+                            </tr>
+
+                            <tr data-category="Dispositivo" data-status="Normal">
+                                <td>28/10/2026<br>10:37:49</td>
+                                <td>
+                                    <span class="icone_tipo azul">▣</span>
+                                    Dispositivo
+                                </td>
+                                <td>
+                                    ENV-BIB
+                                    <small>Biblioteca</small>
+                                </td>
+                                <td>
+                                    Dispositivo atualizado
+                                    <small>Firmware atualizado com sucesso</small>
+                                </td>
+                                <td>
+                                    Versão: 1.2.4
+                                    <small>Status: OK</small>
+                                </td>
+                                <td>
+                                    <span class="status_evento normal">Normal</span>
+                                </td>
+                                <td>Sistema</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- PAGINAÇÃO -->
+                <div class="rodape_tabela">
+                    <span id="quantidadeResultados">
+                        Mostrando 1 a 10 de 156 eventos
+                    </span>
+
+                    <nav class="paginacao">
+                        <button aria-label="Página anterior">‹</button>
+                        <button class="pagina_atual">1</button>
+                        <button>2</button>
+                        <button>3</button>
+                        <span>...</span>
+                        <button>16</button>
+                        <button aria-label="Próxima página">›</button>
+                    </nav>
+
+                    <label class="tamanho_pagina">
+                        Linhas por página:
+                        <select>
+                            <option>10</option>
+                            <option>25</option>
+                            <option>50</option>
+                        </select>
+                    </label>
+                </div>
+            </section>
+
+            <!-- RODAPÉ -->
+            <footer class="barra_inferior">
+                <span class="em_execucao">
+                    <i></i>
+                    Painel em execução
+                </span>
+
+                <div>
+                    <span>Senai "Anchieta" · Campus principal</span>
+                    <b></b>
+                    <span>Dados simulados</span>
+                    <b></b>
+                    <span>© 2026 SENAI</span>
+                </div>
+            </footer>
+
+        </section>
+    </main>
+
+</body>
+</html>
