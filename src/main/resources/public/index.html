@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atmosfera 4.0</title>
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="topo">
+        <div class="inf-esquerda">
+            <div class="logo-topo">
+                <span>◉</span>
+            </div>
+
+            <div class="texto-topo">
+                <h1>Supervisão Ambiental</h1>
+                <h2>Senai "Anchieta" · Campus principal</h2>
+            </div>
+        </div>
+
+        <div class="inf-direita">
+            <span class="status-dados">DADOS SIMULADOS</span>
+
+            <p class="ultima-atualizacao">
+                Atualizado:
+                <strong>15/10, 09:24:39</strong>
+            </p>
+        </div>
+    </header>
+
+    <!-- Indicadores gerais -->
+    <div class="cards-container">
+
+        <div class="card Temp">
+            <p class="PT1">Temperatura interior</p>
+            <p class="PT2">● Normal</p>
+            <h2 class="HT">22.5° C</h2>
+            <p class="PT3">Limite de aviso 25° C</p>
+        </div>
+
+        <div class="card Umidade">
+            <p class="PU1">Umidade Média</p>
+            <p class="PU2">● Normal</p>
+            <h2 class="HU">49 %HR</h2>
+            <p class="PU3">Intervalo recomendado 40-60 %</p>
+        </div>
+
+        <div class="card Ar">
+            <p class="PA1">CO² máximo</p>
+            <p class="PA2 status-critico">● Crítico</p>
+            <h2 class="HA">1617 ppm</h2>
+            <p class="PA3">ENV-GIN · Ginásio</p>
+        </div>
+
+        <div class="card Dispositivos">
+            <p class="PD1">Dispositivos em linha</p>
+            <p class="PD2 status-aviso">● Aviso</p>
+            <h2 class="HD">7/8</h2>
+            <p class="PD3">3 com valores fora do intervalo</p>
+        </div>
+
+    </div>
+
+    <!-- Gráficos ambientais -->
+    <div class="graficos-container">
+
+        <!-- Temperatura e umidade -->
+        <div class="card-Temp">
+            <div class="Graf_Temp">
+
+                <div class="graf-header">
+                    <h3 class="info-graf">
+                        Temperatura e umidade — CO2-A02
+                        <span>[°C · %HR]</span>
+                    </h3>
+
+                    <div class="graf-periodo">
+                        <button type="button">1h</button>
+                        <button type="button" class="ativo">6h</button>
+                        <button type="button">24h</button>
+                    </div>
+                </div>
+
+                <div class="graf-legendas">
+                    <p class="PG">
+                        <span class="linha-temp"></span>
+                        Temperatura (eixo esq.)
+                    </p>
+
+                    <p class="PG2">
+                        <span class="linha-umid"></span>
+                        Umidade (eixo dir.)
+                    </p>
+
+                    <p class="PG3">Bloco A · Sala 4</p>
+                </div>
+
+                <div class="graf-conteudo">
+                    <!-- Área destinada ao gráfico -->
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Concentração de CO₂ -->
+        <div class="card-co2">
+
+            <div class="co2-header">
+                <h3>
+                    Concentração de CO₂ por dispositivo
+                    <span>[ppm]</span>
+                </h3>
+            </div>
+
+            <div class="co2-grafico">
+
+                <div class="barra-co2">
+                    <span class="co2-label">ENV-A01</span>
+                    <div class="co2-trilho">
+                        <div class="co2-valor normal" style="width: 50%;"></div>
+                    </div>
+                </div>
+
+                <div class="barra-co2">
+                    <span class="co2-label">CO2-A02</span>
+                    <div class="co2-trilho">
+                        <div class="co2-valor aviso" style="width: 75%;"></div>
+                    </div>
+                </div>
+
+                <div class="barra-co2">
+                    <span class="co2-label">ENV-B01</span>
+                    <div class="co2-trilho">
+                        <div class="co2-valor normal" style="width: 45%;"></div>
+                    </div>
+                </div>
+
+                <div class="barra-co2">
+                    <span class="co2-label">ENV-BIB</span>
+                    <div class="co2-trilho">
+                        <div class="co2-valor normal" style="width: 42%;"></div>
+                    </div>
+                </div>
+
+                <div class="barra-co2">
+                    <span class="co2-label">NOT-REF</span>
+                    <div class="co2-trilho">
+                        <div class="co2-valor aviso" style="width: 58%;"></div>
+                    </div>
+                </div>
+
+                <div class="barra-co2">
+                    <span class="co2-label">ENV-PAT</span>
+                    <div class="co2-trilho">
+                        <div class="co2-valor normal" style="width: 32%;"></div>
+                    </div>
+                </div>
+
+                <div class="barra-co2">
+                    <span class="co2-label">ENV-GIN</span>
+                    <div class="co2-trilho">
+                        <div class="co2-valor critico" style="width: 90%;"></div>
+                    </div>
+                </div>
+
+                <div class="co2-eixo">
+                    <span>0</span>
+                    <span>450</span>
+                    <span>900</span>
+                    <span>1350</span>
+                    <span>1800</span>
+                </div>
+
+            </div>
+
+            <div class="co2-rodape">
+                Aviso ≥ 1000 ppm · Crítico ≥ 1400 ppm
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Planta e informações do dispositivo -->
+    <div class="retangulos-baixos">
+
+        <div class="planta-campus">
+
+            <header class="tabela-inf">
+                <h1>Status dos Dispositivos — Piso 0</h1>
+
+                <div class="legenda">
+                    <span class="normal">● Normal</span>
+                    <span class="aviso">● Aviso</span>
+                    <span class="critico">● Crítico</span>
+                    <span class="sem-leitura">● Sem leitura</span>
+                </div>
+            </header>
+
+            <div class="conteudo">
+
+                <div class="mapa">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Time Stamp</th>
+                                <th>Temp</th>
+                                <th>Umidade</th>
+                                <th>Pressao</th>
+                                <th>Altitude</th>
+                                <th>Lumin</th>
+                                <th>Velc.Vento</th>
+                                <th>Dirç Vento</th>
+                                <th>Inte Wifi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>22-10-26</td>
+                                <td>25º</td>
+                                <td>68.6</td>
+                                <td>1013.2</td>
+                                <td>850.0º</td>
+                                <td>720.5</td>
+                                <td>12.3</td>
+                                <td>90</td>
+                                <td>-55.0</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>22-10-26</td>
+                                <td>25º</td>
+                                <td>68.6</td>
+                                <td>1013.2</td>
+                                <td>850.0º</td>
+                                <td>720.5</td>
+                                <td>12.3</td>
+                                <td>90</td>
+                                <td>-55.0</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>22-10-26</td>
+                                <td>25º</td>
+                                <td>68.6</td>
+                                <td>1013.2</td>
+                                <td>850.0º</td>
+                                <td>720.5</td>
+                                <td>12.3</td>
+                                <td>90</td>
+                                <td>-55.0</td>
+                            </tr>
+                             <tr>
+                                <td>4</td>
+                                <td>22-10-26</td>
+                                <td>25º</td>
+                                <td>68.6</td>
+                                <td>1013.2</td>
+                                <td>850.0º</td>
+                                <td>720.5</td>
+                                <td>12.3</td>
+                                <td>90</td>
+                                <td>-55.0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+                <div class="detalhes">
+                    <h2>CO2-A02</h2>
+                    <p class="localizacao">Bloco A — Sala 4</p>
+                    <p class="estado aviso">● AVISO</p>
+
+                    <div class="leitura">
+                        <span>Temperatura</span>
+                        <strong class="temperatura">24.1 °C</strong>
+                    </div>
+
+                    <div class="leitura">
+                        <span>Umidade</span>
+                        <strong class="humidade">46 %RH</strong>
+                    </div>
+
+                    <div class="leitura">
+                        <span>CO₂</span>
+                        <strong class="co2">1316 ppm</strong>
+                    </div>
+
+                    <div class="leitura">
+                        <span>Ruído</span>
+                        <strong class="ruido">61 dB(A)</strong>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Controle de atuadores -->
+        <div class="Controle-Atuadores">
+
+            <div class="atuadores-header">
+                <h2>Controle de atuadores</h2>
+                <span class="modo-manual">Modo manual</span>
+            </div>
+
+            <div class="lista-atuadores">
+
+                <div class="atuador">
+                    <div class="atuador-info">
+                        <h3>Climatização <span>HVAC-GIN</span></h3>
+                        <p>Ginásio</p>
+                    </div>
+
+                    <button type="button" class="botao-atuador ligado">
+                        <span class="indicador"></span>
+                        LIGADO
+                    </button>
+                </div>
+
+                <div class="atuador">
+                    <div class="atuador-info">
+                        <h3>Ventilação forçada <span>VNT-A04</span></h3>
+                        <p>Bloco A · Sala 4</p>
+                    </div>
+
+                    <button type="button" class="botao-atuador desligado">
+                        <span class="indicador"></span>
+                        DESLIGADO
+                    </button>
+                </div>
+
+                <div class="atuador">
+                    <div class="atuador-info">
+                        <h3>Iluminação <span>ILU-BIB</span></h3>
+                        <p>Biblioteca</p>
+                    </div>
+
+                    <button type="button" class="botao-atuador ligado">
+                        <span class="indicador"></span>
+                        LIGADO
+                    </button>
+                </div>
+
+                <div class="atuador">
+                    <div class="atuador-info">
+                        <h3>Exaustores <span>EST-REF</span></h3>
+                        <p>Refeitório</p>
+                    </div>
+
+                    <button type="button" class="botao-atuador desligado">
+                        <span class="indicador"></span>
+                        DESLIGADO
+                    </button>
+                </div>
+
+                <div class="atuador">
+                    <div class="atuador-info">
+                        <h3>Extração de ar <span>VNT-REF</span></h3>
+                        <p>Refeitório</p>
+                    </div>
+
+                    <button type="button" class="botao-atuador ligado">
+                        <span class="indicador"></span>
+                        LIGADO
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="registro-atuadores">
+                <p>Registro de comandos</p>
+                <span>Sem comandos nesta sessão.</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Rodapé do sistema -->
+    <footer class="rodape">
+
+        <div class="rodape-principal">
+
+            <div class="rodape-identidade">
+                <div class="rodape-logo">◉</div>
+
+                <div class="rodape-titulo">
+                    <strong>Atmosfera 4.0</strong>
+                    <span>Supervisão Ambiental</span>
+                </div>
+            </div>
+
+            <div class="rodape-coluna">
+                <h4>SISTEMA</h4>
+                <p>Versão <strong>1.0.0</strong></p>
+                <p>Ambiente: <strong>Simulação</strong></p>
+                <p>Plataforma: <strong>Monitoramento IoT</strong></p>
+            </div>
+
+            <div class="rodape-coluna">
+                <h4>MONITORAMENTO</h4>
+                <p>Sensores cadastrados: <strong>8</strong></p>
+                <p>Dispositivos em linha: <strong>7/8</strong></p>
+                <p>Parâmetros: <strong>Temperatura, umidade e CO₂</strong></p>
+            </div>
+
+            <div class="rodape-coluna">
+                <h4>LIMITES DE REFERÊNCIA</h4>
+                <p>Temperatura: <strong>25 °C</strong></p>
+                <p>Umidade: <strong>40–60 %RH</strong></p>
+                <p>CO₂ crítico: <strong>1400 ppm</strong></p>
+            </div>
+
+        </div>
+
+        <div class="rodape-inferior">
+
+            <div class="rodape-status">
+                <span class="indicador-rodape"></span>
+                <span>Painel em execução</span>
+            </div>
+
+            <div class="rodape-info">
+                <span>Senai "Anchieta" · Campus principal</span>
+                <span class="rodape-separador">|</span>
+                <span>Dados simulados</span>
+                <span class="rodape-separador">|</span>
+                <span>© 2026 SENAI</span>
+            </div>
+
+        </div>
+
+    </footer>
+
+    <script src="JS/script.js"></script>
+
+</body>
+
+</html>

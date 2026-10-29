@@ -1,0 +1,974 @@
+
+/* ========================================
+   1. CONFIGURAÇÕES GERAIS
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    background: #0B1220;
+    color: #E6EDF5;
+    font-family: Arial, sans-serif;
+}
+
+
+/* ========================================
+   2. CABEÇALHO PRINCIPAL
+======================================== */
+
+header.topo {
+    width: calc(100% + 40px);
+    min-height: 58px;
+    margin: 0 -20px 16px;
+    padding: 10px 48px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    background: #153b50;
+    border: 1px solid #28566a;
+    border-radius: 8px 8px 0 0;
+
+    color: #e6edf5;
+    font-family: Arial, sans-serif;
+    position: relative;
+}
+
+.topo .inf-esquerda {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.logo-topo {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #36748b;
+    border-radius: 4px;
+
+    color: #d8edf5;
+    font-size: 18px;
+}
+
+.texto-topo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+}
+
+.texto-topo h1 {
+    margin: 0;
+    color: #f0f4f8;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.texto-topo h2 {
+    margin: 0;
+    color: #b9cbd8;
+    font-family: monospace;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.topo .inf-direita {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+    min-width: 0;
+    flex-shrink: 0;
+}
+
+.status-dados {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 9px;
+
+    border: 1px solid #58717e;
+    border-radius: 4px;
+
+    color: #c6d4de;
+    font-family: monospace;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.ultima-atualizacao {
+    margin: 0;
+    color: #b9cbd8;
+    font-family: monospace;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.ultima-atualizacao strong {
+    margin-left: 4px;
+    color: #f0f4f8;
+    font-weight: 700;
+}
+
+
+/* ========================================
+   3. CARDS SUPERIORES
+======================================== */
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px 0;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1 1 200px;
+    min-width: 0;
+    padding: 14px;
+
+    background-color: #111d28;
+    border: 1px solid #2A394B;
+    border-top: 3px solid hsl(182, 100%, 65%);
+    border-radius: 6px;
+}
+
+.PT1,
+.PU1,
+.PA1,
+.PD1 {
+    margin: 0 0 5px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #91A0B4;
+}
+
+.PT2,
+.PU2 {
+    margin: 0;
+    font-size: 12px;
+    color: green;
+}
+
+.status-critico {
+    margin: 0;
+    font-size: 12px;
+    color: red;
+}
+
+.status-aviso {
+    margin: 0;
+    font-size: 12px;
+    color: orange;
+}
+
+.HT,
+.HU,
+.HA,
+.HD {
+    margin: 10px 0;
+    font-size: 26px;
+}
+
+.PT3,
+.PU3,
+.PA3,
+.PD3 {
+    margin: 0;
+    font-size: 11px;
+    color: #888;
+}
+
+
+/* ========================================
+   4. ÁREA DOS GRÁFICOS
+======================================== */
+
+.graficos-container {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 12px;
+    width: 100%;
+    align-items: stretch;
+}
+
+/* Gráfico de temperatura e umidade */
+
+.card-Temp {
+    width: 100%;
+    height: 226px;
+    min-width: 0;
+
+    background: #111d29;
+    border: 1px solid #2b3d4e;
+    border-radius: 7px;
+    overflow: hidden;
+
+    color: #dce5ef;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+.Graf_Temp {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.graf-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    min-height: 47px;
+
+    border-bottom: 1px solid #2b3d4e;
+}
+
+.info-graf {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #dce5ef;
+}
+
+.info-graf span {
+    margin-left: 4px;
+    color: #8b9bad;
+    font-size: 11px;
+}
+
+.graf-periodo {
+    display: flex;
+    flex-shrink: 0;
+    border: 1px solid #2b3d4e;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.graf-periodo button {
+    padding: 5px 8px;
+    background: transparent;
+    border: none;
+    color: #94a4b7;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.graf-periodo button.ativo {
+    background: #203343;
+    color: #36c6d5;
+    font-weight: bold;
+}
+
+.graf-legendas {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    padding: 10px 16px 4px;
+}
+
+.graf-legendas p {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+
+    color: #a2b0c0;
+    font-family: monospace;
+    font-size: 11px;
+}
+
+.linha-temp {
+    display: inline-block;
+    width: 12px;
+    height: 2px;
+    background: #f5a04b;
+}
+
+.linha-umid {
+    display: inline-block;
+    width: 12px;
+    height: 2px;
+    background: #68a9f5;
+}
+
+.graf-conteudo {
+    width: 100%;
+    height: 155px;
+    min-height: 0;
+    padding: 8px 16px 14px;
+    box-sizing: border-box;
+}
+
+/* Gráfico de concentração de CO2 */
+
+.card-co2 {
+    width: 100%;
+    height: 226px;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #111d29;
+    border: 1px solid #2b3d4e;
+    border-radius: 7px;
+    overflow: hidden;
+
+    color: #dce5ef;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+.co2-header {
+    min-height: 41px;
+    padding: 0 16px;
+
+    display: flex;
+    align-items: center;
+
+    border-bottom: 1px solid #2b3d4e;
+    box-sizing: border-box;
+}
+
+.co2-header h3 {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #dce5ef;
+}
+
+.co2-header h3 span {
+    margin-left: 4px;
+    color: #8b9bad;
+    font-size: 11px;
+}
+
+.co2-grafico {
+    flex: 1;
+    min-height: 0;
+    padding: 12px 16px 8px 12px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    box-sizing: border-box;
+}
+
+.barra-co2 {
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+    min-height: 12px;
+}
+
+.co2-label {
+    color: #91a0b4;
+    font-family: monospace;
+    font-size: 9px;
+    text-align: right;
+}
+
+.co2-trilho {
+    position: relative;
+    height: 10px;
+
+    background-color: transparent;
+    background-image: linear-gradient(
+        to right,
+        #2b3d4e 1px,
+        transparent 1px
+    );
+    background-size: 25% 100%;
+    border-left: 1px solid #718093;
+}
+
+.co2-valor {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+}
+
+.co2-valor.normal {
+    background: #35c6d3;
+}
+
+.co2-valor.aviso {
+    background: #e9b44c;
+}
+
+.co2-valor.critico {
+    background: #e45b62;
+}
+
+.co2-eixo {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 66px;
+    padding-top: 5px;
+
+    color: #91a0b4;
+    font-family: monospace;
+    font-size: 9px;
+}
+
+.co2-rodape {
+    min-height: 22px;
+    padding: 5px 16px;
+
+    border-top: 1px solid #2b3d4e;
+
+    color: #91a0b4;
+    font-family: monospace;
+    font-size: 10px;
+    box-sizing: border-box;
+}
+
+
+/* ========================================
+   5. PLANTA DO CAMPUS
+======================================== */
+
+.planta-campus {
+    width: 100%;
+    height: 276px;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+
+    background: #131E2D;
+    border: 1px solid #2A394B;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.tabela-inf {
+    width: 100%;
+    min-height: 42px;
+    padding: 8px 16px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+
+    background: #15394D;
+    border: none;
+    border-bottom: 1px solid #2A394B;
+    border-radius: 0;
+    font-size: 12px;
+}
+
+.tabela-inf h1 {
+    margin: 0;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.legenda {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    color: #91A0B4;
+    font-size: 10px;
+}
+
+.normal {
+    color: #47C98A;
+}
+
+.aviso {
+    color: #E9B44C;
+}
+
+.critico {
+    color: #E45B62;
+}
+
+.sem-leitura {
+    color: #91A0B4;
+}
+
+.planta-campus .conteudo {
+    display: grid;
+    grid-template-columns: minmax(0, 2.2fr) minmax(180px, 0.8fr);
+    gap: 0;
+    height: 232px;
+    align-items: stretch;
+    min-width: 0;
+}
+
+.planta-campus .mapa {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+
+    background: #0E1826;
+    border: none;
+    border-right: 1px solid #2A394B;
+    border-radius: 0;
+}
+
+.planta-campus .detalhes {
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    margin: 0;
+    padding: 10px 12px;
+
+    background: #0E1826;
+    border: none;
+    overflow-y: auto;
+}
+
+.planta-campus .detalhes h2 {
+    margin: 0;
+    color: #35C6D9;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.planta-campus .localizacao {
+    margin: 5px 0 10px;
+    color: #91A0B4;
+    font-size: 10px;
+}
+
+.planta-campus .estado {
+    margin: 0 0 8px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.planta-campus .leitura {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+
+    border-bottom: 1px solid #2A394B;
+    font-size: 10px;
+}
+
+.planta-campus .leitura span {
+    color: #91A0B4;
+}
+
+.planta-campus .leitura strong {
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.planta-campus .temperatura {
+    color: #F0A45D;
+}
+
+.planta-campus .humidade {
+    color: #63A7E8;
+}
+
+.planta-campus .co2 {
+    color: #35C6D9;
+}
+
+.planta-campus .ruido {
+    color: #E6EDF5;
+}
+
+
+/* ========================================
+   8. TABELA DE REGISTROS DOS SENSORES
+======================================== */
+
+
+
+.conteudo {
+    margin-top: 16px;
+}
+
+.mapa {
+    width: 100%;
+    background: #111D29;
+    border: 1px solid #2A394B;
+    border-radius: 6px;
+}
+
+.mapa table {
+    width: 100%;
+    min-width: 1000px;
+    color: #E6EDF5;
+    font-size: 11px;
+    text-align: left;
+}
+
+.mapa th {
+    padding: 12px;
+    background: #15394D;
+    color: #35C6D9;
+}
+
+.mapa td {
+    padding: 12px;
+    border-bottom: 1px solid #2A394B;
+}
+
+.mapa tbody  {
+    background: #131F2E;
+}
+
+
+
+
+
+/* ========================================
+   6. CONTROLE DE ATUADORES
+======================================== */
+
+.retangulos-baixos {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+    margin-top: 16px;
+}
+
+.Controle-Atuadores {
+    width: 100%;
+    height: 276px;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #131E2D;
+    border: 1px solid #2A394B;
+    border-radius: 6px;
+    overflow: hidden;
+
+    color: #E6EDF5;
+    font-family: Arial, sans-serif;
+}
+
+.atuadores-header {
+    min-height: 35px;
+    padding: 8px 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+
+    background: #131E2D;
+    border-bottom: 1px solid #2A394B;
+}
+
+.atuadores-header h2 {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 600;
+    color: #DCE5EF;
+}
+
+.modo-manual {
+    font-size: 9px;
+    color: #91A0B4;
+    white-space: nowrap;
+}
+
+.lista-atuadores {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.atuador {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: 39px;
+    padding: 4px 12px;
+
+    border-bottom: 1px solid #243243;
+}
+
+.atuador-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.atuador-info h3 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px;
+    margin: 0 0 2px;
+
+    color: #C9D3DF;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.atuador-info h3 span {
+    color: #91A0B4;
+    font-family: monospace;
+    font-size: 9px;
+    font-weight: 400;
+}
+
+.atuador-info p {
+    margin: 0;
+    color: #91A0B4;
+    font-family: monospace;
+    font-size: 8px;
+}
+
+.botao-atuador {
+    width: 70px;
+    min-width: 70px;
+    height: 22px;
+    padding: 0 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    border: 1px solid;
+    border-radius: 4px;
+    background: transparent;
+
+    font-family: monospace;
+    font-size: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.botao-atuador .indicador {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+}
+
+.botao-atuador.ligado {
+    color: #47D7A0;
+    border-color: #285E50;
+}
+
+.botao-atuador.ligado .indicador {
+    background: #47D7A0;
+}
+
+.botao-atuador.desligado {
+    color: #91A0B4;
+    border-color: #344255;
+}
+
+.botao-atuador.desligado .indicador {
+    background: #91A0B4;
+}
+
+.registro-atuadores {
+    min-height: 48px;
+    padding: 8px 12px;
+    margin-top: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+
+    background: #111B29;
+    border-top: 1px solid #2A394B;
+}
+
+.registro-atuadores p {
+    margin: 0;
+    color: #91A0B4;
+    font-family: monospace;
+    font-size: 9px;
+}
+
+.registro-atuadores span {
+    display: block;
+    color: #65758A;
+    font-family: monospace;
+    font-size: 9px;
+}
+
+
+
+
+/* ========================================
+   7. Roda Pé
+======================================== */
+
+
+/* Rodapé do sistema */
+.rodape {
+    width: 100%;
+    margin-top: 16px;
+    background: #111d29;
+    border: 1px solid #2A394B;
+    border-radius: 6px;
+    color: #91A0B4;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+/* Área principal */
+.rodape-principal {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.5fr 1fr;
+    gap: 24px;
+    padding: 22px 20px;
+}
+
+/* Identidade do sistema */
+.rodape-identidade {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.rodape-logo {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #36748B;
+    border-radius: 5px;
+    color: #35C6D9;
+    font-size: 19px;
+}
+
+.rodape-titulo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.rodape-titulo strong {
+    color: #E6EDF5;
+    font-size: 13px;
+}
+
+.rodape-titulo span {
+    color: #91A0B4;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+/* Colunas de informações */
+.rodape-coluna {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+    min-width: 0;
+}
+
+.rodape-coluna h4 {
+    margin: 0 0 3px;
+    color: #35C6D9;
+    font-family: monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.rodape-coluna p {
+    margin: 0;
+    color: #91A0B4;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.rodape-coluna strong {
+    color: #DCE5EF;
+    font-weight: 500;
+}
+
+/* Faixa inferior */
+.rodape-inferior {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 12px 20px;
+    background: #0E1826;
+    border-top: 1px solid #2A394B;
+}
+
+.rodape-status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #47C98A;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.indicador-rodape {
+    width: 6px;
+    height: 6px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #47C98A;
+}
+
+.rodape-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 9px;
+    font-size: 10px;
+}
+
+.rodape-separador {
+    color: #344255;
+}
+
+
+
+
