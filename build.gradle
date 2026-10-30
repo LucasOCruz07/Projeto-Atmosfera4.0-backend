@@ -22,7 +22,7 @@ dependencies {
 }
 
 application {
-    mainClass = 'org.example.TesteDAO'
+    mainClass = 'org.example.Main'
 
 }
 

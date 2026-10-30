@@ -132,9 +132,9 @@ public class Main {
     }
 
     private static void configurarCors(HttpExchange troca) {
-        troca.getResponseHeaders().set("Acess-Control-Allow-Origin", "*");
-        troca.getResponseHeaders().set("Acess-Control-Allow-Methods", "GET, POST, OPTIONS");
-        troca.getResponseHeaders().set("Acess-Control-Allow-Headers", "Content-Type");
+        troca.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
+        troca.getResponseHeaders().set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        troca.getResponseHeaders().set("Access-Control-Allow-Headers", "Content-Type");
     }
 
     private static void responder (HttpExchange troca, int status, String conteudo) throws IOException {

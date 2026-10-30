@@ -32,22 +32,137 @@ document.addEventListener("DOMContentLoaded", () => {
         co2Critico: 1400
     };
 
-    // Dados iniciais simulados
-    const sensores = {
-        temperatura: 22.5,
-        umidade: 49,
-        co2: 1617
-    };
 
-    const dispositivos = [
-        { nome: "ENV-A01", co2: 900 },
-        { nome: "CO2-A02", co2: 1350 },
-        { nome: "ENV-B01", co2: 810 },
-        { nome: "ENV-BIB", co2: 756 },
-        { nome: "NOT-REF", co2: 1044 },
-        { nome: "ENV-PAT", co2: 576 },
-        { nome: "ENV-GIN", co2: 1617 }
-    ];
+
+    let sensores = {};
+    let dispositivos = [];
+    let registros = [];
+    let atuadores = [];
+
+    const totalSensores = document.getElementById("totalSensores");
+    const dispositivosOnline = document.getElementById("dispositivosOnline");
+    const ambienteSistema = document.getElementById("ambienteSistema");
+    const statusRodape = document.getElementById("statusRodape");
+
+    // Tabela que receberá os registros do banco
+    const tabelaRegistros = document.getElementById("tabelaRegistros");
+
+    // Busca os registros no backend
+    async function atualizarRodape() {
+        try {
+            const resposta = await fetch("http://localhost:8080/api/dispositivos");
+
+            if (!resposta.ok) {
+                throw new Error("Erro ao buscar dispositivos");
+            }
+
+            dispositivos = await resposta.json();
+
+            // Total de dispositivos cadastrados
+            const total = dispositivos.length;
+
+            if (totalSensores) {
+                totalSensores.textContent = total;
+            }
+
+            if (ambienteSistema) {
+                ambienteSistema.textContent = "Banco de dados";
+            }
+
+            if (statusRodape) {
+                statusRodape.textContent = "Dados do banco de dados";
+            }
+
+            // O total de dispositivos online será calculado
+            // quando confirmarmos o campo de status da API.
+            if (dispositivosOnline) {
+                dispositivosOnline.textContent = `--/${total}`;
+            }
+
+            // Atualiza o card superior
+            if (dispositivosCard) {
+                dispositivosCard.textContent = `--/${total}`;
+            }
+
+        } catch (erro) {
+            console.error("Erro ao atualizar rodapé:", erro);
+
+            if (ambienteSistema) {
+                ambienteSistema.textContent = "Sem conexão";
+            }
+
+            if (statusRodape) {
+                statusRodape.textContent = "Erro ao conectar ao banco";
+            }
+        }
+    }
+
+    async function carregarRegistros() {
+        try {
+            const resposta = await fetch("http://localhost:8080/api/registros");
+
+            if (!resposta.ok) {
+                throw new Error("Erro ao buscar os registros");
+            }
+
+            registros = await resposta.json();
+
+            if (typeof atualizarGrafico === "function") {
+                atualizarGrafico(registros);
+            }
+
+            registros.sort((a, b) => b.id_registro - a.id_registro);
+
+            // Pega o registro mais recente do banco
+            const ultimoRegistro = registros[0];
+
+            if (ultimoRegistro) {
+                sensores.temperatura = Number(ultimoRegistro.temperatura);
+                sensores.umidade = Number(ultimoRegistro.umidade);
+
+                atualizarSensores();
+            }
+
+
+            // Limpa os dados antigos da tabela
+            tabelaRegistros.innerHTML = "";
+
+            // Percorre os registros recebidos do banco
+            registros.forEach((registro) => {
+                const linha = document.createElement("tr");
+
+                const valores = [
+                    registro.id_registro,
+                    registro.time_stamp,
+                    registro.temperatura + " °C",
+                    registro.umidade,
+                    registro.pressao,
+                    registro.altitude,
+                    registro.luminosidade,
+                    registro.velocidade_vento,
+                    registro.direcao_vento,
+                    registro.intensidade_wifi
+                ];
+
+                valores.forEach((valor) => {
+                    const celula = document.createElement("td");
+                    celula.textContent = valor ?? "-";
+                    linha.appendChild(celula);
+                });
+
+                tabelaRegistros.appendChild(linha);
+            });
+
+        } catch (erro) {
+            console.error("Erro ao carregar registros:", erro);
+
+            tabelaRegistros.innerHTML = `
+                <tr>
+                    <td colspan="10">Erro ao carregar os dados.</td>
+                </tr>
+            `;
+        }
+    }
 
     // Formata a data de atualização
     function atualizarData() {
@@ -68,6 +183,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         dataAtualizacao.textContent = `${data}, ${hora}`;
     }
+
+    atualizarData();
+    setInterval(atualizarData, 1000);
 
     // Atualiza o texto e a cor de um estado
     function atualizarStatus(elemento, texto, classe) {
@@ -111,45 +229,64 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Atualiza os valores dos cards
     function atualizarSensores() {
+
         const tempStatus = statusTemperaturaAtual(sensores.temperatura);
         const umidStatus = statusUmidadeAtual(sensores.umidade);
-        const co2Status = statusCo2Atual(sensores.co2);
 
+        // Cards superiores
         if (temperaturaCard) {
-            temperaturaCard.textContent =
-                `${sensores.temperatura.toFixed(1)}° C`;
+            temperaturaCard.textContent = `${sensores.temperatura.toFixed(1)}° C`;
         }
 
         if (umidadeCard) {
-            umidadeCard.textContent =
-                `${Math.round(sensores.umidade)} %HR`;
+            umidadeCard.textContent = `${Math.round(sensores.umidade)} %HR`;
         }
 
-        if (co2Card) {
-            co2Card.textContent =
-                `${Math.round(sensores.co2)} ppm`;
-        }
-
+        // Status dos cards
         atualizarStatus(statusTemperatura, ...tempStatus);
         atualizarStatus(statusUmidade, ...umidStatus);
-        atualizarStatus(statusCo2, ...co2Status);
 
+        // Detalhes dos sensores
         if (detalheTemperatura) {
-            detalheTemperatura.textContent =
-                `${sensores.temperatura.toFixed(1)} °C`;
+            detalheTemperatura.textContent = `${sensores.temperatura.toFixed(1)} °C`;
         }
 
         if (detalheUmidade) {
-            detalheUmidade.textContent =
-                `${Math.round(sensores.umidade)} %RH`;
+            detalheUmidade.textContent = `${Math.round(sensores.umidade)} %HR`;
         }
+    }
 
-        if (detalheCo2) {
-            detalheCo2.textContent =
-                `${Math.round(sensores.co2)} ppm`;
-        }
+    function obterDadosGrafico() {
 
-        atualizarData();
+        // Organiza os registros do mais antigo para o mais recente
+        const dadosOrdenados = [...registros].sort(
+            (a, b) => a.id_registro - b.id_registro
+        );
+
+        // Pega os últimos 7 registros
+        const ultimosRegistros = dadosOrdenados.slice(-7);
+
+        const horarios = ultimosRegistros.map(registro => {
+            const data = registro.data_hora;
+
+            if (!data) return registro.time_stamp ?? "-";
+
+            return String(data).substring(11, 16);
+        });
+
+        const temperaturas = ultimosRegistros.map(
+            registro => Number(registro.temperatura)
+        );
+
+        const umidades = ultimosRegistros.map(
+            registro => Number(registro.umidade)
+        );
+
+        return {
+            horarios,
+            temperaturas,
+            umidades
+        };
     }
 
     // Atualiza as barras de concentração de CO2
@@ -291,11 +428,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Inicialização
-    atualizarSensores();
-    atualizarBarrasCo2();
+    carregarRegistros();
+    atualizarRodape();
 
-    // Atualização simulada a cada 5 segundos
-    setInterval(simularSensores, 5000);
+    // Atualizar os registros a cada 1 hr
+    setInterval(carregarRegistros, 3600000);
+    setInterval(atualizarRodape, 3600000);
 });
 
 
@@ -342,4 +480,257 @@ document.addEventListener("keydown", function(evento) {
         fecharMenuLateral();
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const elementoGrafico = document.getElementById(
+        "graficoTemperaturaUmidade"
+    );
+
+    if (!elementoGrafico) {
+        console.error("Elemento do gráfico não encontrado.");
+        return;
+    }
+
+    if (typeof Chart === "undefined") {
+        console.error(
+            "Chart.js não foi carregado. Verifique a biblioteca no HTML."
+        );
+        return;
+    }
+
+    const contexto = elementoGrafico.getContext("2d");
+
+    // Dados demonstrativos para cada período.
+    // Substitua pelos dados reais dos sensores quando disponíveis.
+    const dadosGrafico = {
+        labels: [],
+        temperatura: [],
+        umidade: []
+    };
+
+    // Gradientes das linhas.
+    const gradienteTemperatura = contexto.createLinearGradient(
+        0, 0, 0, 180
+    );
+
+    gradienteTemperatura.addColorStop(
+        0,
+        "rgba(245, 160, 75, 0.25)"
+    );
+
+    gradienteTemperatura.addColorStop(
+        1,
+        "rgba(245, 160, 75, 0)"
+    );
+
+    const gradienteUmidade = contexto.createLinearGradient(
+        0, 0, 0, 180
+    );
+
+    gradienteUmidade.addColorStop(
+        0,
+        "rgba(104, 169, 245, 0.20)"
+    );
+
+    gradienteUmidade.addColorStop(
+        1,
+        "rgba(104, 169, 245, 0)"
+    );
+
+    // Criação do gráfico.
+    const grafico = new Chart(contexto, {
+        type: "line",
+
+        data: {
+            labels: dadosGrafico.labels,
+
+            datasets: [
+                {
+                    label: "Temperatura (°C)",
+
+                    data: dadosGrafico.temperatura,
+
+                    borderColor: "#f5a04b",
+                    backgroundColor: gradienteTemperatura,
+
+                    borderWidth: 2,
+                    pointRadius: 3,
+                    pointHoverRadius: 5,
+
+                    pointBackgroundColor: "#f5a04b",
+                    pointBorderColor: "#1b1d21",
+
+                    fill: true,
+                    tension: 0.4,
+
+                    yAxisID: "eixoTemperatura"
+                },
+
+                {
+                    label: "Umidade (%)",
+
+                    data: dadosGrafico.umidade,
+
+                    borderColor: "#68a9f5",
+                    backgroundColor: gradienteUmidade,
+
+                    borderWidth: 2,
+                    pointRadius: 3,
+                    pointHoverRadius: 5,
+
+                    pointBackgroundColor: "#68a9f5",
+                    pointBorderColor: "#1b1d21",
+
+                    fill: true,
+                    tension: 0.4,
+
+                    yAxisID: "eixoUmidade"
+                }
+            ]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            interaction: {
+                mode: "index",
+                intersect: false
+            },
+
+            plugins: {
+                legend: {
+                    display: false
+                },
+
+                tooltip: {
+                    backgroundColor: "#202329",
+                    titleColor: "#ffffff",
+                    bodyColor: "#e0e0e0",
+
+                    borderColor: "#383c44",
+                    borderWidth: 1,
+
+                    padding: 10,
+
+                    displayColors: true
+                }
+            },
+
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+
+                    border: {
+                        display: false
+                    },
+
+                    ticks: {
+                        color: "#9298a3",
+                        font: {
+                            size: 10
+                        },
+
+                        maxRotation: 0,
+                        autoSkip: true
+                    }
+                },
+
+                eixoTemperatura: {
+                    type: "linear",
+                    position: "left",
+
+                    min: 10,
+                    max: 35,
+
+                    grid: {
+                        color: "rgba(255, 255, 255, 0.06)"
+                    },
+
+                    border: {
+                        display: false
+                    },
+
+                    ticks: {
+                        color: "#f5a04b",
+                        font: {
+                            size: 10
+                        },
+
+                        callback: function (valor) {
+                            return valor + "°";
+                        }
+                    }
+                },
+
+                eixoUmidade: {
+                    type: "linear",
+                    position: "right",
+
+                    min: 0,
+                    max: 100,
+
+                    grid: {
+                        drawOnChartArea: false
+                    },
+
+                    border: {
+                        display: false
+                    },
+
+                    ticks: {
+                        color: "#68a9f5",
+                        font: {
+                            size: 10
+                        },
+
+                        callback: function (valor) {
+                            return valor + "%";
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Atualiza o gráfico com os registros recebidos do banco
+    window.atualizarGrafico = function (registros) {
+
+        if (!Array.isArray(registros)) return;
+
+        // Organiza os registros do mais antigo para o mais recente
+        const dadosOrdenados = [...registros].sort(
+            (a, b) => a.id_registro - b.id_registro
+        );
+
+        // Pega os últimos 7 registros
+        const ultimosRegistros = dadosOrdenados.slice(-7);
+
+        // Horários
+        grafico.data.labels = ultimosRegistros.map(registro => {
+            if (!registro.data_hora) {
+                return registro.time_stamp ?? "-";
+            }
+
+            return String(registro.data_hora).substring(11, 16);
+        });
+
+        // Temperaturas
+        grafico.data.datasets[0].data = ultimosRegistros.map(
+            registro => Number(registro.temperatura)
+        );
+
+        // Umidades
+        grafico.data.datasets[1].data = ultimosRegistros.map(
+            registro => Number(registro.umidade)
+        );
+
+        // Redesenha o gráfico
+        grafico.update();
+    };
+
+
+        });
 

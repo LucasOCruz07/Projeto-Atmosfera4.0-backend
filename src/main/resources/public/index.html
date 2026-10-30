@@ -31,7 +31,9 @@
         </div>
 
         <div class="inf-direita">
-            <span class="status-dados">DADOS SIMULADOS</span>
+            <span class="status-dados" id="statusDados">
+    CONECTANDO...
+</span>
             <p class="ultima-atualizacao">
                 Atualizado:
                 <strong>15/10, 09:24:39</strong>
@@ -120,13 +122,12 @@
         <div class="card Dispositivos">
             <p class="PD1">Dispositivos em linha</p>
             <p class="PD2 status-aviso">● Aviso</p>
-            <h2 class="HD">7/8</h2>
+            <h2 class="HD">--</h2>
             <p class="PD3">3 com valores fora do intervalo</p>
         </div>
 
     </div>
 
-    <!-- GRÁFICOS AMBIENTAIS -->
     <div class="graficos-container">
 
         <!-- TEMPERATURA E UMIDADE -->
@@ -162,7 +163,7 @@
                 </div>
 
                 <div class="graf-conteudo">
-                    <!-- Área destinada ao gráfico -->
+                    <canvas id="graficoTemperaturaUmidade"></canvas>
                 </div>
 
             </div>
@@ -282,27 +283,10 @@
                             </tr>
                         </thead>
 
-                        <tbody>
-                            <tr>
-                                <td>1</td><td>22-10-26</td><td>25º</td>
-                                <td>68.6</td><td>1013.2</td><td>850.0º</td>
-                                <td>720.5</td><td>12.3</td><td>90</td><td>-55.0</td>
-                            </tr>
-                            <tr>
-                                <td>2</td><td>22-10-26</td><td>25º</td>
-                                <td>68.6</td><td>1013.2</td><td>850.0º</td>
-                                <td>720.5</td><td>12.3</td><td>90</td><td>-55.0</td>
-                            </tr>
-                            <tr>
-                                <td>3</td><td>22-10-26</td><td>25º</td>
-                                <td>68.6</td><td>1013.2</td><td>850.0º</td>
-                                <td>720.5</td><td>12.3</td><td>90</td><td>-55.0</td>
-                            </tr>
-                            <tr>
-                                <td>4</td><td>22-10-26</td><td>25º</td>
-                                <td>68.6</td><td>1013.2</td><td>850.0º</td>
-                                <td>720.5</td><td>12.3</td><td>90</td><td>-55.0</td>
-                            </tr>
+                        <tbody id="tabelaRegistros">
+                        <tr>
+                            <td colspan="10">Carregando dados...</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -429,14 +413,14 @@
             <div class="rodape-coluna">
                 <h4>SISTEMA</h4>
                 <p>Versão <strong>1.0.0</strong></p>
-                <p>Ambiente: <strong>Simulação</strong></p>
+                <p>Ambiente: <strong id="ambienteSistema">Conectando...</strong></p>
                 <p>Plataforma: <strong>Monitoramento IoT</strong></p>
             </div>
 
             <div class="rodape-coluna">
                 <h4>MONITORAMENTO</h4>
-                <p>Sensores cadastrados: <strong>8</strong></p>
-                <p>Dispositivos em linha: <strong>7/8</strong></p>
+                <p>Sensores cadastrados: <strong id="totalSensores">--</strong></p>
+                <p>Dispositivos em linha: <strong id="dispositivosOnline">--</strong></p>
                 <p>Parâmetros: <strong>Temperatura, umidade e CO₂</strong></p>
             </div>
 
@@ -459,7 +443,7 @@
             <div class="rodape-info">
                 <span>Senai "Anchieta" · Campus principal</span>
                 <span class="rodape-separador">|</span>
-                <span>Dados simulados</span>
+                <span id="statusRodape">Conectando ao banco...</span>
                 <span class="rodape-separador">|</span>
                 <span>© 2026 SENAI</span>
             </div>
@@ -468,7 +452,13 @@
 
     </footer>
 
-    <!-- JAVASCRIPT -->
+    <!-- Biblioteca Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Código do gráfico -->
+    <script src="JS/grafico.js"></script>
+
+    <!-- Código principal -->
     <script src="JS/script.js"></script>
 
 </body>

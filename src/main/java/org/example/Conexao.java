@@ -12,7 +12,7 @@ public class Conexao {
 // permite que o  drive JDBC  solicite ao MySQL uma chave publica durante a autenticacao
 
     private static final String USUARIO = "root";
-    private  static  final String SENHA = "senaisp";
+    private  static  final String SENHA = "055330869Ma.";
 
 
 
