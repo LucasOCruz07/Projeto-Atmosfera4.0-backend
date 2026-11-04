@@ -1,1150 +1,210 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap');
-/* ========================================
-   1. CONFIGURAÇÕES GERAIS
-======================================== */
 
+/* ---------- Variáveis  ---------- */
+:root {
+    --fundo-card: rgba(255, 255, 255, 0.2);
+    --fundo-solido: #46808a;
+    --borda: rgba(255, 255, 255, 0.5);
+    --texto: #ffffff;
+    --texto-suave: rgba(255, 255, 255, 0.8);
+    --texto-escuro: #2f6f7a;
+
+    --normal: #6ef0b0;
+    --aviso: #ffd36b;
+    --critico: #ff7a85;
+    --sem-leitura: #d9e6ea;
+
+    --raio: 18px;
+    --espaco: 20px;
+}
+
+/* ---------- Base ---------- */
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    padding: 20px;
-    background: #0B1220;
-    color: #E6EDF5;
-    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    padding: 24px 32px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 16px;
+    color: var(--texto);
+    background: linear-gradient(135deg, #3f78a0 0%, #5fa5a8 55%, #8cc9b0 100%) fixed;
 }
 
-button,
-input,
-select {
-    font: inherit;
+/* ---------- Estilo comum dos painéis---------- */
+.topo,
+.card,
+.card-Temp,
+.card-co2,
+.planta-campus,
+.Controle-Atuadores,
+.rodape {
+    background: var(--fundo-card);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    box-shadow: 0 4px 14px rgba(20, 70, 90, 0.15);
+    backdrop-filter: blur(12px);
 }
 
-button,
-select {
-    cursor: pointer;
+.card,
+.card-Temp,
+.card-co2,
+.planta-campus,
+.Controle-Atuadores {
+    padding: var(--espaco);
 }
 
+.topo,
+.cards-container,
+.graficos-container,
+.retangulos-baixos {
+    margin-bottom: var(--espaco);
+}
 
-/* ========================================
-   2. CABEÇALHO PRINCIPAL
-======================================== */
-
-header.topo {
-    width: calc(100% + 40px);
-    min-height: 58px;
-    margin: 0 -20px 16px;
-    padding: 10px 48px;
-
+/* ---------- Cabeçalho ---------- */
+.topo {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px;
-
-    background: #153b50;
-    border: 1px solid #28566a;
-    border-radius: 8px 8px 0 0;
-
-    color: #e6edf5;
-    font-family: Arial, sans-serif;
-    position: relative;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px 24px;
+    border-radius: 40px;
 }
 
-.topo .inf-esquerda {
+.inf-esquerda,
+.inf-direita {
     display: flex;
     align-items: center;
-    gap: 12px;
-    min-width: 0;
+    gap: 16px;
 }
 
 .logo-topo {
-    width: 45px;
-    height: 45px;
-    flex-shrink: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 1px solid #36748b;
-    border-radius: 4px;
-
-    color: #ffffff;
-    font-size: 18px;
-    background-color :#0B1220;
-}
-
-button .logo-topo{
-     width: 41px;
-    height: 41px;
-    flex: 0 0 41px;
-    color: var(--cyan);
-    background: rgba(8, 24, 39, 0.42);
-    border: 1px solid #2aa8b9;
-    border-radius: 6px;
-    font-size: 27px;
-    line-height: 1;
-    transition: 0.2s;
-
-}
-
-.logo-topo:hover {
-    background: rgba(53, 213, 223, 0.12);
-}
-
-
-.texto-topo {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 4px;
-    min-width: 0;
+    width: 46px;
+    height: 46px;
+    font-size: 22px;
+    color: var(--texto);
+    background: var(--fundo-card);
+    border: 1px solid var(--borda);
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 .texto-topo h1 {
-    margin: 0;
-    color: #f0f4f8;
-    font-size: 13px;
-    font-weight: 700;
-    line-height: 1.2;
+    font-size: 28px;
+    font-weight: 400;
 }
 
 .texto-topo h2 {
-    margin: 0;
-    color: #b9cbd8;
-    font-family: monospace;
-    font-size: 11px;
+    font-size: 15px;
     font-weight: 400;
-    line-height: 1.2;
-}
-
-.topo .inf-direita {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 16px;
-    min-width: 0;
-    flex-shrink: 0;
+    color: var(--texto-suave);
 }
 
 .status-dados {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px 9px;
-
-    border: 1px solid #58717e;
-    border-radius: 4px;
-
-    color: #c6d4de;
-    font-family: monospace;
-    font-size: 10px;
-    white-space: nowrap;
+    padding: 6px 14px;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    color: var(--texto);
+    background: var(--fundo-card);
+    border: 1px solid var(--borda);
+    border-radius: 14px;
 }
 
 .ultima-atualizacao {
-    margin: 0;
-    color: #b9cbd8;
-    font-family: monospace;
-    font-size: 11px;
-    white-space: nowrap;
+    font-size: 14px;
+    color: var(--texto-suave);
 }
 
 .ultima-atualizacao strong {
-    margin-left: 4px;
-    color: #f0f4f8;
-    font-weight: 700;
-}
-
-
-/* ========================================
-   3. CARDS SUPERIORES
-======================================== */
-
-.cards-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    padding: 16px 0;
-}
-
-.card {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    flex: 1 1 200px;
-    min-width: 0;
-    padding: 14px;
-
-    background-color: #111d28;
-    border: 1px solid #2A394B;
-    border-top: 3px solid hsl(182, 100%, 65%);
-    border-radius: 6px;
-}
-
-.PT1,
-.PU1,
-.PA1,
-.PD1 {
-    margin: 0 0 5px;
-    font-size: 12px;
     font-weight: 500;
-    color: #91A0B4;
+    color: var(--texto);
 }
 
-.PT2,
-.PU2 {
-    margin: 0;
-    font-size: 12px;
-    color: green;
-}
-
-.status-critico {
-    margin: 0;
-    font-size: 12px;
-    color: red;
-}
-
-.status-aviso {
-    margin: 0;
-    font-size: 12px;
-    color: orange;
-}
-
-.HT,
-.HU,
-.HA,
-.HD {
-    margin: 10px 0;
-    font-size: 26px;
-}
-
-.PT3,
-.PU3,
-.PA3,
-.PD3 {
-    margin: 0;
-    font-size: 11px;
-    color: #888;
-}
-
-
-/* ========================================
-   4. ÁREA DOS GRÁFICOS
-======================================== */
-
-.graficos-container {
-    display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-    gap: 12px;
-    width: 100%;
-    align-items: stretch;
-}
-
-/* Gráfico de temperatura e umidade */
-
-.card-Temp {
-    width: 100%;
-    height: 226px;
-    min-width: 0;
-
-    background: #111d29;
-    border: 1px solid #2b3d4e;
-    border-radius: 7px;
-    overflow: hidden;
-
-    color: #dce5ef;
-    font-family: Arial, sans-serif;
-    box-sizing: border-box;
-}
-
-.Graf_Temp {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.graf-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 16px;
-    min-height: 47px;
-
-    border-bottom: 1px solid #2b3d4e;
-}
-
-.info-graf {
-    margin: 0;
-    font-size: 13px;
-    font-weight: 600;
-    color: #dce5ef;
-}
-
-.info-graf span {
-    margin-left: 4px;
-    color: #8b9bad;
-    font-size: 11px;
-}
-
-.graf-periodo {
-    display: flex;
-    flex-shrink: 0;
-    border: 1px solid #2b3d4e;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.graf-periodo button {
-    padding: 5px 8px;
-    background: transparent;
-    border: none;
-    color: #94a4b7;
-    font-size: 11px;
-    cursor: pointer;
-}
-
-.graf-periodo button.ativo {
-    background: #203343;
-    color: #36c6d5;
-    font-weight: bold;
-}
-
-.graf-legendas {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px 18px;
-    padding: 10px 16px 4px;
-}
-
-.graf-legendas p {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin: 0;
-
-    color: #a2b0c0;
-    font-family: monospace;
-    font-size: 11px;
-}
-
-.linha-temp {
-    display: inline-block;
-    width: 12px;
-    height: 2px;
-    background: #f5a04b;
-}
-
-.linha-umid {
-    display: inline-block;
-    width: 12px;
-    height: 2px;
-    background: #68a9f5;
-}
-
-.graf-conteudo {
-    width: 100%;
-    height: 155px;
-    min-height: 0;
-    padding: 8px 16px 14px;
-    box-sizing: border-box;
-}
-
-/* Gráfico de concentração de CO2 */
-
-.card-co2 {
-    width: 100%;
-    height: 226px;
-    min-width: 0;
-
-    display: flex;
-    flex-direction: column;
-
-    background: #111d29;
-    border: 1px solid #2b3d4e;
-    border-radius: 7px;
-    overflow: hidden;
-
-    color: #dce5ef;
-    font-family: Arial, sans-serif;
-    box-sizing: border-box;
-}
-
-.co2-header {
-    min-height: 41px;
-    padding: 0 16px;
-
-    display: flex;
-    align-items: center;
-
-    border-bottom: 1px solid #2b3d4e;
-    box-sizing: border-box;
-}
-
-.co2-header h3 {
-    margin: 0;
-    font-size: 12px;
-    font-weight: 600;
-    color: #dce5ef;
-}
-
-.co2-header h3 span {
-    margin-left: 4px;
-    color: #8b9bad;
-    font-size: 11px;
-}
-
-.co2-grafico {
-    flex: 1;
-    min-height: 0;
-    padding: 12px 16px 8px 12px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    box-sizing: border-box;
-}
-
-.barra-co2 {
-    display: grid;
-    grid-template-columns: 58px minmax(0, 1fr);
-    align-items: center;
-    gap: 8px;
-    min-height: 12px;
-}
-
-.co2-label {
-    color: #91a0b4;
-    font-family: monospace;
-    font-size: 9px;
-    text-align: right;
-}
-
-.co2-trilho {
-    position: relative;
-    height: 10px;
-
-    background-color: transparent;
-    background-image: linear-gradient(
-        to right,
-        #2b3d4e 1px,
-        transparent 1px
-    );
-    background-size: 25% 100%;
-    border-left: 1px solid #718093;
-}
-
-.co2-valor {
-    position: relative;
-    z-index: 1;
-    height: 100%;
-}
-
-.co2-valor.normal {
-    background: #35c6d3;
-}
-
-.co2-valor.aviso {
-    background: #e9b44c;
-}
-
-.co2-valor.critico {
-    background: #e45b62;
-}
-
-.co2-eixo {
-    display: flex;
-    justify-content: space-between;
-    margin-left: 66px;
-    padding-top: 5px;
-
-    color: #91a0b4;
-    font-family: monospace;
-    font-size: 9px;
-}
-
-.co2-rodape {
-    min-height: 22px;
-    padding: 5px 16px;
-
-    border-top: 1px solid #2b3d4e;
-
-    color: #91a0b4;
-    font-family: monospace;
-    font-size: 10px;
-    box-sizing: border-box;
-}
-
-
-/* ========================================
-   5. PLANTA DO CAMPUS
-======================================== */
-
-.planta-campus {
-    width: 100%;
-    height: 276px;
-    min-width: 0;
-    margin: 0;
-    padding: 0;
-
-    background: #131E2D;
-    border: 1px solid #2A394B;
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-.tabela-inf {
-    width: 100%;
-    min-height: 42px;
-    padding: 8px 16px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-
-    background: #15394D;
-    border: none;
-    border-bottom: 1px solid #2A394B;
-    border-radius: 0;
-    font-size: 12px;
-}
-
-.tabela-inf h1 {
-    margin: 0;
-    color: #FFFFFF;
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.legenda {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-
-    color: #91A0B4;
-    font-size: 10px;
-}
-
-.normal {
-    color: #47C98A;
-}
-
-.aviso {
-    color: #E9B44C;
-}
-
-.critico {
-    color: #E45B62;
-}
-
-.sem-leitura {
-    color: #91A0B4;
-}
-
-.planta-campus .conteudo {
-    display: grid;
-    grid-template-columns: minmax(0, 2.2fr) minmax(180px, 0.8fr);
-    gap: 0;
-    height: 232px;
-    align-items: stretch;
-    min-width: 0;
-}
-
-.planta-campus .mapa {
-    width: 100%;
-    height: 100%;
-    min-width: 0;
-    min-height: 0;
-    margin: 0;
-    padding: 0;
-
-    background: #0E1826;
-    border: none;
-    border-right: 1px solid #2A394B;
-    border-radius: 0;
-}
-
-.planta-campus .detalhes {
-    width: 100%;
-    min-width: 0;
-    height: 100%;
-    margin: 0;
-    padding: 10px 12px;
-
-    background: #0E1826;
-    border: none;
-    overflow-y: auto;
-}
-
-.planta-campus .detalhes h2 {
-    margin: 0;
-    color: #35C6D9;
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.planta-campus .localizacao {
-    margin: 5px 0 10px;
-    color: #91A0B4;
-    font-size: 10px;
-}
-
-.planta-campus .estado {
-    margin: 0 0 8px;
-    font-size: 10px;
-    font-weight: bold;
-}
-
-.planta-campus .leitura {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 0;
-
-    border-bottom: 1px solid #2A394B;
-    font-size: 10px;
-}
-
-.planta-campus .leitura span {
-    color: #91A0B4;
-}
-
-.planta-campus .leitura strong {
-    font-weight: 500;
-    white-space: nowrap;
-}
-
-.planta-campus .temperatura {
-    color: #F0A45D;
-}
-
-.planta-campus .humidade {
-    color: #63A7E8;
-}
-
-.planta-campus .co2 {
-    color: #35C6D9;
-}
-
-.planta-campus .ruido {
-    color: #E6EDF5;
-}
-
-
-/* ========================================
-   8. TABELA DE REGISTROS DOS SENSORES
-======================================== */
-
-
-
-.conteudo {
-    margin-top: 16px;
-}
-
-.mapa {
-    width: 100%;
-    background: #111D29;
-    border: 1px solid #2A394B;
-    border-radius: 6px;
-}
-
-.mapa table {
-    width: 100%;
-    min-width: 1000px;
-    color: #E6EDF5;
-    font-size: 11px;
-    text-align: left;
-}
-
-.mapa th {
-    padding: 12px;
-    background: #15394D;
-    color: #35C6D9;
-}
-
-.mapa td {
-    padding: 12px;
-    border-bottom: 1px solid #2A394B;
-}
-
-.mapa tbody  {
-    background: #131F2E;
-}
-
-
-
-
-
-/* ========================================
-   6. CONTROLE DE ATUADORES
-======================================== */
-
-.retangulos-baixos {
-    display: grid;
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-    align-items: stretch;
-    gap: 12px;
-    width: 100%;
-    margin-top: 16px;
-}
-
-.Controle-Atuadores {
-    width: 100%;
-    height: 276px;
-    min-width: 0;
-    margin: 0;
-    padding: 0;
-
-    display: flex;
-    flex-direction: column;
-
-    background: #131E2D;
-    border: 1px solid #2A394B;
-    border-radius: 6px;
-    overflow: hidden;
-
-    color: #E6EDF5;
-    font-family: Arial, sans-serif;
-}
-
-.atuadores-header {
-    min-height: 35px;
-    padding: 8px 12px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-
-    background: #131E2D;
-    border-bottom: 1px solid #2A394B;
-}
-
-.atuadores-header h2 {
-    margin: 0;
-    font-size: 11px;
-    font-weight: 600;
-    color: #DCE5EF;
-}
-
-.modo-manual {
-    font-size: 9px;
-    color: #91A0B4;
-    white-space: nowrap;
-}
-
-.lista-atuadores {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-height: 0;
-}
-
-.atuador {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    min-height: 39px;
-    padding: 4px 12px;
-
-    border-bottom: 1px solid #243243;
-}
-
-.atuador-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.atuador-info h3 {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 4px;
-    margin: 0 0 2px;
-
-    color: #C9D3DF;
-    font-size: 10px;
-    font-weight: 500;
-}
-
-.atuador-info h3 span {
-    color: #91A0B4;
-    font-family: monospace;
-    font-size: 9px;
-    font-weight: 400;
-}
-
-.atuador-info p {
-    margin: 0;
-    color: #91A0B4;
-    font-family: monospace;
-    font-size: 8px;
-}
-
-.botao-atuador {
-    width: 70px;
-    min-width: 70px;
-    height: 22px;
-    padding: 0 5px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-
-    border: 1px solid;
-    border-radius: 4px;
-    background: transparent;
-
-    font-family: monospace;
-    font-size: 8px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.botao-atuador .indicador {
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-}
-
-.botao-atuador.ligado {
-    color: #47D7A0;
-    border-color: #285E50;
-}
-
-.botao-atuador.ligado .indicador {
-    background: #47D7A0;
-}
-
-.botao-atuador.desligado {
-    color: #91A0B4;
-    border-color: #344255;
-}
-
-.botao-atuador.desligado .indicador {
-    background: #91A0B4;
-}
-
-.registro-atuadores {
-    min-height: 48px;
-    padding: 8px 12px;
-    margin-top: 0;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 4px;
-
-    background: #111B29;
-    border-top: 1px solid #2A394B;
-}
-
-.registro-atuadores p {
-    margin: 0;
-    color: #91A0B4;
-    font-family: monospace;
-    font-size: 9px;
-}
-
-.registro-atuadores span {
-    display: block;
-    color: #65758A;
-    font-family: monospace;
-    font-size: 9px;
-}
-
-
-
-
-/* ========================================
-   7. Roda Pé
-======================================== */
-
-
-/* Rodapé do sistema */
-.rodape {
-    width: 100%;
-    margin-top: 16px;
-    background: #111d29;
-    border: 1px solid #2A394B;
-    border-radius: 6px;
-    color: #91A0B4;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
-}
-
-/* Área principal */
-.rodape-principal {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1.5fr 1fr;
-    gap: 24px;
-    padding: 22px 20px;
-}
-
-/* Identidade do sistema */
-.rodape-identidade {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-}
-
-.rodape-logo {
-    width: 32px;
-    height: 32px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #36748B;
-    border-radius: 5px;
-    color: #35C6D9;
-    font-size: 19px;
-}
-
-.rodape-titulo {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.rodape-titulo strong {
-    color: #E6EDF5;
-    font-size: 13px;
-}
-
-.rodape-titulo span {
-    color: #91A0B4;
-    font-size: 10px;
-    line-height: 1.5;
-}
-
-/* Colunas de informações */
-.rodape-coluna {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 9px;
-    min-width: 0;
-}
-
-.rodape-coluna h4 {
-    margin: 0 0 3px;
-    color: #35C6D9;
-    font-family: monospace;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
-
-.rodape-coluna p {
-    margin: 0;
-    color: #91A0B4;
-    font-size: 10px;
-    line-height: 1.5;
-}
-
-.rodape-coluna strong {
-    color: #DCE5EF;
-    font-weight: 500;
-}
-
-/* Faixa inferior */
-.rodape-inferior {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    flex-wrap: wrap;
-    padding: 12px 20px;
-    background: #0E1826;
-    border-top: 1px solid #2A394B;
-}
-
-.rodape-status {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    color: #47C98A;
-    font-size: 10px;
-    white-space: nowrap;
-}
-
-.indicador-rodape {
-    width: 6px;
-    height: 6px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    background: #47C98A;
-}
-
-.rodape-info {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    gap: 9px;
-    font-size: 10px;
-}
-
-.rodape-separador {
-    color: #344255;
-}
-
-
-/* ========================================
-   9. MENU LATERAL -
-======================================== */
-
-.topo .logo-topo {
-    width: 41px;
-    height: 41px;
-    flex: 0 0 41px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #35C6D9;
-    background: rgba(8, 24, 39, 0.42);
-    border: 1px solid #2AA8B9;
-    border-radius: 6px;
-    font-size: 25px;
-    line-height: 1;
-    transition: 0.2s;
-}
-
-.topo .logo-topo:hover {
-    background: rgba(53, 198, 217, 0.15);
-    border-color: #35C6D9;
-}
-
+/* ---------- Menu lateral ---------- */
 .menu-fundo {
+    display: none;
     position: fixed;
     inset: 0;
-    z-index: 1000;
-    background: rgba(0, 0, 0, 0.55);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 10;
+    background: rgba(20, 50, 70, 0.4);
 }
 
-.menu-fundo.aberto {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
+/* O fundo aparece quando o menu está aberto */
+.menu-fundo.aberto,
+body:has(.menu-lateral[aria-hidden="false"]) .menu-fundo {
+    display: block;
 }
 
 .menu-lateral {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1001;
+    z-index: 20;
     display: flex;
     flex-direction: column;
-    width: 290px;
-    max-width: 85vw;
-    height: 100vh;
-    height: 100dvh;
-    padding: 22px 16px;
-    box-sizing: border-box;
-    overflow-y: auto;
-
-    background: #111D2B;
-    border-right: 1px solid #2A394B;
-    box-shadow: 8px 0 30px rgba(0, 0, 0, 0.3);
-
-    transform: translateX(-105%);
-    visibility: hidden;
-    transition: transform 0.3s ease, visibility 0.3s ease;
+    width: 280px;
+    height: 100%;
+    padding: var(--espaco);
+    background: rgba(60, 120, 150, 0.88);
+    border-right: 1px solid var(--borda);
+    backdrop-filter: blur(14px);
+    transform: translateX(-100%);
+    transition: transform 0.25s;
 }
 
-.menu-lateral.aberto {
+.menu-lateral.aberto,
+.menu-lateral[aria-hidden="false"] {
     transform: translateX(0);
-    visibility: visible;
 }
 
 .menu-cabecalho {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    align-items: center;
 }
 
 .menu-identidade {
     display: flex;
     align-items: center;
-    gap: 10px;
-    min-width: 0;
+    gap: 12px;
 }
 
 .menu-logo {
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #35C6D9;
-    background: #0B2635;
-    border: 1px solid #28566A;
-    border-radius: 7px;
-    font-size: 23px;
+    font-size: 28px;
 }
 
 .menu-identidade h2 {
-    margin: 0 0 5px;
-    color: #E6EDF5;
-    font-size: 14px;
+    font-size: 18px;
+    font-weight: 500;
 }
 
 .menu-identidade p {
-    margin: 0;
-    color: #91A0B4;
-    font-size: 10px;
+    font-size: 14px;
+    color: var(--texto-suave);
 }
 
 .menu-fechar {
-    width: 34px;
-    height: 34px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #91A0B4;
-    background: transparent;
-    border: 1px solid #2A394B;
-    border-radius: 6px;
-    font-size: 24px;
+    font-size: 30px;
+    color: var(--texto);
+    background: none;
+    border: 0;
     cursor: pointer;
-}
-
-.menu-fechar:hover {
-    color: #35C6D9;
-    background: #1B2D3E;
-    border-color: #35C6D9;
 }
 
 .menu-separador {
     height: 1px;
-    margin: 24px 0;
-    background: #2A394B;
+    margin: 16px 0;
+    background: var(--borda);
 }
 
 .menu-titulo {
-    margin: 0 0 12px 10px;
-    color: #71859B;
-    font-family: monospace;
-    font-size: 10px;
+    margin-bottom: 10px;
+    font-size: 12px;
     letter-spacing: 1px;
+    color: var(--texto-suave);
 }
 
 .menu-links {
@@ -1157,28 +217,25 @@ button .logo-topo{
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 13px 12px;
-    color: #B9C8D8;
+    padding: 12px 14px;
+    font-size: 16px;
+    color: var(--texto-suave);
     text-decoration: none;
-    font-size: 13px;
-    background: transparent;
-    border: 1px solid transparent;
-    border-radius: 6px;
-    transition: background 0.2s, color 0.2s;
+    border-radius: 12px;
 }
 
-.menu-link:hover,
+.menu-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
 .menu-link.ativo {
-    color: #35C6D9;
-    background: rgba(53, 198, 217, 0.08);
-    border-color: rgba(53, 198, 217, 0.2);
+    color: var(--texto-escuro);
+    background: #fff;
 }
 
 .menu-icone {
-    width: 23px;
-    flex-shrink: 0;
+    width: 22px;
     text-align: center;
-    font-size: 19px;
 }
 
 .menu-rodape {
@@ -1186,23 +243,550 @@ button .logo-topo{
     align-items: center;
     gap: 8px;
     margin-top: auto;
-    padding: 18px 4px 4px;
-    color: #91A0B4;
-    font-size: 10px;
-    line-height: 1.5;
+    font-size: 14px;
+    color: var(--texto-suave);
 }
 
-.menu-status {
-    width: 7px;
-    height: 7px;
-    flex-shrink: 0;
-    background: #47C98A;
+.menu-status,
+.indicador-rodape {
+    width: 8px;
+    height: 8px;
+    background: var(--normal);
     border-radius: 50%;
-    box-shadow: 0 0 8px rgba(71, 201, 138, 0.35);
 }
 
+/* ---------- Cards de indicadores ---------- */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--espaco);
+}
 
+.card > p:first-child {
+    font-size: 18px;
+}
 
+/* Segunda linha do card: estado (normal por padrão) */
+.card > p:nth-child(2) {
+    margin-top: 4px;
+    font-size: 14px;
+    color: var(--normal);
+}
 
+.card > p.status-aviso {
+    color: var(--aviso);
+}
 
+.card > p.status-critico {
+    color: var(--critico);
+}
 
+.card h2 {
+    margin: 10px 0 6px;
+    font-size: 40px;
+    font-weight: 400;
+}
+
+.card > p:last-child {
+    font-size: 14px;
+    color: var(--texto-suave);
+}
+
+/* ---------- Gráficos ---------- */
+.graficos-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--espaco);
+}
+
+.graf-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.info-graf,
+.co2-header h3 {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.info-graf span,
+.co2-header span {
+    font-size: 14px;
+    color: var(--texto-suave);
+}
+
+.graf-periodo {
+    display: flex;
+    gap: 4px;
+}
+
+.graf-periodo button {
+    padding: 6px 14px;
+    font-size: 14px;
+    color: var(--texto-suave);
+    background: var(--fundo-card);
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.graf-periodo button.ativo {
+    color: var(--texto-escuro);
+    background: #fff;
+    border-color: #fff;
+}
+
+.graf-legendas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin: 14px 0;
+    font-size: 14px;
+    color: var(--texto-suave);
+}
+
+.PG,
+.PG2 {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.PG3 {
+    margin-left: auto;
+}
+
+.linha-temp,
+.linha-umid {
+    display: inline-block;
+    width: 20px;
+    height: 3px;
+    border-radius: 2px;
+}
+
+.linha-temp {
+    background: #ffffff;
+}
+
+.linha-umid {
+    background: #9fe3ff;
+}
+
+/* A altura fixa é necessária para o Chart.js se ajustar */
+.graf-conteudo {
+    position: relative;
+    height: 300px;
+}
+
+/* ---------- Gráfico de barras de CO2 ---------- */
+.co2-grafico {
+    margin-top: 16px;
+}
+
+.barra-co2 {
+    display: grid;
+    grid-template-columns: 74px 1fr;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.co2-label {
+    font-size: 14px;
+    color: var(--texto-suave);
+}
+
+.co2-trilho {
+    height: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+}
+
+.co2-valor {
+    height: 100%;
+    border-radius: 6px;
+}
+
+.co2-valor.normal {
+    background: #ffffff;
+}
+
+.co2-valor.aviso {
+    background: var(--aviso);
+}
+
+.co2-valor.critico {
+    background: var(--critico);
+}
+
+/* O recuo é igual à largura do nome + espaço, para alinhar com as barras */
+.co2-eixo {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 84px;
+    font-size: 12px;
+    color: var(--texto-suave);
+}
+
+.co2-rodape {
+    margin-top: 14px;
+    font-size: 14px;
+    color: var(--texto-suave);
+}
+
+/* ---------- Tabela de dispositivos ---------- */
+.retangulos-baixos {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--espaco);
+}
+
+.tabela-inf {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tabela-inf h1 {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.legenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 14px;
+}
+
+.legenda .normal {
+    color: var(--normal);
+}
+
+.legenda .aviso {
+    color: var(--aviso);
+}
+
+.legenda .critico {
+    color: var(--critico);
+}
+
+.legenda .sem-leitura {
+    color: var(--sem-leitura);
+}
+
+.conteudo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 240px;
+    gap: var(--espaco);
+    margin-top: 14px;
+}
+
+.mapa {
+    max-height: 320px;
+    overflow: auto;
+}
+
+.mapa table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.mapa th {
+    position: sticky;
+    top: 0;
+    padding: 10px;
+    font-weight: 400;
+    text-align: left;
+    white-space: nowrap;
+    color: var(--texto-suave);
+    background: var(--fundo-solido);
+}
+
+.mapa td {
+    padding: 12px 10px;
+    white-space: nowrap;
+    border-top: 1px solid var(--borda);
+}
+
+/* ---------- Detalhes do dispositivo ---------- */
+.detalhes {
+    padding-left: var(--espaco);
+    border-left: 1px solid var(--borda);
+}
+
+.detalhes h2 {
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.localizacao {
+    font-size: 14px;
+    color: var(--texto-suave);
+}
+
+.estado {
+    margin: 10px 0 14px;
+    font-size: 14px;
+    color: var(--normal);
+}
+
+.estado.aviso {
+    color: var(--aviso);
+}
+
+.estado.critico {
+    color: var(--critico);
+}
+
+.leitura {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-top: 1px solid var(--borda);
+}
+
+.leitura span {
+    color: var(--texto-suave);
+}
+
+.leitura strong {
+    font-weight: 500;
+}
+
+/* ---------- Controle de atuadores ---------- */
+.atuadores-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.atuadores-header h2 {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.modo-manual {
+    padding: 4px 12px;
+    font-size: 13px;
+    color: var(--texto);
+    background: var(--fundo-card);
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+}
+
+.atuador {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid var(--borda);
+}
+
+.atuador-info h3 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.atuador-info h3 span {
+    margin-left: 6px;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--texto-suave);
+}
+
+.atuador-info p {
+    font-size: 14px;
+    color: var(--texto-suave);
+}
+
+/* Botão em formato de pílula, como os seletores da referência */
+.botao-atuador {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    color: var(--texto);
+    background: var(--fundo-card);
+    border: 1px solid var(--borda);
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.botao-atuador .indicador {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.botao-atuador.ligado .indicador {
+    background: var(--normal);
+}
+
+.botao-atuador.desligado .indicador {
+    background: var(--sem-leitura);
+}
+
+.registro-atuadores {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--borda);
+    font-size: 14px;
+}
+
+.registro-atuadores p {
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.registro-atuadores span {
+    color: var(--texto-suave);
+}
+
+/* ---------- Rodapé ---------- */
+.rodape {
+    padding: 24px;
+}
+
+.rodape-principal {
+    display: grid;
+    grid-template-columns: 1.2fr repeat(3, 1fr);
+    gap: 24px;
+}
+
+.rodape-identidade {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.rodape-logo {
+    font-size: 32px;
+}
+
+.rodape-titulo strong {
+    display: block;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.rodape-titulo span {
+    font-size: 14px;
+    color: var(--texto-suave);
+}
+
+.rodape-coluna h4 {
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: var(--texto-suave);
+}
+
+.rodape-coluna p {
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: var(--texto-suave);
+}
+
+.rodape-coluna strong {
+    font-weight: 500;
+    color: var(--texto);
+}
+
+.rodape-inferior {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--borda);
+    font-size: 14px;
+    color: var(--texto-suave);
+}
+
+.rodape-status,
+.rodape-info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.rodape-separador {
+    opacity: 0.5;
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 1000px) {
+    body {
+        padding: 16px;
+    }
+
+    .cards-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .graficos-container,
+    .retangulos-baixos {
+        grid-template-columns: 1fr;
+    }
+
+    .rodape-principal {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ---------- Celular ---------- */
+@media (max-width: 600px) {
+    body {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .topo {
+        border-radius: var(--raio);
+    }
+
+    .texto-topo h1 {
+        font-size: 22px;
+    }
+
+    .card h2 {
+        font-size: 34px;
+    }
+
+    .cards-container,
+    .conteudo,
+    .rodape-principal {
+        grid-template-columns: 1fr;
+    }
+
+    .detalhes {
+        padding-left: 0;
+        padding-top: var(--espaco);
+        border-left: 0;
+        border-top: 1px solid var(--borda);
+    }
+
+    .PG3 {
+        margin-left: 0;
+    }
+
+    .graf-conteudo {
+        height: 240px;
+    }
+}
