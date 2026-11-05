@@ -1,5 +1,6 @@
 
-/* ---------- Variáveis  ---------- */
+
+/* ---------- Variáveis ---------- */
 :root {
     --fundo-card: rgba(255, 255, 255, 0.2);
     --fundo-solido: #46808a;
@@ -30,10 +31,15 @@ body {
     font-family: "Segoe UI", Arial, sans-serif;
     font-size: 16px;
     color: var(--texto);
-    background: linear-gradient(135deg, #3f78a0 0%, #5fa5a8 55%, #8cc9b0 100%) fixed;
+    background: linear-gradient(
+            135deg,
+            #3f78a0 0%,
+            #5fa5a8 55%,
+            #8cc9b0 100%
+    ) fixed;
 }
 
-/* ---------- Estilo comum dos painéis---------- */
+/* ---------- Estilo comum dos painéis ---------- */
 .topo,
 .card,
 .card-Temp,
@@ -132,7 +138,6 @@ body {
     background: rgba(20, 50, 70, 0.4);
 }
 
-/* O fundo aparece quando o menu está aberto */
 .menu-fundo.aberto,
 body:has(.menu-lateral[aria-hidden="false"]) .menu-fundo {
     display: block;
@@ -266,7 +271,6 @@ body:has(.menu-lateral[aria-hidden="false"]) .menu-fundo {
     font-size: 18px;
 }
 
-/* Segunda linha do card: estado (normal por padrão) */
 .card > p:nth-child(2) {
     margin-top: 4px;
     font-size: 14px;
@@ -373,70 +377,52 @@ body:has(.menu-lateral[aria-hidden="false"]) .menu-fundo {
 }
 
 .linha-umid {
-    background: #9fe3ff;
+    background: #2356ff;
 }
 
-/* A altura fixa é necessária para o Chart.js se ajustar */
+/* ---------- Gráfico de temperatura e umidade ---------- */
 .graf-conteudo {
     position: relative;
+    width: 100%;
     height: 300px;
 }
 
-/* ---------- Gráfico de barras de CO2 ---------- */
-.co2-grafico {
-    margin-top: 16px;
-}
+/* ========================================
+   NOVO GRÁFICO DE COLUNAS
+======================================== */
 
-.barra-co2 {
-    display: grid;
-    grid-template-columns: 74px 1fr;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
-}
-
-.co2-label {
-    font-size: 14px;
-    color: var(--texto-suave);
-}
-
-.co2-trilho {
-    height: 12px;
+.card-co2 {
+    min-width: 0;
+    padding: 20px;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.25);
-    border-radius: 6px;
 }
 
-.co2-valor {
-    height: 100%;
-    border-radius: 6px;
+.co2-header {
+    margin-bottom: 15px;
 }
 
-.co2-valor.normal {
-    background: #ffffff;
+.co2-header h3 {
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--texto);
 }
 
-.co2-valor.aviso {
-    background: var(--aviso);
-}
-
-.co2-valor.critico {
-    background: var(--critico);
-}
-
-/* O recuo é igual à largura do nome + espaço, para alinhar com as barras */
-.co2-eixo {
-    display: flex;
-    justify-content: space-between;
-    padding-left: 84px;
-    font-size: 12px;
-    color: var(--texto-suave);
-}
-
-.co2-rodape {
-    margin-top: 14px;
+.co2-header span {
     font-size: 14px;
     color: var(--texto-suave);
+}
+
+.co2-grafico-colunas {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    min-width: 0;
+}
+
+.co2-grafico-colunas canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 /* ---------- Tabela de dispositivos ---------- */
@@ -610,7 +596,6 @@ body:has(.menu-lateral[aria-hidden="false"]) .menu-fundo {
     color: var(--texto-suave);
 }
 
-/* Botão em formato de pílula, como os seletores da referência */
 .botao-atuador {
     display: inline-flex;
     align-items: center;
@@ -788,5 +773,13 @@ body:has(.menu-lateral[aria-hidden="false"]) .menu-fundo {
 
     .graf-conteudo {
         height: 240px;
+    }
+
+    .co2-grafico-colunas {
+        height: 260px;
+    }
+
+    .co2-header h3 {
+        font-size: 18px;
     }
 }

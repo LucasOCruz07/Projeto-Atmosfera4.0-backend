@@ -11,239 +11,176 @@
 
 <body>
 
-    <!-- CABEÇALHO -->
-    <header class="topo">
-        <div class="inf-esquerda">
+<!-- CABEÇALHO -->
+<header class="topo">
+    <div class="inf-esquerda">
 
-            <button class="logo-topo"
-                    id="botaoMenu"
-                    type="button"
-                    aria-label="Abrir menu"
-                    aria-controls="menuLateral"
-                    aria-expanded="false">
-                ☰
-            </button>
+        <button class="logo-topo"
+                id="botaoMenu"
+                type="button"
+                aria-label="Abrir menu"
+                aria-controls="menuLateral"
+                aria-expanded="false">
+            ☰
+        </button>
 
-            <div class="texto-topo">
-                <h1>Supervisão Ambiental</h1>
-                <h2>Senai "Anchieta" · Campus principal</h2>
-            </div>
+        <div class="texto-topo">
+            <h1>Supervisão Ambiental</h1>
+            <h2>Senai "Anchieta" · Campus principal</h2>
         </div>
+    </div>
 
-        <div class="inf-direita">
+    <div class="inf-direita">
             <span class="status-dados" id="statusDados">
     CONECTANDO...
 </span>
-            <p class="ultima-atualizacao">
-                Atualizado:
-                <strong>15/10, 09:24:39</strong>
-            </p>
-        </div>
-    </header>
+        <p class="ultima-atualizacao">
+            Atualizado:
+            <strong>15/10, 09:24:39</strong>
+        </p>
+    </div>
+</header>
 
-    <!-- MENU LATERAL -->
-    <div class="menu-fundo" id="menuFundo"></div>
+<!-- MENU LATERAL -->
+<div class="menu-fundo" id="menuFundo"></div>
 
-    <aside class="menu-lateral"
-           id="menuLateral"
-           aria-label="Menu de navegação"
-           aria-hidden="true">
+<aside class="menu-lateral"
+       id="menuLateral"
+       aria-label="Menu de navegação"
+       aria-hidden="true">
 
-        <div class="menu-cabecalho">
+    <div class="menu-cabecalho">
 
-            <div class="menu-identidade">
-                <span class="menu-logo">◉</span>
+        <div class="menu-identidade">
+            <span class="menu-logo">◉</span>
 
-                <div>
-                    <h2>Atmosfera 4.0</h2>
-                    <p>Supervisão Ambiental</p>
-                </div>
+            <div>
+                <h2>Atmosfera 4.0</h2>
+                <p>Supervisão Ambiental</p>
             </div>
-
-            <button class="menu-fechar"
-                    id="fecharMenu"
-                    type="button"
-                    aria-label="Fechar menu">
-                &times;
-            </button>
-
         </div>
 
-        <div class="menu-separador"></div>
-
-        <p class="menu-titulo">NAVEGAÇÃO</p>
-
-        <nav class="menu-links">
-
-            <a href="index.html" class="menu-link ativo">
-                <span class="menu-icone">⌂</span>
-                <span>Painel principal</span>
-            </a>
-
-            <a href="historico.html" class="menu-link">
-                <span class="menu-icone">◷</span>
-                <span>Histórico de dados</span>
-            </a>
-
-           
-        </nav>
-
-        <div class="menu-rodape">
-            <span class="menu-status"></span>
-            Sistema de monitoramento ativo
-        </div>
-
-    </aside>
-
-    <!-- INDICADORES GERAIS -->
-    <div class="cards-container">
-
-        <div class="card Temp">
-            <p class="PT1">Temperatura interior</p>
-            <p class="PT2">● Normal</p>
-            <h2 class="HT">22.5° C</h2>
-            <p class="PT3">Limite de aviso 25° C</p>
-        </div>
-
-        <div class="card Umidade">
-            <p class="PU1">Umidade Média</p>
-            <p class="PU2">● Normal</p>
-            <h2 class="HU">49 %HR</h2>
-            <p class="PU3">Intervalo recomendado 40-60 %</p>
-        </div>
-
-        <div class="card Ar">
-            <p class="PA1">CO² máximo</p>
-            <p class="PA2 status-critico">● Crítico</p>
-            <h2 class="HA">1617 ppm</h2>
-            <p class="PA3">ENV-GIN · Ginásio</p>
-        </div>
-
-        <div class="card Dispositivos">
-            <p class="PD1">Dispositivos em linha</p>
-            <p class="PD2 status-aviso">● Aviso</p>
-            <h2 class="HD">--</h2>
-            <p class="PD3">3 com valores fora do intervalo</p>
-        </div>
+        <button class="menu-fechar"
+                id="fecharMenu"
+                type="button"
+                aria-label="Fechar menu">
+            &times;
+        </button>
 
     </div>
 
-    <div class="graficos-container">
+    <div class="menu-separador"></div>
 
-        <!-- TEMPERATURA E UMIDADE -->
-        <div class="card-Temp">
+    <p class="menu-titulo">NAVEGAÇÃO</p>
 
-            <div class="Graf_Temp">
+    <nav class="menu-links">
 
-                <div class="graf-header">
-                    <h3 class="info-graf">
-                        Temperatura e umidade — CO2-A02
-                        <span>[°C · %HR]</span>
-                    </h3>
+        <a href="index.html" class="menu-link ativo">
+            <span class="menu-icone">⌂</span>
+            <span>Painel principal</span>
+        </a>
 
-                    <div class="graf-periodo">
-                        <button type="button">1h</button>
-                        <button type="button" class="ativo">6h</button>
-                        <button type="button">24h</button>
-                    </div>
+        <a href="historico.html" class="menu-link">
+            <span class="menu-icone">◷</span>
+            <span>Histórico de dados</span>
+        </a>
+
+
+    </nav>
+
+    <div class="menu-rodape">
+        <span class="menu-status"></span>
+        Sistema de monitoramento ativo
+    </div>
+
+</aside>
+
+<!-- INDICADORES GERAIS -->
+<div class="cards-container">
+
+    <div class="card Temp">
+        <p class="PT1">Temperatura interior</p>
+        <p class="PT2">● Normal</p>
+        <h2 class="HT">22.5° C</h2>
+        <p class="PT3">Limite de aviso 25° C</p>
+    </div>
+
+    <div class="card Umidade">
+        <p class="PU1">Umidade Média</p>
+        <p class="PU2">● Normal</p>
+        <h2 class="HU">49 %HR</h2>
+        <p class="PU3">Intervalo recomendado 40-60 %</p>
+    </div>
+
+    <div class="card Ar">
+        <p class="PA1">CO² máximo</p>
+        <p class="PA2 status-critico">● Crítico</p>
+        <h2 class="HA">1617 ppm</h2>
+        <p class="PA3">ENV-GIN · Ginásio</p>
+    </div>
+
+    <div class="card Dispositivos">
+        <p class="PD1">Dispositivos em linha</p>
+        <p class="PD2 status-aviso">● Aviso</p>
+        <h2 class="HD">--</h2>
+        <p class="PD3">3 com valores fora do intervalo</p>
+    </div>
+
+</div>
+
+<div class="graficos-container">
+
+    <!-- TEMPERATURA E UMIDADE -->
+    <div class="card-Temp">
+
+        <div class="Graf_Temp">
+
+            <div class="graf-header">
+                <h3 class="info-graf">
+                    Temperatura e umidade — CO2-A02
+                    <span>[°C · %HR]</span>
+                </h3>
+
+                <div class="graf-periodo">
+                    <button type="button">1h</button>
+                    <button type="button" class="ativo">6h</button>
+                    <button type="button">24h</button>
                 </div>
-
-                <div class="graf-legendas">
-                    <p class="PG">
-                        <span class="linha-temp"></span>
-                        Temperatura (eixo esq.)
-                    </p>
-
-                    <p class="PG2">
-                        <span class="linha-umid"></span>
-                        Umidade (eixo dir.)
-                    </p>
-
-                    <p class="PG3">Bloco A · Sala 4</p>
-                </div>
-
-                <div class="graf-conteudo">
-                    <canvas id="graficoTemperaturaUmidade"></canvas>
-                </div>
-
             </div>
+
+            <div class="graf-legendas">
+                <p class="PG">
+                    <span class="linha-temp"></span>
+                    Temperatura (eixo esq.)
+                </p>
+
+                <p class="PG2">
+                    <span class="linha-umid"></span>
+                    Umidade (eixo dir.)
+                </p>
+
+                <p class="PG3">Bloco A · Sala 4</p>
+            </div>
+
+            <div class="graf-conteudo">
+                <canvas id="graficoTemperaturaUmidade"></canvas>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- GRÁFICO DE COLUNAS -->
+    <div class="card-co2">
+
+        <div class="co2-header">
+            <h3>
+                Média de Temperatura Anual
+                <span>[p/Mês]</span>
+            </h3>
         </div>
 
-        <!-- CONCENTRAÇÃO DE CO2 -->
-        <div class="card-co2">
-
-            <div class="co2-header">
-                <h3>
-                    Concentração de CO₂ por dispositivo
-                    <span>[ppm]</span>
-                </h3>
-            </div>
-
-            <div class="co2-grafico">
-
-                <div class="barra-co2">
-                    <span class="co2-label">ENV-A01</span>
-                    <div class="co2-trilho">
-                        <div class="co2-valor normal" style="width: 50%;"></div>
-                    </div>
-                </div>
-
-                <div class="barra-co2">
-                    <span class="co2-label">CO2-A02</span>
-                    <div class="co2-trilho">
-                        <div class="co2-valor aviso" style="width: 75%;"></div>
-                    </div>
-                </div>
-
-                <div class="barra-co2">
-                    <span class="co2-label">ENV-B01</span>
-                    <div class="co2-trilho">
-                        <div class="co2-valor normal" style="width: 45%;"></div>
-                    </div>
-                </div>
-
-                <div class="barra-co2">
-                    <span class="co2-label">ENV-BIB</span>
-                    <div class="co2-trilho">
-                        <div class="co2-valor normal" style="width: 42%;"></div>
-                    </div>
-                </div>
-
-                <div class="barra-co2">
-                    <span class="co2-label">NOT-REF</span>
-                    <div class="co2-trilho">
-                        <div class="co2-valor aviso" style="width: 58%;"></div>
-                    </div>
-                </div>
-
-                <div class="barra-co2">
-                    <span class="co2-label">ENV-PAT</span>
-                    <div class="co2-trilho">
-                        <div class="co2-valor normal" style="width: 32%;"></div>
-                    </div>
-                </div>
-
-                <div class="barra-co2">
-                    <span class="co2-label">ENV-GIN</span>
-                    <div class="co2-trilho">
-                        <div class="co2-valor critico" style="width: 90%;"></div>
-                    </div>
-                </div>
-
-                <div class="co2-eixo">
-                    <span>0</span>
-                    <span>450</span>
-                    <span>900</span>
-                    <span>1350</span>
-                    <span>1800</span>
-                </div>
-
-            </div>
-
-            <div class="co2-rodape">
-                Aviso ≥ 1000 ppm · Crítico ≥ 1400 ppm
-            </div>
-
+        <div class="co2-grafico-colunas">
+            <canvas id="graficoColunas"></canvas>
         </div>
 
     </div>
@@ -269,18 +206,18 @@
                 <div class="mapa">
                     <table>
                         <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Time Stamp</th>
-                                <th>Temp</th>
-                                <th>Umidade</th>
-                                <th>Pressao</th>
-                                <th>Altitude</th>
-                                <th>Lumin</th>
-                                <th>Velc.Vento</th>
-                                <th>Dirç Vento</th>
-                                <th>Inte Wifi</th>
-                            </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Time Stamp</th>
+                            <th>Temp</th>
+                            <th>Umidade</th>
+                            <th>Pressao</th>
+                            <th>Altitude</th>
+                            <th>Lumin</th>
+                            <th>Velc.Vento</th>
+                            <th>Dirç Vento</th>
+                            <th>Inte Wifi</th>
+                        </tr>
                         </thead>
 
                         <tbody id="tabelaRegistros">

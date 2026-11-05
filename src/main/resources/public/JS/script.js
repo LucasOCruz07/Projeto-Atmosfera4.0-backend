@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
     // Elementos dos cards
     const temperaturaCard = document.querySelector(".HT");
@@ -32,8 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
         co2Critico: 1400
     };
 
-
-
     let sensores = {};
     let dispositivos = [];
     let registros = [];
@@ -58,7 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             dispositivos = await resposta.json();
 
-            // Total de dispositivos cadastrados
             const total = dispositivos.length;
 
             if (totalSensores) {
@@ -73,13 +69,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 statusRodape.textContent = "Dados do banco de dados";
             }
 
-            // O total de dispositivos online será calculado
-            // quando confirmarmos o campo de status da API.
             if (dispositivosOnline) {
                 dispositivosOnline.textContent = `--/${total}`;
             }
 
-            // Atualiza o card superior
             if (dispositivosCard) {
                 dispositivosCard.textContent = `--/${total}`;
             }
@@ -113,7 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             registros.sort((a, b) => b.id_registro - a.id_registro);
 
-            // Pega o registro mais recente do banco
             const ultimoRegistro = registros[0];
 
             if (ultimoRegistro) {
@@ -122,7 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 atualizarSensores();
             }
-
 
             // Limpa os dados antigos da tabela
             tabelaRegistros.innerHTML = "";
@@ -192,7 +183,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!elemento) return;
 
         elemento.textContent = `●${texto}`;
-        elemento.classList.remove("status-normal", "status-aviso", "status-critico");
+        elemento.classList.remove(
+            "status-normal",
+            "status-aviso",
+            "status-critico"
+        );
         elemento.classList.add(classe);
     }
 
@@ -248,11 +243,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Detalhes dos sensores
         if (detalheTemperatura) {
-            detalheTemperatura.textContent = `${sensores.temperatura.toFixed(1)} °C`;
+            detalheTemperatura.textContent =
+                `${sensores.temperatura.toFixed(1)} °C`;
         }
 
         if (detalheUmidade) {
-            detalheUmidade.textContent = `${Math.round(sensores.umidade)} %HR`;
+            detalheUmidade.textContent =
+                `${Math.round(sensores.umidade)} %HR`;
         }
     }
 
@@ -287,72 +284,6 @@ document.addEventListener("DOMContentLoaded", () => {
             temperaturas,
             umidades
         };
-    }
-
-    // Atualiza as barras de concentração de CO2
-    function atualizarBarrasCo2() {
-        document.querySelectorAll(".barra-co2").forEach((barra, indice) => {
-            const dispositivo = dispositivos[indice];
-            if (!dispositivo) return;
-
-            const valor = barra.querySelector(".co2-valor");
-            const trilho = barra.querySelector(".co2-trilho");
-
-            if (!valor || !trilho) return;
-
-            const porcentagem = Math.min(
-                (dispositivo.co2 / 1800) * 100,
-                100
-            );
-
-            valor.style.width = `${porcentagem}%`;
-
-            valor.classList.remove("normal", "aviso", "critico");
-
-            if (dispositivo.co2 >= limites.co2Critico) {
-                valor.classList.add("critico");
-            } else if (dispositivo.co2 >= limites.co2Aviso) {
-                valor.classList.add("aviso");
-            } else {
-                valor.classList.add("normal");
-            }
-
-            trilho.setAttribute(
-                "title",
-                `${dispositivo.nome}: ${dispositivo.co2} ppm`
-            );
-        });
-    }
-
-    // Simula pequenas variações nos sensores
-    function simularSensores() {
-        sensores.temperatura = Math.max(
-            18,
-            Math.min(32, sensores.temperatura + (Math.random() - 0.5) * 1.2)
-        );
-
-        sensores.umidade = Math.max(
-            25,
-            Math.min(75, sensores.umidade + (Math.random() - 0.5) * 4)
-        );
-
-        sensores.co2 = Math.max(
-            400,
-            Math.min(2000, sensores.co2 + (Math.random() - 0.5) * 150)
-        );
-
-        dispositivos.forEach((dispositivo) => {
-            dispositivo.co2 = Math.max(
-                350,
-                Math.min(
-                    2000,
-                    dispositivo.co2 + (Math.random() - 0.5) * 120
-                )
-            );
-        });
-
-        atualizarSensores();
-        atualizarBarrasCo2();
     }
 
     // Controle dos atuadores
@@ -431,7 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
     carregarRegistros();
     atualizarRodape();
 
-    // Atualizar os registros a cada 1 hr
+    // Atualizar os registros a cada 1 hora
     setInterval(carregarRegistros, 3600000);
     setInterval(atualizarRodape, 3600000);
 });
@@ -481,7 +412,14 @@ document.addEventListener("keydown", function(evento) {
     }
 });
 
+
+/* ========================================
+   GRÁFICO DE TEMPERATURA E UMIDADE
+   CHART.JS
+======================================== */
+
 document.addEventListener("DOMContentLoaded", function () {
+
     const elementoGrafico = document.getElementById(
         "graficoTemperaturaUmidade"
     );
@@ -500,44 +438,43 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const contexto = elementoGrafico.getContext("2d");
 
-    // Dados demonstrativos para cada período.
-    // Substitua pelos dados reais dos sensores quando disponíveis.
     const dadosGrafico = {
         labels: [],
         temperatura: [],
         umidade: []
     };
 
-    // Gradientes das linhas.
+    // Gradiente da temperatura
     const gradienteTemperatura = contexto.createLinearGradient(
         0, 0, 0, 180
     );
 
     gradienteTemperatura.addColorStop(
         0,
-        "rgba(245, 160, 75, 0.25)"
+        "rgba(43, 125, 248, 0.75)"
     );
 
     gradienteTemperatura.addColorStop(
         1,
-        "rgba(245, 160, 75, 0)"
+        "rgba(75, 169, 245, 0.34)"
     );
 
+    // Gradiente da umidade
     const gradienteUmidade = contexto.createLinearGradient(
         0, 0, 0, 180
     );
 
     gradienteUmidade.addColorStop(
         0,
-        "rgba(104, 169, 245, 0.20)"
+        "rgb(241, 244, 247)"
     );
 
     gradienteUmidade.addColorStop(
         1,
-        "rgba(104, 169, 245, 0)"
+        "rgba(255, 255, 255, 0.23)"
     );
 
-    // Criação do gráfico.
+    // Criação do gráfico
     const grafico = new Chart(contexto, {
         type: "line",
 
@@ -550,15 +487,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     data: dadosGrafico.temperatura,
 
-                    borderColor: "#f5a04b",
+                    borderColor: "#1f62f1",
                     backgroundColor: gradienteTemperatura,
 
                     borderWidth: 2,
                     pointRadius: 3,
                     pointHoverRadius: 5,
 
-                    pointBackgroundColor: "#f5a04b",
-                    pointBorderColor: "#1b1d21",
+                    pointBackgroundColor: "#579aff",
+                    pointBorderColor: "#ffffff",
 
                     fill: true,
                     tension: 0.4,
@@ -571,15 +508,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     data: dadosGrafico.umidade,
 
-                    borderColor: "#68a9f5",
+                    borderColor: "#ffffff",
                     backgroundColor: gradienteUmidade,
 
                     borderWidth: 2,
                     pointRadius: 3,
                     pointHoverRadius: 5,
 
-                    pointBackgroundColor: "#68a9f5",
-                    pointBorderColor: "#1b1d21",
+                    pointBackgroundColor: "#ffffff",
+                    pointBorderColor: "#b4b3b3",
 
                     fill: true,
                     tension: 0.4,
@@ -654,7 +591,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     },
 
                     ticks: {
-                        color: "#f5a04b",
+                        color: "#ffffff",
                         font: {
                             size: 10
                         },
@@ -681,7 +618,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     },
 
                     ticks: {
-                        color: "#68a9f5",
+                        color: "#ffffff",
                         font: {
                             size: 10
                         },
@@ -731,6 +668,158 @@ document.addEventListener("DOMContentLoaded", function () {
         grafico.update();
     };
 
+});
+/* ========================================
+   GRÁFICO DE COLUNAS
+======================================== */
 
-        });
+const elementoColunas = document.getElementById("graficoColunas");
 
+if (elementoColunas) {
+
+    const contextoColunas = elementoColunas.getContext("2d");
+
+    new Chart(contextoColunas, {
+
+        type: "bar",
+
+        data: {
+
+            labels: [
+                "Janeiro",
+                "Fevereiro",
+                "Março",
+                "Abril",
+                "Maio",
+                "Junho",
+                "Julho",
+                "Agosto",
+                "Setembro",
+                "Outubro",
+                "Novembro",
+                "Decembro"
+            ],
+
+            datasets: [
+                {
+                    label: "Temperatura",
+
+                    data: [
+                        28,
+                        26,
+                        26.5,
+                        24.4,
+                        22.2,
+                        25.3,
+                        20.4,
+                        22.5,
+                        21.3,
+                        24.5,
+                        24.3,
+                        26.7
+                    ],
+
+                    backgroundColor: "#48f0a2ab",
+
+                    borderRadius: 2,
+
+                    borderSkipped: false,
+
+                    barPercentage: 0.55,
+
+                    categoryPercentage: 0.75
+                }
+            ]
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+                    display: false
+                },
+
+                tooltip: {
+                    backgroundColor: "rgb(255, 255, 255)",
+
+                    titleColor: "#388329",
+
+                    bodyColor: "#000000",
+
+                    callbacks: {
+                        label: function(context) {
+                            return context.parsed.y +
+                                "Temperatura";
+                        }
+                    }
+                }
+            },
+
+            scales: {
+
+                x: {
+
+                    grid: {
+                        display: false
+                    },
+
+                    ticks: {
+                        color: "#ffffff",
+
+                        font: {
+                            size: 11
+                        }
+                    },
+
+                    border: {
+                        color: "rgba(255, 255, 255, 0.87)"
+                    }
+                },
+
+                y: {
+
+                    beginAtZero: true,
+
+                    min: 0,
+
+                    max: 30,
+
+                    title: {
+                        display: true,
+
+                        text: "Temperatura",
+
+                        color: "#ffffff",
+
+                        font: {
+                            size: 12
+                        }
+                    },
+
+                    ticks: {
+                        stepSize: 5,
+
+                        color: "#ffffff",
+
+                        font: {
+                            size: 11
+                        }
+                    },
+
+                    grid: {
+                        color: "rgba(255,255,255,0.18)"
+                    },
+
+                    border: {
+                        color: "rgba(255,255,255,0.3)"
+                    }
+                }
+            }
+        }
+    });
+}
