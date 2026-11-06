@@ -113,10 +113,10 @@
     </div>
 
     <div class="card Ar">
-        <p class="PA1">CO² máximo</p>
-        <p class="PA2 status-critico">● Crítico</p>
-        <h2 class="HA">1617 ppm</h2>
-        <p class="PA3">ENV-GIN · Ginásio</p>
+        <p class="PA1">Velocidade do Vent.</p>
+        <p class="PA2 status-critico">● Normal</p>
+        <h2 class="HA">2-6 Km/h</h2>
+        <p class="PA3">180º ao Sul</p>
     </div>
 
     <div class="card Dispositivos">
@@ -336,55 +336,8 @@
     <!-- RODAPÉ DO SISTEMA -->
     <footer class="rodape">
 
-        <div class="rodape-principal">
-
-            <div class="rodape-identidade">
-                <div class="rodape-logo">◉</div>
-
-                <div class="rodape-titulo">
-                    <strong>Atmosfera 4.0</strong>
-                    <span>Supervisão Ambiental</span>
-                </div>
-            </div>
-
-            <div class="rodape-coluna">
-                <h4>SISTEMA</h4>
-                <p>Versão <strong>1.0.0</strong></p>
-                <p>Ambiente: <strong id="ambienteSistema">Conectando...</strong></p>
-                <p>Plataforma: <strong>Monitoramento IoT</strong></p>
-            </div>
-
-            <div class="rodape-coluna">
-                <h4>MONITORAMENTO</h4>
-                <p>Sensores cadastrados: <strong id="totalSensores">--</strong></p>
-                <p>Dispositivos em linha: <strong id="dispositivosOnline">--</strong></p>
-                <p>Parâmetros: <strong>Temperatura, umidade e CO₂</strong></p>
-            </div>
-
-            <div class="rodape-coluna">
-                <h4>LIMITES DE REFERÊNCIA</h4>
-                <p>Temperatura: <strong>25 °C</strong></p>
-                <p>Umidade: <strong>40–60 %RH</strong></p>
-                <p>CO₂ crítico: <strong>1400 ppm</strong></p>
-            </div>
-
-        </div>
-
-        <div class="rodape-inferior">
-
-            <div class="rodape-status">
-                <span class="indicador-rodape"></span>
-                <span>Painel em execução</span>
-            </div>
-
-            <div class="rodape-info">
-                <span>Senai "Anchieta" · Campus principal</span>
-                <span class="rodape-separador">|</span>
-                <span id="statusRodape">Conectando ao banco...</span>
-                <span class="rodape-separador">|</span>
-                <span>© 2026 SENAI</span>
-            </div>
-
+        <div class="grafico-container">
+            <canvas id="graficoRosca"></canvas>
         </div>
 
     </footer>
@@ -397,6 +350,8 @@
 
     <!-- Código principal -->
     <script src="JS/script.js"></script>
+
+
 
 </body>
 </html>

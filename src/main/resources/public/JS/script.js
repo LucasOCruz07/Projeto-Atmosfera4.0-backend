@@ -55,7 +55,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
             dispositivos = await resposta.json();
 
+// Quantidade total de dispositivos cadastrados
             const total = dispositivos.length;
+
+            console.log("Dispositivos recebidos:", dispositivos);
+
+            const respostaStatus = await fetch(
+                "http://localhost:8080/api/dispositivos/status"
+            );
+
+            if (!respostaStatus.ok) {
+                throw new Error("Erro ao buscar status dos dispositivos");
+            }
+
+            const status = await respostaStatus.json();
+
+            const online = status.online;
 
             if (totalSensores) {
                 totalSensores.textContent = total;
@@ -70,12 +85,19 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if (dispositivosOnline) {
-                dispositivosOnline.textContent = `--/${total}`;
+                dispositivosOnline.textContent = `${online}/${total}`;
             }
 
             if (dispositivosCard) {
-                dispositivosCard.textContent = `--/${total}`;
+                dispositivosCard.textContent = `${online}/${total}`;
             }
+
+// Atualiza o status do card
+            atualizarStatus(
+                statusDispositivos,
+                online > 0 ? "Online" : "Offline",
+                online > 0 ? "status-normal" : "status-critico"
+            );
 
         } catch (erro) {
             console.error("Erro ao atualizar rodapé:", erro);
@@ -102,6 +124,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (typeof atualizarGrafico === "function") {
                 atualizarGrafico(registros);
+            }
+
+// Atualiza o gráfico anual com os dados do banco
+            if (typeof atualizarGraficoAnual === "function") {
+                atualizarGraficoAnual(registros);
             }
 
             registros.sort((a, b) => b.id_registro - a.id_registro);
@@ -364,7 +391,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Atualizar os registros a cada 1 hora
     setInterval(carregarRegistros, 3600000);
-    setInterval(atualizarRodape, 3600000);
+    setInterval(atualizarRodape, 60000);
 });
 
 
@@ -679,7 +706,7 @@ if (elementoColunas) {
 
     const contextoColunas = elementoColunas.getContext("2d");
 
-    new Chart(contextoColunas, {
+    const graficoAnual = new Chart(contextoColunas, {
 
         type: "bar",
 
@@ -704,20 +731,9 @@ if (elementoColunas) {
                 {
                     label: "Temperatura",
 
-                    data: [
-                        28,
-                        26,
-                        26.5,
-                        24.4,
-                        22.2,
-                        25.3,
-                        20.4,
-                        22.5,
-                        21.3,
-                        24.5,
-                        24.3,
-                        26.7
-                    ],
+                    data: Array(12).fill(null),
+
+                    backgroundColor: "#48f0a2ab",
 
                     backgroundColor: "#48f0a2ab",
 
@@ -753,8 +769,8 @@ if (elementoColunas) {
 
                     callbacks: {
                         label: function(context) {
-                            return context.parsed.y +
-                                "Temperatura";
+                            return "Temperatura média: " +
+                                context.parsed.y + " °C";
                         }
                     }
                 }
@@ -822,4 +838,88 @@ if (elementoColunas) {
             }
         }
     });
+    window.atualizarGraficoAnual = function(registros) {
+
+        if (!Array.isArray(registros)) return;
+
+        // Ano atual
+        const anoAtual = new Date().getFullYear();
+
+        // Armazena a soma e quantidade de registros por mês
+        const somaTemperaturas = Array(12).fill(0);
+        const quantidadeRegistros = Array(12).fill(0);
+
+        registros.forEach(registro => {
+
+            // A data vem como objeto do Java
+            const data = registro.data_hora?.date;
+
+            if (!data) return;
+
+            // Considera somente registros do ano atual
+            if (Number(data.year) !== anoAtual) return;
+
+            // O mês no JSON vai de 1 a 12
+            // O array JavaScript vai de 0 a 11
+            const mes = Number(data.month) - 1;
+
+            if (mes < 0 || mes > 11) return;
+
+            const temperatura = Number(registro.temperatura);
+
+            if (!Number.isFinite(temperatura)) return;
+
+            somaTemperaturas[mes] += temperatura;
+            quantidadeRegistros[mes]++;
+        });
+
+        // Calcula a média de cada mês
+        const medias = somaTemperaturas.map((soma, mes) => {
+
+            if (quantidadeRegistros[mes] === 0) {
+                return null;
+            }
+
+            return Number(
+                (soma / quantidadeRegistros[mes]).toFixed(1)
+            );
+        });
+
+        // Atualiza o gráfico
+        graficoAnual.data.datasets[0].data = medias;
+
+        graficoAnual.update();
+    };
 }
+
+
+async function alterarStatusAtuador(idAtuador, novoStatus) {
+    try {
+        const resposta = await fetch("/api/atuadores/status", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id_atuadores: idAtuador,
+                status_atual: novoStatus
+            })
+        });
+
+        if (!resposta.ok) {
+            throw new Error("Erro ao atualizar atuador");
+        }
+
+        const resultado = await resposta.json();
+
+        console.log(resultado.mensagem);
+
+        return true;
+
+    } catch (erro) {
+        console.error("Erro ao alterar atuador:", erro);
+        return false;
+    }
+}
+
+

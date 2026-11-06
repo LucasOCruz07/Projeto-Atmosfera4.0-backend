@@ -25,8 +25,13 @@
         </div>
 
         <div class="metadados_superiores">
-            <span class="dados_simulados">DADOS SIMULADOS</span>
-            <span>Atualizado: <strong>28/10, 11:10:54</strong></span>
+            <span class="dados_simulados" id="statusDadosHistorico">
+    CONECTANDO...
+</span>
+            <span>
+    Atualizado:
+    <strong id="dataAtualizacaoHistorico">--/--, --:--:--</strong>
+</span>
         </div>
     </header>
 
@@ -47,11 +52,11 @@
 
                 <label class="campo_filtro">
                     Período
-                    <select>
-                        <option>22/10/2026 — 28/10/2026</option>
-                        <option>Últimas 24 horas</option>
-                        <option>Últimos 7 dias</option>
-                        <option>Últimos 30 dias</option>
+                    <select id="filtroPeriodo">
+                        <option value="">Todo o período</option>
+                        <option value="24h">Últimas 24 horas</option>
+                        <option value="7d">Últimos 7 dias</option>
+                        <option value="30d">Últimos 30 dias</option>
                     </select>
                 </label>
 
@@ -59,11 +64,10 @@
                     Categoria
                     <select id="filtroCategoria">
                         <option value="">Todas as categorias</option>
-                        <option>Alerta</option>
-                        <option>Temperatura</option>
-                        <option>Dispositivo</option>
-                        <option>Atuador</option>
-                        <option>CO₂</option>
+                        <option value="Temperatura">Temperatura / Umidade</option>
+                        <option value="Dispositivo">Dispositivo</option>
+                        <option value="Atuador">Atuador</option>
+                        <option value="Alerta">Alerta</option>
                     </select>
                 </label>
 
@@ -71,20 +75,17 @@
                     Status
                     <select id="filtroStatus">
                         <option value="">Todos os status</option>
-                        <option>Crítico</option>
-                        <option>Aviso</option>
-                        <option>Normal</option>
+                        <option value="Crítico">Crítico</option>
+                        <option value="Aviso">Aviso</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Offline">Offline</option>
                     </select>
                 </label>
 
                 <label class="campo_filtro">
                     Dispositivo
-                    <select>
-                        <option>Todos os dispositivos</option>
-                        <option>Bloco A - Sala 4</option>
-                        <option>Biblioteca</option>
-                        <option>Ginásio</option>
-                        <option>Refeitório</option>
+                    <select id="filtroDispositivo">
+                        <option value="">Todos os dispositivos</option>
                     </select>
                 </label>
 
@@ -100,7 +101,7 @@
                     <span class="icone_resumo ciano">☷</span>
                     <span class="texto_resumo">
                         <span>Todos os eventos</span>
-                        <strong>156</strong>
+                        <strong id="totalEventos">0</strong>
                     </span>
                 </button>
 
@@ -108,23 +109,16 @@
                     <span class="icone_resumo laranja">♨</span>
                     <span class="texto_resumo">
                         <span>Temperatura / Umidade</span>
-                        <strong>42</strong>
+                        <strong id="totalMedicoes">0</strong>
                     </span>
                 </button>
 
-                <button class="cartao_resumo" data-category="CO₂">
-                    <span class="icone_resumo ciano">☁</span>
-                    <span class="texto_resumo">
-                        <span>CO₂</span>
-                        <strong>28</strong>
-                    </span>
-                </button>
 
                 <button class="cartao_resumo" data-category="Dispositivo">
                     <span class="icone_resumo azul">▣</span>
                     <span class="texto_resumo">
                         <span>Dispositivos</span>
-                        <strong>32</strong>
+                        <strong id="totalDispositivos">0</strong>
                     </span>
                 </button>
 
@@ -132,7 +126,7 @@
                     <span class="icone_resumo roxo">⚙</span>
                     <span class="texto_resumo">
                         <span>Atuadores</span>
-                        <strong>38</strong>
+                        <strong id="totalAtuadores">0</strong>
                     </span>
                 </button>
 
@@ -140,7 +134,7 @@
                     <span class="icone_resumo vermelho">⚠</span>
                     <span class="texto_resumo">
                         <span>Alertas</span>
-                        <strong>16</strong>
+                        <strong id="totalAlertas">0</strong>
                     </span>
                 </button>
 
@@ -185,7 +179,7 @@
                 <div>
                     <span>Senai "Anchieta" · Campus principal</span>
                     <b></b>
-                    <span>Dados simulados</span>
+                    <span>Dados do banco de dados</span>
                     <b></b>
                     <span>© 2026 SENAI</span>
                 </div>

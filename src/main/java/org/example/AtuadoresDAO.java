@@ -59,4 +59,70 @@ public class AtuadoresDAO {
         return atuadores;
     }
 
+
+    public boolean alterarStatusAtuador(int idAtuador, boolean novoStatus)
+            throws SQLException {
+
+        String sqlAtualizar = """
+            UPDATE atuadores
+            SET status_atual = ?, ultimo_comando = ?
+            WHERE id_atuadores = ?
+            """;
+
+        String sqlHistorico = """
+            INSERT INTO historico_atuadores
+            (id_atuadores_fk, status_novo, data_hora)
+            VALUES (?, ?, ?)
+            """;
+
+        try (Connection conexao = Conexao.connection()) {
+
+            conexao.setAutoCommit(false);
+
+            try {
+                LocalDateTime agora = LocalDateTime.now();
+
+                // Atualiza o estado atual do atuador
+                int linhasAlteradas;
+
+                try (PreparedStatement comando =
+                             conexao.prepareStatement(sqlAtualizar)) {
+
+                    comando.setBoolean(1, novoStatus);
+                    comando.setObject(2, agora);
+                    comando.setInt(3, idAtuador);
+
+                    linhasAlteradas = comando.executeUpdate();
+                }
+
+                // Se o atuador não existir, não cria histórico
+                if (linhasAlteradas == 0) {
+                    conexao.rollback();
+                    return false;
+                }
+
+                // Registra o comando no histórico
+                try (PreparedStatement comando =
+                             conexao.prepareStatement(sqlHistorico)) {
+
+                    comando.setInt(1, idAtuador);
+                    comando.setBoolean(2, novoStatus);
+                    comando.setObject(3, agora);
+
+                    comando.executeUpdate();
+                }
+
+                // Confirma as duas operações no banco
+                conexao.commit();
+
+                return true;
+
+            } catch (SQLException erro) {
+                conexao.rollback();
+                throw erro;
+            }
+        }
+    }
+
+
 }

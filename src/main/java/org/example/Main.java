@@ -28,7 +28,12 @@ public class Main {
 
         HttpServer servidor = HttpServer.create(new InetSocketAddress("0.0.0.0", PORTA), 0);
         servidor.createContext("/api/atuadores", Main::atenderAtuadores);
+        servidor.createContext("/api/atuadores/status", Main::alterarStatusAtuador);
         servidor.createContext("/api/dispositivos", Main::atenderDispositivos);
+        servidor.createContext(
+                "/api/dispositivos/status",
+                Main::atenderStatusDispositivos
+        );
         servidor.createContext("/api/registros", Main::atenderRegistros);
 
         servidor.createContext("/", Main::abrirPagina);
@@ -85,6 +90,58 @@ public class Main {
         }
     }
 
+
+    private static void alterarStatusAtuador(HttpExchange troca) throws IOException {
+        configurarCors(troca);
+
+        if (troca.getRequestMethod().equals("OPTIONS")) {
+            troca.sendResponseHeaders(204, -1);
+            troca.close();
+            return;
+        }
+
+        if (!troca.getRequestMethod().equals("PUT")) {
+            responder(troca, 405, "{\"erro\":\"Método não permitido\"}");
+            return;
+        }
+
+        try {
+            String corpo = new String(
+                    troca.getRequestBody().readAllBytes(),
+                    StandardCharsets.UTF_8
+            );
+
+            // Converte o JSON recebido em um objeto
+            com.google.gson.JsonObject dados =
+                    com.google.gson.JsonParser.parseString(corpo).getAsJsonObject();
+
+            int idAtuador = dados.get("id_atuadores").getAsInt();
+            boolean novoStatus = dados.get("status_atual").getAsBoolean();
+
+            // Atualiza o atuador e registra o comando no histórico
+            boolean atualizado = ATUADORES_DAO.alterarStatusAtuador(
+                    idAtuador,
+                    novoStatus
+            );
+
+            if (!atualizado) {
+                responder(troca, 404, "{\"erro\":\"Atuador não encontrado\"}");
+                return;
+            }
+
+            responder(troca, 200,
+                    "{\"mensagem\":\"Status atualizado com sucesso\"}");
+
+        } catch (SQLException erro) {
+            erro.printStackTrace();
+            responder(troca, 500, "{\"erro\":\"Erro no banco de dados\"}");
+
+        } catch (RuntimeException erro) {
+            responder(troca, 400, "{\"erro\":\"JSON inválido ou incompleto\"}");
+        }
+    }
+
+
     private static void atenderDispositivos (HttpExchange troca) throws IOException {
         configurarCors(troca);
         try {
@@ -105,6 +162,49 @@ public class Main {
         } catch (SQLException e) {
             e.printStackTrace();
             responder(troca, 500, "{\"erro\":\"Erro no banco de dados\"}");
+        }
+    }
+
+    private static void atenderStatusDispositivos(HttpExchange troca)
+            throws IOException {
+
+        configurarCors(troca);
+
+        try {
+            if (troca.getRequestMethod().equals("OPTIONS")) {
+                troca.sendResponseHeaders(204, -1);
+                troca.close();
+                return;
+            }
+
+            if (!troca.getRequestMethod().equals("GET")) {
+                responder(troca, 405,
+                        "{\"erro\":\"Método não permitido\"}");
+                return;
+            }
+
+            // Total de dispositivos cadastrados
+            int total = DISPOSITIVOS_DAO
+                    .listarDispDisponiveies().size();
+
+            // Dispositivos com medições recentes
+            int online = DISPOSITIVOS_DAO
+                    .contarDispositivosOnline();
+
+            int offline = total - online;
+
+            // Monta a resposta JSON
+            String json = GSON.toJson(
+                    new StatusDispositivos(total, online, offline)
+            );
+
+            responder(troca, 200, json);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            responder(troca, 500,
+                    "{\"erro\":\"Erro ao consultar status dos dispositivos\"}");
         }
     }
 
@@ -133,7 +233,7 @@ public class Main {
 
     private static void configurarCors(HttpExchange troca) {
         troca.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
-        troca.getResponseHeaders().set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        troca.getResponseHeaders().set("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS");
         troca.getResponseHeaders().set("Access-Control-Allow-Headers", "Content-Type");
     }
 
@@ -208,4 +308,10 @@ public class Main {
         troca.getResponseBody().write(resposta);
         troca.close();
     }
+
+    private record StatusDispositivos(
+            int total,
+            int online,
+            int offline
+    ) {}
 }

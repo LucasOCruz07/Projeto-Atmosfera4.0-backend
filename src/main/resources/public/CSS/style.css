@@ -642,6 +642,20 @@ body:has(.menu-lateral[aria-hidden="false"]) .menu-fundo {
 /* ---------- Rodapé ---------- */
 .rodape {
     padding: 24px;
+
+}
+
+.grafico-container {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    height: 340px;
+    margin: 0 auto;
+}
+
+.grafico-container canvas {
+    width: 100% !important;
+    height: 100% !important;
 }
 
 .rodape-principal {

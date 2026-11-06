@@ -54,4 +54,30 @@ public class DispositivosDAO {
         }
         return dispositvos;
     }
+
+    public int contarDispositivosOnline() throws SQLException {
+
+        String sql = """
+        SELECT COUNT(*) AS total_online
+        FROM dispositivos d
+        WHERE EXISTS (
+            SELECT 1
+            FROM registro r
+            WHERE r.id_dispositivos_fk = d.id_dispositivos
+              AND r.data_hora >= NOW() - INTERVAL 5 MINUTE
+              AND r.data_hora <= NOW()
+        )
+        """;
+
+        try (Connection conexao = Conexao.connection();
+             PreparedStatement comando = conexao.prepareStatement(sql);
+             ResultSet resultado = comando.executeQuery()) {
+
+            if (resultado.next()) {
+                return resultado.getInt("total_online");
+            }
+        }
+
+        return 0;
+    }
 }
