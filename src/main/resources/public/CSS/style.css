@@ -430,6 +430,7 @@ body:has(.menu-lateral[aria-hidden="false"]) .menu-fundo {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: var(--espaco);
+
 }
 
 .tabela-inf {
@@ -642,6 +643,7 @@ body:has(.menu-lateral[aria-hidden="false"]) .menu-fundo {
 /* ---------- Rodapé ---------- */
 .rodape {
     padding: 24px;
+    height: 480px;
 }
 
 .rodape-principal {
@@ -713,6 +715,13 @@ body:has(.menu-lateral[aria-hidden="false"]) .menu-fundo {
 
 .rodape-separador {
     opacity: 0.5;
+}
+/* ----------Grafico bola ------- */
+
+.grafico-container {
+    position: relative;
+    width: 100%;
+    height: 450px;
 }
 
 /* ---------- Tablet ---------- */

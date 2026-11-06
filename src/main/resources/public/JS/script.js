@@ -823,3 +823,60 @@ if (elementoColunas) {
         }
     });
 }
+// ------------Grafico BOla -----------------
+
+const ctx = document.getElementById('graficoRosca');
+
+new Chart(ctx, {
+    type: 'doughnut',
+
+    data: {
+        labels: ['Dispositivo 1', 'Dispositivo 2', 'Dispositivo 3'],
+
+        datasets: [{
+            label: 'My First Dataset',
+
+            data: [300, 50, 100],
+
+            backgroundColor: [
+                '#80fcc2',
+                '#78b9f5',
+                '#ffffffda'
+            ],
+
+            borderColor: '#69f8e533',
+            borderWidth: 2,
+
+            hoverOffset: 4
+        }]
+    },
+
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+
+        cutout: '48%',
+
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top',
+
+                labels: {
+                    usePointStyle: false,
+                    boxWidth: 30,
+                    boxHeight: 10,
+                    padding: 10,
+
+                    font: {
+                        size: 11
+                    }
+                }
+            },
+
+            tooltip: {
+                enabled: true
+            }
+        }
+    }
+});
