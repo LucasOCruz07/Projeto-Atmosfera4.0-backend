@@ -1,101 +1,147 @@
-FALTA TERMINAR O TesteDAO, e FAZER a main
-<br>
-(USAR DE REFERENCIA projetos fullstack do Orrico)
-<br>
-<hr>
+# 🌎 Atmosfera 4.0 — Backend
 
+## 📌 Sobre o projeto
 
-deixei em aberto a questao de algumas variaveis como:
-"nome_atuador"
-"ultimo_comando"
+O **Atmosfera 4.0** é um projeto acadêmico voltado ao monitoramento de condições atmosféricas por meio de dispositivos e sensores.
 
-Pois estao dadas como varChar, datetime, timestamp..
-Fico aberto a opinões de como declarar ela, estou deixando algumas como String,
-deem uma olhada depois e se quiser façam alguma alteração,
-porem deixe resgistrado aqui
+O sistema permite armazenar e consultar informações coletadas pelos dispositivos, como temperatura, umidade, pressão atmosférica, altitude, luminosidade e velocidade do vento.
 
-<hr>
-bem provavel ter que colocar as FK
-Orrico disse que nao mas o projeto do marcus precisou
-Segue as Orienteções: 
+O backend é responsável por realizar a comunicação com o banco de dados MySQL e disponibilizar os dados por meio de uma API HTTP para o frontend.
 
-Table: atuadores
+## 🚀 Tecnologias utilizadas
 
+- **Java** — desenvolvimento do backend.
+- **Gradle** — gerenciamento e compilação do projeto.
+- **MySQL** — armazenamento dos dados.
+- **JDBC** — comunicação com o banco de dados.
+- **Gson** — conversão de objetos Java para JSON.
+- **HTML, CSS e JavaScript** — desenvolvimento da interface.
+- **Chart.js** — visualização de dados em gráficos.
 
-Table: registro
-gatewai_pai_fk int
+## 📂 Estrutura do projeto
 
+```text
+Projeto-Atmosfera4.0-backend/
+│
+├── src/
+│   └── main/
+│       ├── java/
+│       │   └── org/example/
+│       │       ├── Main.java
+│       │       ├── Conexao.java
+│       │       ├── DispositivosDAO.java
+│       │       ├── RegistrosDAO.java
+│       │       └── AtuadoresDAO.java
+│       │
+│       └── resources/
+│           └── public/
+│               ├── index.html
+│               └── JS/
+│                   ├── script.js
+│                   └── historico.js
+│
+├── build.gradle
+├── settings.gradle
+└── README.md
+```
 
-Table: registro
-id_dispositivos_fk int 
+## 🗄️ Banco de dados
 
+O projeto utiliza o MySQL com um banco de dados chamado `atmosfera`.
 
-<br>
-<hr>
-TABELA ATUAL DO MySQL:
+As principais tabelas utilizadas são:
 
+| Tabela | Finalidade |
+|---|---|
+| `dispositivos` | Armazenar informações dos dispositivos |
+| `registro` | Armazenar os dados coletados pelos sensores |
+| `atuadores` | Armazenar informações dos atuadores |
 
-/*
-USE atmosfera;
-SELECT * FROM atuadores;
-SELECT * FROM dispositivos;
-SELECT * FROM registro;
+Os identificadores das tabelas são configurados para geração automática (`AUTO_INCREMENT`).
 
-CREATE TABLE dispositivos(
-id_dispositivos INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-nome_dispositivo VARCHAR(30) NOT NULL,
-localizacao VARCHAR(50),
-tipo_dispositivo VARCHAR(30) NOT NULL,
-gatewai_pai_fk INT
-);
+### Configuração da conexão
 
+Antes de executar o projeto, é necessário:
 
-CREATE TABLE registro(
-id_registro BIGINT NOT NULL auto_increment PRIMARY KEY,
-id_dispositivos_fk INT NOT NULL,
-time_stamp timestamp NOT NULL,
-data_hora DATETIME default NOW(),
-temperatura FLOAT,
-umidade FLOAT,
-pressao FLOAT,
-altitude FLOAT,
-luminosidade FLOAT,
-velocidade_vento FLOAT,
-direcao_vento INT,
-intensidade_wifi FLOAT,
-FOREIGN KEY (id_dispositivos_fk) REFERENCES dispositivos(id_dispositivos)
-);
+1. Instalar e iniciar o MySQL.
+2. Criar o banco de dados `atmosfera`.
+3. Criar as tabelas necessárias conforme a estrutura SQL do projeto.
+4. Conferir as configurações de conexão no arquivo `Conexao.java`.
+5. Informar o endereço, a porta, o usuário e a senha do seu banco de dados.
 
+**Importante:** não compartilhe senhas do banco de dados no GitHub.
 
-CREATE TABLE atuadores(
-id_atuadores INT PRIMARY KEY auto_increment NOT NULL,
-id_dispositivos_fk INT NOT NULL,
-nome_atuador VARCHAR(30) NOT NULL,
-status_atual BOOl NOT NULL,
-ultimo_comando DATETIME default NOW(),
-FOREIGN KEY (id_dispositivos_fk) REFERENCES dispositivos(id_dispositivos)
-);
+## ⚙️ Como executar o projeto
 
-USE atmosfera;
+### Pré-requisitos
 
------------------------------------
-INSERT INTO registro (temperatura, umidade, pressao, altitude, luminosidade, velocidade_vento, intensidade_wifi) VALUES
-( 24.5, 65.2, 1013.25, 750.0, 450.0, 12, -65),
-( 28.1, 55.0, 1012.80, 752.3, 890.0, 22, -70),
-( 24.8, 64.9, 1013.10, 750.0, 420.0, 10, -64);
-select*from registro;
+- Java JDK instalado.
+- MySQL instalado e em execução.
+- IntelliJ IDEA ou outra IDE compatível com Java.
+- Gradle (o projeto também possui o Gradle Wrapper).
 
-select*from Atuadores;
+### 1. Clonar o repositório
 
-INSERT INTO Atuadores ( nome_atuador) VALUES
-( 'Irrigador Automático Setor A'),
-( 'Exaustor de Ar Traseiro'),
-( 'Válvula de Pressão de Segurança');
+```bash
+git clone https://github.com/LucasOCruz07/Projeto-Atmosfera4.0-backend.git
+```
 
-INSERT INTO dispositivos ( nome_dispositivo, localizacao, tipo_dispositivo, gatewai_pai_fk) VALUES
-( 'Sensor Estação Norte', 'Estufa 01', 'Estação Meteorológica', 100),
-( 'Sensor Estação Sul', 'Campo Aberto', 'Estação Meteorológica', 100),
-( 'Controlador Central', 'Laboratório', 'Painel de Controle', 101);
+### 2. Entrar na pasta do projeto
 
-select*from   registro;
-*/
+```bash
+cd Projeto-Atmosfera4.0-backend
+```
+
+### 3. Compilar o projeto
+
+No Windows, execute:
+
+```powershell
+.\gradlew.bat build
+```
+
+### 4. Executar o backend
+
+```powershell
+.\gradlew.bat run
+```
+
+### 5. Acessar a aplicação
+
+Com o servidor em execução, abra o navegador e acesse:
+
+```text
+http://localhost:8080
+```
+
+## 🔌 API HTTP
+
+O backend disponibiliza rotas para trabalhar com dispositivos, registros e atuadores.
+
+| Método | Endpoint | Descrição |
+|---|---|---|
+| GET | `/api/dispositivos` | Consultar dispositivos |
+| POST | `/api/dispositivos` | Cadastrar dispositivos |
+| GET | `/api/registros` | Consultar registros |
+| POST | `/api/registros` | Cadastrar registros |
+| GET | `/api/atuadores` | Consultar atuadores |
+| POST | `/api/atuadores` | Cadastrar atuadores |
+
+As respostas da API utilizam o formato JSON.
+
+## 📊 Funcionalidades
+
+- Cadastro e consulta de dispositivos.
+- Armazenamento de registros dos sensores.
+- Consulta de informações dos atuadores.
+- Dashboard para visualização de informações.
+- Gráficos para acompanhamento dos dados.
+- Histórico de registros coletados.
+
+## 👨‍💻 Equipe e desenvolvimento
+
+Projeto desenvolvido com finalidade acadêmica, aplicando conhecimentos de programação Java, banco de dados, desenvolvimento web e integração entre frontend e backend.
+
+## 📄 Licença
+
+Projeto desenvolvido para fins educacionais.
