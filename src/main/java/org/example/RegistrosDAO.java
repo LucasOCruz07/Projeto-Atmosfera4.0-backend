@@ -8,25 +8,24 @@ import java.util.List;
 public class RegistrosDAO {
         public Registros salvarRegis(Registros registros) throws SQLException {
         String sql = """
-                INSERT INTO registro(id_registro, id_dispositivos_fk, time_stamp, data_hora,temperatura, umidade, pressao, altitude, luminosidade, velocidade_vento, direcao_vento, intensidade_wifi)
-                VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO registro(id_dispositivos_fk, time_stamp, data_hora, temperatura, umidade, pressao, altitude, luminosidade, velocidade_vento, direcao_vento, intensidade_wifi)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """;
         try (Connection conexao = Conexao.connection();
              PreparedStatement comando = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             //Statement:  envia os comandos do SQL pronto pro banco
 
-            comando.setLong(1, registros.getId_registro());
-            comando.setInt(2, registros.getId_dispositivos_fk());
-            comando.setString(3, registros.getTime_stamp());
-            comando.setObject(4, registros.getData_hora());
-            comando.setFloat(5, registros.getTemperatura());
-            comando.setFloat(6, registros.getUmidade());
-            comando.setFloat(7, registros.getPressao());
-            comando.setFloat(8, registros.getAltitude());
-            comando.setFloat(9, registros.getLuminosidade());
-            comando.setFloat(10, registros.getVelocidade_vento());
-            comando.setInt(11 ,registros.getDirecao_vento());
-            comando.setFloat(12, registros.getIntensidade_wifi() );
+            comando.setInt(1, registros.getId_dispositivos_fk());
+            comando.setString(2, registros.getTime_stamp());
+            comando.setObject(3, registros.getData_hora());
+            comando.setFloat(4, registros.getTemperatura());
+            comando.setFloat(5, registros.getUmidade());
+            comando.setFloat(6, registros.getPressao());
+            comando.setFloat(7, registros.getAltitude());
+            comando.setFloat(8, registros.getLuminosidade());
+            comando.setFloat(9, registros.getVelocidade_vento());
+            comando.setInt(10, registros.getDirecao_vento());
+            comando.setFloat(11, registros.getIntensidade_wifi());
 
             comando.executeUpdate();
             try (ResultSet chaves = comando.getGeneratedKeys()) {

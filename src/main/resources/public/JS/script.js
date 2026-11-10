@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Busca os registros no backend
     async function atualizarRodape() {
         try {
-            const resposta = await fetch("http://localhost:8080/api/dispositivos");
+            const resposta = await fetch("/api/dispositivos");
 
             if (!resposta.ok) {
                 throw new Error("Erro ao buscar dispositivos");
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function carregarRegistros() {
         try {
-            const resposta = await fetch("http://localhost:8080/api/registros");
+            const resposta = await fetch("/api/registros");
 
             if (!resposta.ok) {
                 throw new Error("Erro ao buscar os registros");
@@ -362,9 +362,9 @@ document.addEventListener("DOMContentLoaded", () => {
     carregarRegistros();
     atualizarRodape();
 
-    // Atualizar os registros a cada 1 hora
-    setInterval(carregarRegistros, 3600000);
-    setInterval(atualizarRodape, 3600000);
+    // Atualiza os dados do painel a cada 60 segundos.
+    setInterval(carregarRegistros, 60000);
+    setInterval(atualizarRodape, 60000);
 });
 
 

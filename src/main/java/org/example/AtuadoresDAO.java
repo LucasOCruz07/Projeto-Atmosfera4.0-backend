@@ -9,18 +9,17 @@ public class AtuadoresDAO {
 
     public Atuadores salvarAtua(Atuadores atuadores) throws SQLException {
         String sql = """
-                INSERT INTO Atuadores ( id_atuadores, id_dispositivos_fk, nome_atuador, status_atual, ultimo_comando)
-                VALUE (?, ?, ?, ?, ?)
+                INSERT INTO Atuadores (id_dispositivos_fk, nome_atuador, status_atual, ultimo_comando)
+                VALUES (?, ?, ?, ?)
                 """;
         try (Connection conexao = Conexao.connection();
              PreparedStatement comando = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             //Statement:  envia os comandos do SQL pronto pro banco
 
-            comando.setInt(1, atuadores.getId_atuadores());
-            comando.setInt(2, atuadores.getId_dispositivos_fk());
-            comando.setString(3, atuadores.getNome_atuador());
-            comando.setBoolean(4, atuadores.getStatus_atual());
-            comando.setObject(5, (LocalDateTime) atuadores.getUltimo_comando());
+            comando.setInt(1, atuadores.getId_dispositivos_fk());
+            comando.setString(2, atuadores.getNome_atuador());
+            comando.setBoolean(3, atuadores.getStatus_atual());
+            comando.setObject(4, atuadores.getUltimo_comando());
             comando.executeUpdate();
             try (ResultSet chaves = comando.getGeneratedKeys()) {
                 if (chaves.next()) {

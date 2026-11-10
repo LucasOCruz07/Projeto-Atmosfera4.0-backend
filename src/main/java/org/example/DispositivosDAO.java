@@ -8,18 +8,17 @@ public class DispositivosDAO {
 
     public Dispositivo salvarDisp(Dispositivo dispositivos) throws SQLException {
         String sql = """
-                INSERT INTO dispositivos( id_dispositivos, nome_dispositivo, localizacao, tipo_dispositivo, gatewai_pai_fk )
-                VALUE (?, ?, ?, ?, ?)
+                INSERT INTO dispositivos(nome_dispositivo, localizacao, tipo_dispositivo, gatewai_pai_fk)
+                VALUES (?, ?, ?, ?)
                 """;
         try (Connection conexao = Conexao.connection();
              PreparedStatement comando = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             //Statement:  envia os comandos do SQL pronto pro banco
 
-            comando.setInt(1, dispositivos.getId_dispositivos());
-            comando.setString(2, dispositivos.getNome_dispositivo());
-            comando.setString(3, dispositivos.getLocalizacao());
-            comando.setString(4, dispositivos.getTipo_dispositivo());
-            comando.setInt(5, dispositivos.getGatewai_pai_fk());
+            comando.setString(1, dispositivos.getNome_dispositivo());
+            comando.setString(2, dispositivos.getLocalizacao());
+            comando.setString(3, dispositivos.getTipo_dispositivo());
+            comando.setInt(4, dispositivos.getGatewai_pai_fk());
             comando.executeUpdate();
             try (ResultSet chaves = comando.getGeneratedKeys()) {
                 if (chaves.next()) {
