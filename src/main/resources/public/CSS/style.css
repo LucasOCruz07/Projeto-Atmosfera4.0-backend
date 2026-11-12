@@ -469,7 +469,7 @@ body:has(.menu-lateral[aria-hidden="false"]) .menu-fundo {
 }
 
 .conteudo {
-    display: grid;
+
     grid-template-columns: minmax(0, 1fr) 240px;
     gap: var(--espaco);
     margin-top: 14px;
@@ -478,6 +478,7 @@ body:has(.menu-lateral[aria-hidden="false"]) .menu-fundo {
 .mapa {
     max-height: 320px;
     overflow: auto;
+    width: 100%;
 }
 
 .mapa table {
@@ -642,6 +643,7 @@ body:has(.menu-lateral[aria-hidden="false"]) .menu-fundo {
 /* ---------- Rodapé ---------- */
 .rodape {
     padding: 24px;
+    height: 480px;
 
 }
 

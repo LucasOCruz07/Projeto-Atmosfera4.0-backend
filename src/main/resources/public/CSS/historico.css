@@ -309,6 +309,7 @@ select option {
     overflow-x: auto;
     border: 1px solid var(--borda);
     border-radius: 12px;
+    margin-bottom: 20px;
 }
 
 table {
