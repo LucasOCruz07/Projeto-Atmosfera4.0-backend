@@ -59,30 +59,30 @@ document.addEventListener("DOMContentLoaded", async () => {
         ];
 
         new Chart(canvas, {
-            type: "doughnut",
+                    type: "doughnut",
 
-            data: {
-                labels: dispositivos.map(d => d.nome_dispositivo),
+                    data: {
+                        labels: dispositivos.map(d => d.nome_dispositivo),
 
-                datasets: [{
-                    label: "Dispositivos",
+                        datasets: [{
+                            label: "Dispositivos",
 
-                    data: dispositivos.map(() => 1),
+                            data: dispositivos.map(() => 1),
 
-                    backgroundColor: [
-                        "#80fcc2",
-                        "#78b9f5",
-                        "#ffffffda",
-                        "#f5c978",
-                        "#c4a1ff",
-                        "#ff8c8c"
-                    ],
+                            backgroundColor: [
+                                                    "#80fcc2", // Verde claro principal
+                                                    "#78b9f5", // Azul claro principal
+                                                    "#ffffffda", // Branco translúcido
+                                                    "#45d497", // Um tom de verde um pouco mais fechado para o 4º dispositivo
+                                                    "#4ba3e3", // Um tom de azul um pouco mais fechado para o 5º dispositivo
+                                                    "#d0f5e4"  // Um tom verde-gelo bem suave para o 6º dispositivo
+                                                ],
 
-                    borderColor: "#69f8e533",
-                    borderWidth: 2,
-                    hoverOffset: 4
-                }]
-            },
+                            borderColor: "#69f8e533",
+                            borderWidth: 2,
+                            hoverOffset: 4
+                        }]
+                    },
 
             options: {
                 responsive: true,

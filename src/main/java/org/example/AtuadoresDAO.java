@@ -4,6 +4,8 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public class AtuadoresDAO {
 
@@ -123,6 +125,49 @@ public class AtuadoresDAO {
             }
         }
     }
+
+
+    public List<Map<String, Object>> listarHistoricoAtuadores()
+            throws SQLException {
+
+        String sql = """
+        SELECT
+            h.id_historico,
+            h.id_atuadores_fk,
+            a.nome_atuador,
+            a.id_dispositivos_fk,
+            h.status_novo,
+            h.data_hora
+        FROM historico_atuadores h
+        INNER JOIN atuadores a
+            ON h.id_atuadores_fk = a.id_atuadores
+        ORDER BY h.data_hora DESC, h.id_historico DESC
+        """;
+
+        List<Map<String, Object>> historico = new ArrayList<>();
+
+        try (Connection conexao = Conexao.connection();
+             PreparedStatement comando = conexao.prepareStatement(sql);
+             ResultSet resultado = comando.executeQuery()) {
+
+            while (resultado.next()) {
+
+                Map<String, Object> evento = new HashMap<>();
+
+                evento.put("id_historico", resultado.getInt("id_historico"));
+                evento.put("id_atuadores_fk", resultado.getInt("id_atuadores_fk"));
+                evento.put("nome_atuador", resultado.getString("nome_atuador"));
+                evento.put("id_dispositivos_fk", resultado.getInt("id_dispositivos_fk"));
+                evento.put("status_novo", resultado.getBoolean("status_novo"));
+                evento.put("data_hora", resultado.getTimestamp("data_hora").toLocalDateTime().toString());
+
+                historico.add(evento);
+            }
+        }
+
+        return historico;
+    }
+
 
 
 }

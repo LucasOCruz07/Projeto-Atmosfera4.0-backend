@@ -313,58 +313,92 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
+
     // Controle dos atuadores
     const botoesAtuadores = document.querySelectorAll(".botao-atuador");
 
     botoesAtuadores.forEach((botao) => {
-        botao.addEventListener("click", () => {
+
+        botao.addEventListener("click", async () => {
+
+            const idAtuador = Number(botao.dataset.id);
+
+            if (!Number.isInteger(idAtuador) || idAtuador <= 0) {
+                console.error("ID do atuador inválido");
+                return;
+            }
+
             const estavaLigado = botao.classList.contains("ligado");
-            const novoEstado = estavaLigado ? "desligado" : "ligado";
+            const novoStatus = !estavaLigado;
 
-            botao.classList.remove("ligado", "desligado");
-            botao.classList.add(novoEstado);
+            // Impede vários cliques durante a requisição
+            botao.disabled = true;
 
-            botao.innerHTML = `
-                <span class="indicador"></span>
-                ${novoEstado === "ligado" ? "LIGADO" : "DESLIGADO"}
-            `;
-
-            const nomeAtuador =
-                botao.closest(".atuador")
-                    ?.querySelector(".atuador-info h3")
-                    ?.childNodes[0]?.textContent.trim() || "Atuador";
-
-            if (registro) {
-                const agora = new Date().toLocaleTimeString("pt-BR");
-
-                registro.textContent =
-                    `${agora} — ${nomeAtuador}: ${novoEstado.toUpperCase()}`;
-
-                const historico = document.querySelector(
-                    ".registro-atuadores"
+            try {
+                // Envia o comando ao backend Java
+                const sucesso = await alterarStatusAtuador(
+                    idAtuador,
+                    novoStatus
                 );
 
-                if (historico) {
-                    let lista = historico.querySelector(".historico-comandos");
+                if (!sucesso) {
+                    alert("Não foi possível atualizar o atuador.");
+                    return;
+                }
 
-                    if (!lista) {
-                        lista = document.createElement("div");
-                        lista.className = "historico-comandos";
-                        lista.style.cssText =
-                            "max-height:70px;overflow-y:auto;";
+                // Atualiza o botão somente após o banco confirmar
+                const novoEstado = novoStatus ? "ligado" : "desligado";
 
-                        historico.appendChild(lista);
-                    }
+                botao.classList.remove("ligado", "desligado");
+                botao.classList.add(novoEstado);
 
-                    const item = document.createElement("p");
-                    item.textContent =
+                botao.innerHTML = `
+                    <span class="indicador"></span>
+                    ${novoStatus ? "LIGADO" : "DESLIGADO"}
+                `;
+
+                const nomeAtuador =
+                    botao.closest(".atuador")
+                        ?.querySelector(".atuador-info h3")
+                        ?.childNodes[0]?.textContent.trim() || "Atuador";
+
+                const agora = new Date().toLocaleTimeString("pt-BR");
+
+                if (registro) {
+                    registro.textContent =
                         `${agora} — ${nomeAtuador}: ${novoEstado.toUpperCase()}`;
 
-                    lista.prepend(item);
+                    const historico = document.querySelector(
+                        ".registro-atuadores"
+                    );
+
+                    if (historico) {
+                        let lista = historico.querySelector(".historico-comandos");
+
+                        if (!lista) {
+                            lista = document.createElement("div");
+                            lista.className = "historico-comandos";
+                            lista.style.cssText =
+                                "max-height:70px;overflow-y:auto;";
+
+                            historico.appendChild(lista);
+                        }
+
+                        const item = document.createElement("p");
+
+                        item.textContent =
+                            `${agora} — ${nomeAtuador}: ${novoEstado.toUpperCase()}`;
+
+                        lista.prepend(item);
+                    }
                 }
+
+            } finally {
+                botao.disabled = false;
             }
         });
     });
+
 
     // Seleção do período do gráfico
     botoesPeriodo.forEach((botao) => {
@@ -660,40 +694,108 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Atualiza o gráfico com os registros recebidos do banco
-    window.atualizarGrafico = function (registros) {
 
-        if (!Array.isArray(registros)) return;
+let registrosGrafico = [];
+let periodoGrafico = 6;
 
-        // Organiza os registros do mais antigo para o mais recente
-        const dadosOrdenados = [...registros].sort(
-            (a, b) => a.id_registro - b.id_registro
+// Converte a data do MySQL para um objeto Date
+function converterDataRegistro(registro) {
+    const valor = registro.data_hora || registro.time_stamp;
+
+    if (!valor) return null;
+
+    if (typeof valor === "object" && valor.date) {
+        const data = valor.date;
+        const hora = valor.time || {};
+
+        return new Date(
+            Number(data.year),
+            Number(data.month) - 1,
+            Number(data.day),
+            Number(hora.hour || 0),
+            Number(hora.minute || 0),
+            Number(hora.second || 0)
+        );
+    }
+
+    const data = new Date(String(valor).replace(" ", "T"));
+
+    return Number.isNaN(data.getTime()) ? null : data;
+}
+
+// Atualiza o gráfico conforme o período selecionado
+function renderizarGrafico() {
+    const agora = Date.now();
+    const inicio = agora - periodoGrafico * 60 * 60 * 1000;
+
+    const filtrados = registrosGrafico
+        .map(registro => ({
+            ...registro,
+            dataConvertida: converterDataRegistro(registro)
+        }))
+        .filter(registro =>
+            registro.dataConvertida &&
+            registro.dataConvertida.getTime() >= inicio &&
+            registro.dataConvertida.getTime() <= agora
+        )
+        .sort((a, b) =>
+            a.dataConvertida - b.dataConvertida
         );
 
-        // Pega os últimos 7 registros
-        const ultimosRegistros = dadosOrdenados.slice(-7);
+    grafico.data.labels = filtrados.map(registro =>
+        registro.dataConvertida.toLocaleTimeString("pt-BR", {
+            hour: "2-digit",
+            minute: "2-digit"
+        })
+    );
 
-        // Horários
-        grafico.data.labels = ultimosRegistros.map(registro => {
-            if (!registro.data_hora) {
-                return registro.time_stamp ?? "-";
-            }
+    grafico.data.datasets[0].data = filtrados.map(
+        registro => Number(registro.temperatura)
+    );
 
-            return String(registro.data_hora).substring(11, 16);
+    grafico.data.datasets[1].data = filtrados.map(
+        registro => Number(registro.umidade)
+    );
+
+    grafico.update();
+
+    console.log(
+        `Gráfico ${periodoGrafico}h: ${filtrados.length} registros`
+    );
+}
+
+// Recebe os dados do MySQL
+window.atualizarGrafico = function (registros) {
+    if (!Array.isArray(registros)) return;
+
+    registrosGrafico = registros;
+    registrosGrafico = registros;
+
+    console.log("Datas recebidas do MySQL:", registrosGrafico.map(r => ({
+        id: r.id_registro,
+        data_hora: r.data_hora,
+        time_stamp: r.time_stamp,
+        temperatura: r.temperatura
+    })));
+
+    renderizarGrafico();
+    renderizarGrafico();
+};
+
+// Conecta os botões ao gráfico
+document.querySelectorAll(".graf-periodo button")
+    .forEach(botao => {
+
+        botao.addEventListener("click", () => {
+            const horas = parseInt(botao.textContent.trim(), 10);
+
+            if (![1, 6, 24].includes(horas)) return;
+
+            periodoGrafico = horas;
+            renderizarGrafico();
         });
+    });
 
-        // Temperaturas
-        grafico.data.datasets[0].data = ultimosRegistros.map(
-            registro => Number(registro.temperatura)
-        );
-
-        // Umidades
-        grafico.data.datasets[1].data = ultimosRegistros.map(
-            registro => Number(registro.umidade)
-        );
-
-        // Redesenha o gráfico
-        grafico.update();
-    };
 
 });
 /* ========================================

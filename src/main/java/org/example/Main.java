@@ -28,8 +28,11 @@ public class Main {
 
         HttpServer servidor = HttpServer.create(new InetSocketAddress("0.0.0.0", PORTA), 0);
         servidor.createContext("/api/atuadores", Main::atenderAtuadores);
+        servidor.createContext("/api/atuadores/historico", Main::consultarHistoricoAtuadores);
         servidor.createContext("/api/atuadores/status", Main::alterarStatusAtuador);
         servidor.createContext("/api/dispositivos", Main::atenderDispositivos);
+        servidor.createContext("/api/dispositivos/historico", Main::consultarHistoricoDispositivos);
+        servidor.createContext("/api/dispositivos/atualizar", Main::atualizarDispositivo);
         servidor.createContext(
                 "/api/dispositivos/status",
                 Main::atenderStatusDispositivos
@@ -87,6 +90,42 @@ public class Main {
         } catch (SQLException e) {
             e.printStackTrace();
             responder(troca, 500, "{\"erro\":\"Erro no banco de dados\"}");
+        }
+    }
+
+
+    private static void consultarHistoricoAtuadores(HttpExchange troca)
+            throws IOException {
+
+        configurarCors(troca);
+
+        if (troca.getRequestMethod().equals("OPTIONS")) {
+            troca.sendResponseHeaders(204, -1);
+            troca.close();
+            return;
+        }
+
+        if (!troca.getRequestMethod().equals("GET")) {
+            responder(troca, 405,
+                    "{\"erro\":\"Método não permitido\"}");
+            return;
+        }
+
+        try {
+            // Busca o histórico real dos atuadores no MySQL
+            var historico = ATUADORES_DAO.listarHistoricoAtuadores();
+
+            // Converte os dados para JSON
+            String json = GSON.toJson(historico);
+
+            // Envia o histórico ao frontend
+            responder(troca, 200, json);
+
+        } catch (SQLException erro) {
+            erro.printStackTrace();
+
+            responder(troca, 500,
+                    "{\"erro\":\"Erro ao consultar histórico dos atuadores\"}");
         }
     }
 
@@ -314,4 +353,108 @@ public class Main {
             int online,
             int offline
     ) {}
+
+
+    private static void consultarHistoricoDispositivos(HttpExchange troca)
+            throws IOException {
+
+        configurarCors(troca);
+
+        // Permite requisições OPTIONS
+        if (troca.getRequestMethod().equals("OPTIONS")) {
+            troca.sendResponseHeaders(204, -1);
+            troca.close();
+            return;
+        }
+
+        // Permite somente GET
+        if (!troca.getRequestMethod().equals("GET")) {
+            responder(troca, 405,
+                    "{\"erro\":\"Método não permitido\"}");
+            return;
+        }
+
+        try {
+            // Busca os eventos no MySQL
+            var historico =
+                    DISPOSITIVOS_DAO.listarHistoricoDispositivos();
+
+            // Converte os eventos para JSON
+            String json = GSON.toJson(historico);
+
+            // Envia os dados ao frontend
+            responder(troca, 200, json);
+
+        } catch (SQLException erro) {
+            erro.printStackTrace();
+
+            responder(troca, 500,
+                    "{\"erro\":\"Erro ao consultar histórico dos dispositivos\"}");
+        }
+    }
+
+
+    private static void atualizarDispositivo(HttpExchange troca)
+            throws IOException {
+
+        configurarCors(troca);
+
+        if (troca.getRequestMethod().equals("OPTIONS")) {
+            troca.sendResponseHeaders(204, -1);
+            troca.close();
+            return;
+        }
+
+        if (!troca.getRequestMethod().equals("PUT")) {
+            responder(troca, 405,
+                    "{\"erro\":\"Método não permitido\"}");
+            return;
+        }
+
+        try {
+            String corpo = new String(
+                    troca.getRequestBody().readAllBytes(),
+                    StandardCharsets.UTF_8
+            );
+
+            Dispositivo dispositivo =
+                    GSON.fromJson(corpo, Dispositivo.class);
+
+            if (dispositivo == null ||
+                    dispositivo.getId_dispositivos() <= 0 ||
+                    dispositivo.getNome_dispositivo() == null ||
+                    dispositivo.getNome_dispositivo().isBlank() ||
+                    dispositivo.getTipo_dispositivo() == null ||
+                    dispositivo.getTipo_dispositivo().isBlank()) {
+
+                responder(troca, 400,
+                        "{\"erro\":\"Dados do dispositivo inválidos\"}");
+                return;
+            }
+
+            boolean atualizado =
+                    DISPOSITIVOS_DAO.atualizarDispositivo(dispositivo);
+
+            if (!atualizado) {
+                responder(troca, 404,
+                        "{\"erro\":\"Dispositivo não encontrado\"}");
+                return;
+            }
+
+            responder(troca, 200,
+                    "{\"mensagem\":\"Dispositivo atualizado com sucesso\"}");
+
+        } catch (SQLException erro) {
+            erro.printStackTrace();
+
+            responder(troca, 500,
+                    "{\"erro\":\"Erro ao atualizar dispositivo no banco\"}");
+
+        } catch (com.google.gson.JsonSyntaxException erro) {
+            responder(troca, 400,
+                    "{\"erro\":\"JSON inválido\"}");
+        }
+    }
+
+
 }
